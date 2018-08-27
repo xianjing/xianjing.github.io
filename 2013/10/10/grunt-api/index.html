@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>玩转Grunt（二）: Gruntfile 详解 | Xianjing&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Gruntfile.js是Grunt工具的项目配置文件，它主要用来定义需要运行的任务及配置信息、加载这些任务使用的插件和注册他们的运行顺序。要想读懂这个文件，首先需要了解Grunt 的运行机制以及配置。 1. How Grunt worksGrunt是基于nodejs平台开发和运行的，那么讨论grunt一切都离不开nodejs的模块机制。在Grunt中核心模块即是Grunt，它提供了grunt用到">
+<meta property="og:type" content="article">
+<meta property="og:title" content="玩转Grunt（二）: Gruntfile 详解">
+<meta property="og:url" content="http://yoursite.com/2013/10/10/grunt-api/index.html">
+<meta property="og:site_name" content="Xianjing&#39;s blog">
+<meta property="og:description" content="Gruntfile.js是Grunt工具的项目配置文件，它主要用来定义需要运行的任务及配置信息、加载这些任务使用的插件和注册他们的运行顺序。要想读懂这个文件，首先需要了解Grunt 的运行机制以及配置。 1. How Grunt worksGrunt是基于nodejs平台开发和运行的，那么讨论grunt一切都离不开nodejs的模块机制。在Grunt中核心模块即是Grunt，它提供了grunt用到">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-08-11T09:47:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="玩转Grunt（二）: Gruntfile 详解">
+<meta name="twitter:description" content="Gruntfile.js是Grunt工具的项目配置文件，它主要用来定义需要运行的任务及配置信息、加载这些任务使用的插件和注册他们的运行顺序。要想读懂这个文件，首先需要了解Grunt 的运行机制以及配置。 1. How Grunt worksGrunt是基于nodejs平台开发和运行的，那么讨论grunt一切都离不开nodejs的模块机制。在Grunt中核心模块即是Grunt，它提供了grunt用到">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Xianjing&#39;s blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpeg" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpeg" />
+            <h2 id="name">Xianjing</h2>
+            <h3 id="title">learner</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/xianjing">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                36
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                2
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/xianjing" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-grunt-api" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            玩转Grunt（二）: Gruntfile 详解
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2013/10/10/grunt-api/">
+            <time datetime="2013-10-10T10:21:00.000Z" itemprop="datePublished">2013-10-10</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/works/">works</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>Gruntfile.js是Grunt工具的项目配置文件，它主要用来定义需要运行的任务及配置信息、加载这些任务使用的插件和注册他们的运行顺序。要想读懂这个文件，首先需要了解Grunt 的运行机制以及配置。</p>
+<h2 id="1-How-Grunt-works"><a href="#1-How-Grunt-works" class="headerlink" title="1. How Grunt works"></a>1. How Grunt works</h2><p>Grunt是基于nodejs平台开发和运行的，那么讨论grunt一切都离不开nodejs的模块机制。在Grunt中核心模块即是Grunt，它提供了grunt用到的的所有的公共方法和属性。当我们在命令行运行Grunt命令时，它会以node的require方式加载本地安装的grunt模块（包括内部api），并应用Gruntfile中的配置项，最后执行指定的任务或者缺省的任务列表。</p>
+<p>以下几段代码也证实了这一点：<br><a id="more"></a></p>
+<blockquote>
+<p>node_modules/grunt/lib/grunt/cli.js</p>
+</blockquote>
+<figure class="highlight javascript"><figcaption><span>cli.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> grunt = <span class="built_in">require</span>(<span class="string">'../grunt'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// This is only executed when run via command line.</span></span><br><span class="line"><span class="keyword">var</span> cli = <span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">options, done</span>) </span>&#123;</span><br><span class="line">  <span class="comment">//process cli options</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="comment">// Run tasks.</span></span><br><span class="line">  grunt.tasks(cli.tasks, cli.options, done);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>node_modules/grunt/lib/grunt.js</p>
+</blockquote>
+<figure class="highlight javascript"><figcaption><span>grunt.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// The module to be exported.</span></span><br><span class="line"><span class="keyword">var</span> grunt = <span class="built_in">module</span>.exports = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Expose internal grunt libs.</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">gRequire</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> grunt[name] = <span class="built_in">require</span>(<span class="string">'./grunt/'</span> + name);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> util = gRequire(<span class="string">'util'</span>);</span><br><span class="line">gRequire(<span class="string">'file'</span>);</span><br><span class="line"><span class="keyword">var</span> option = gRequire(<span class="string">'option'</span>);</span><br><span class="line"><span class="keyword">var</span> config = gRequire(<span class="string">'config'</span>);</span><br><span class="line"><span class="keyword">var</span> task = gRequire(<span class="string">'task'</span>);</span><br><span class="line">gRequire(<span class="string">'cli'</span>);</span><br><span class="line">..</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>node_modules/grunt/lib/grunt/tasks.js</p>
+</blockquote>
+<figure class="highlight javascript"><figcaption><span>grunt/tasks.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> grunt = <span class="built_in">require</span>(<span class="string">'../grunt'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Get any local Gruntfile or tasks that might exist. Use --gruntfile override</span></span><br><span class="line"><span class="comment">// if specified, otherwise search the current directory or any parent.</span></span><br><span class="line"><span class="keyword">if</span> (gruntfile &amp;&amp; grunt.file.exists(gruntfile)) &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// Load local tasks, if the file exists.</span></span><br><span class="line">    loadTask(gruntfile);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line"><span class="comment">// Load tasks and handlers from a given tasks file.</span></span><br><span class="line"><span class="keyword">var</span> loadTaskStack = [];</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadTask</span>(<span class="params">filepath</span>) </span>&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="keyword">var</span> fn;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// Load taskfile.</span></span><br><span class="line">    fn = <span class="built_in">require</span>(path.resolve(filepath));</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> fn === <span class="string">'function'</span>) &#123;</span><br><span class="line">      fn.call(grunt, grunt);</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-Grunt-配置"><a href="#2-Grunt-配置" class="headerlink" title="2. Grunt 配置"></a>2. Grunt 配置</h2><p>看到上面的fn.call(grunt, grunt)后，我们就可以回头来看看我们的Gruntfile.js。<br><figure class="highlight js"><figcaption><span>gruntfile.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">grunt</span>) </span>&#123; <span class="comment">// ** wrapper function to define nodejs module**</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// Project configuration.</span></span><br><span class="line">  grunt.initConfig(&#123;   <span class="comment">//grunt.config</span></span><br><span class="line">    pkg: grunt.file.readJSON(<span class="string">'package.json'</span>), <span class="comment">//grunt.file</span></span><br><span class="line">    uglify: &#123; <span class="comment">// task name</span></span><br><span class="line">      options: &#123;</span><br><span class="line">        banner: <span class="string">'banner'</span></span><br><span class="line">      &#125;,</span><br><span class="line">      build: &#123; <span class="comment">// target</span></span><br><span class="line">        src: <span class="string">'src/&lt;%= pkg.name %&gt;.js'</span>, </span><br><span class="line">        dest: <span class="string">'build/&lt;%= pkg.name %&gt;.min.js'</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Load the plugin that provides the "uglify" task.</span></span><br><span class="line">  grunt.loadNpmTasks(<span class="string">'grunt-contrib-uglify'</span>); <span class="comment">//grunt.tasks</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// Default task(s).</span></span><br><span class="line">  grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'uglify'</span>]); <span class="comment">// grunt.tasks</span></span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-1-Grunt-initConfig"><a href="#2-1-Grunt-initConfig" class="headerlink" title="2.1 Grunt.initConfig"></a>2.1 Grunt.initConfig</h3><p>初始化项目任务的配置信息，grunt.initConfig(configObject) == grunt.config.init(configObject)。这个configObject可以用grunt.config获得。</p>
+<h3 id="2-2-lt-gt-Template-String"><a href="#2-2-lt-gt-Template-String" class="headerlink" title="2.2 &lt;%%&gt; Template String"></a>2.2 &lt;%%&gt; Template String</h3><p>在配置各项任务时，其实发现有很多重复信息，包括上例中使用同样的pkg.name作为的源文件前缀。在Grunt配置文件中，&lt;% %&gt; 中的模板字符串可以使用文件任何一个配置属性包括文件路径，包信息、源/目标文件列表及路径等，从而减少不必要的重复配置，并使得相同的配置保持一致。</p>
+<h3 id="2-3-Tasks-and-Targets"><a href="#2-3-Tasks-and-Targets" class="headerlink" title="2.3 Tasks and Targets"></a>2.3 Tasks and Targets</h3><p>任务包括单一任务和多目标任务。每个任务的配置对象可包括任务名称及不同的目标。任务和目标是类继承的关系，每个任务和每个目标都可以不同的配置项，而子目标的配置项会复写任务级别的配置项。</p>
+<h3 id="2-4-Options"><a href="#2-4-Options" class="headerlink" title="2.4 Options"></a>2.4 Options</h3><p>每个任务配置对象都有一个缺省的options选项，options选项用来复写依赖的类库缺省的属性，比如uglify任务的option可以复写uglify2类库的banner配置。</p>
+<h3 id="2-5-Files"><a href="#2-5-Files" class="headerlink" title="2.5 Files"></a>2.5 Files</h3><p>Grunt的任务大多都是基于文件操作，比如uglify是将文件压缩，concat是将一组文件合并为一个文件，jshint是对一组文件进行代码检查，所以任务的文件配置选项大多是针对源目标文件路径的定义以及文件的搜索匹配规则。Grunt在这一方面提供了强有力的支持，支持src-dest选项，有Compact、文件对象和文件数组三种方式。</p>
+<h4 id="2-5-1-Compcat-Format"><a href="#2-5-1-Compcat-Format" class="headerlink" title="2.5.1 Compcat Format"></a>2.5.1 Compcat Format</h4><p>顾名思义简化版，是为了简单的只读任务使用，可以出现单个src-dest文件映射配置，比如jshint，只需定义source文件即可。<br><figure class="highlight js"><figcaption><span>gruntfile.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">grunt.initConfig(&#123;</span><br><span class="line">  jshint: &#123;</span><br><span class="line">    foo: &#123;</span><br><span class="line">      src: [<span class="string">'src/aa.js'</span>, <span class="string">'src/aaa.js'</span>]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-5-2-Files-Object-Format-amp-Files-Array-Format"><a href="#2-5-2-Files-Object-Format-amp-Files-Array-Format" class="headerlink" title="2.5.2 Files Object Format &amp; Files Array Format"></a>2.5.2 Files Object Format &amp; Files Array Format</h4><p>这两种方式都指支持多个src-dest文件映射关系，在文件对象配置方式下，src/dest的文件信息是一个对象，对象的属性名称是目标文件，值是源文件；而 在文件数组配置方式下，src/dest的文件信息是一个数组，数组每个元素是一个对象，表示对应的src-dest映射；从而在第二种方式下课以应用诸如filter等其它属性。</p>
+<figure class="highlight javascript"><figcaption><span>cli.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">grunt.initConfig(&#123;</span><br><span class="line">  concat: &#123;</span><br><span class="line">    foo: &#123;</span><br><span class="line">      files: &#123;</span><br><span class="line">        <span class="string">'dest/a.js'</span>: [<span class="string">'src/aa.js'</span>, <span class="string">'src/aaa.js'</span>],</span><br><span class="line">        <span class="string">'dest/a1.js'</span>: [<span class="string">'src/aa1.js'</span>, <span class="string">'src/aaa1.js'</span>],</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    bar: &#123;</span><br><span class="line">      files: [</span><br><span class="line">        &#123;<span class="attr">src</span>: [<span class="string">'src/bb.js'</span>, <span class="string">'src/bbb.js'</span>], <span class="attr">dest</span>: <span class="string">'dest/b/'</span>, <span class="attr">nonull</span>: <span class="literal">true</span>&#125;,</span><br><span class="line">        &#123;<span class="attr">src</span>: [<span class="string">'src/bb1.js'</span>, <span class="string">'src/bbb1.js'</span>], <span class="attr">dest</span>: <span class="string">'dest/b1/'</span>, <span class="attr">filter</span>: <span class="string">'isFile'</span>&#125;,</span><br><span class="line">      ],,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="2-6-Building-files-dynamically"><a href="#2-6-Building-files-dynamically" class="headerlink" title="2.6 Building files dynamically"></a>2.6 Building files dynamically</h3><p>在一些源文件列表搜索的复杂场景下，Grunt提供了一些额外的属性来更优雅的完成，这些属性需要打开expand = true开关。</p>
+<ul>
+<li><p>cwd</p>
+<p>  如果定义了cwd，那么所有的src都是相对于此路径（但是不包含）。</p>
+</li>
+<li><p>ext</p>
+<p>  在生成目标文件时替换后缀。</p>
+</li>
+<li><p>flatten</p>
+<p>  去除目标文件中的路径信息。</p>
+</li>
+<li><p>rename</p>
+<p>  在扩展替换ext和flatten执行后，进行源文件的重命名并返回新的目标文件名，可能出现多个重名情况，也就会出现多个源文件。</p>
+</li>
+</ul>
+<h3 id="2-7-Glob"><a href="#2-7-Glob" class="headerlink" title="2.7 Glob"></a>2.7 Glob</h3><p>这是当我看Gruntfile时最困惑的地方，{a,b}\/*.js。查了下文档，发现原来是来自nodejs内置的<a href="https://github.com/isaacs/node-glob" target="_blank" rel="noopener">node-glob库</a>支持，将几个和其它正则不一样的列在下面。</p>
+<ul>
+<li><p>{} 逗号分隔的或操作</p>
+<p>  {a,b}*.js ==&gt; a.js || b.js</p>
+</li>
+<li><p>** 所有包含路径符/</p>
+<p>  lib/*<em>/</em>.js ==&gt; lib/a.js and lib/sub/a.js</p>
+</li>
+<li><p>! 排除</p>
+<p>  !a*.js =&gt; 不以a字母开头的文件。</p>
+</li>
+</ul>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li>Grunt官方文档<a href="http://gruntjs.com/configuring-tasks" target="_blank" rel="noopener">任务配置</a></li>
+<li>Grunt <a href="http://gruntjs.com/api/grunt" target="_blank" rel="noopener">API</a></li>
+<li>Grunt <a href="https://github.com/gruntjs/grunt/tree/master/lib" target="_blank" rel="noopener">源代码</a></li>
+</ol>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2013/10/10/grunt-api/" data-id="cjlbz54ty000fss6sal5ysxmv" class="article-share-link"><i class="fas fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2013/10/10/grunt-api/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2013/10/10/grunt-api/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2013/10/16/jshint-doc/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    JSHint在线文档翻译（一）：基本介绍
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2013/10/07/grunt-minify/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">玩转Grunt（一）: Minification</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/cxo-guide-microservices/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://lh4.googleusercontent.com/A7tEGUUzYq2LAC45i3e_hKuN7X3JKJqUPxQnk4K523ZSaFzvC2dudPXWL7w7yRJY07gKbl2xwc8ubjC4vCuZKH2dFWcJtoTnN4bAxjy4Gvm9GRHa896njBSnZLuexDXc_diTd-9h)" alt="[翻译] 给CxO的微服务指南" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/cxo-guide-microservices/" class="title">[翻译] 给CxO的微服务指南</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:11:42.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/abilities/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://upload-images.jianshu.io/upload_images/1825822-32344c7ba682ad9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)" alt="你需要了解的那些Abilities(一)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/abilities/" class="title">你需要了解的那些Abilities(一)</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:08:14.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/token/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/car.png)" alt="谁动了我的Token" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/05/25/token/" class="title">谁动了我的Token</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T07:03:47.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/insights/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/insights.jpeg)" alt="如何培养技术洞见力" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/05/25/insights/" class="title">如何培养技术洞见力</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T00:45:32.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/02/01/refactoring/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/refactoring.png)" alt="重构的七宗罪" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/02/01/refactoring/" class="title">重构的七宗罪</a></p>
+                            <p class="item-date"><time datetime="2016-02-01T06:59:00.000Z" itemprop="datePublished">2016-02-01</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/coding/">coding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/thought/">thought</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/works/">works</a><span class="category-list-count">20</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture/">architecture</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture-microservices/">architecture,microservices</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/architecture/" style="font-size: 10px;">architecture</a> <a href="/tags/architecture-microservices/" style="font-size: 10px;">architecture,microservices</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Xianjing Zhuo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'http://yoursite.com/2013/10/10/grunt-api/';
+        
+        this.page.identifier = 'grunt-api';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'xianjing' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>升级.NET Framework不得不说的事 (一)：What&#39;s it | Xianjing&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="In computer programming, a software framework is an abstraction in which software providing generic functionality can be selectively changed by additional user-written code, thus providing applicatio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="升级.NET Framework不得不说的事 (一)：What&#39;s it">
+<meta property="og:url" content="http://yoursite.com/2014/04/14/understanding-net-framework/index.html">
+<meta property="og:site_name" content="Xianjing&#39;s blog">
+<meta property="og:description" content="In computer programming, a software framework is an abstraction in which software providing generic functionality can be selectively changed by additional user-written code, thus providing applicatio">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/dotnet-framework.gif">
+<meta property="og:image" content="http://yoursite.com/images/CLR.compile.png">
+<meta property="og:updated_time" content="2017-08-11T09:47:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="升级.NET Framework不得不说的事 (一)：What&#39;s it">
+<meta name="twitter:description" content="In computer programming, a software framework is an abstraction in which software providing generic functionality can be selectively changed by additional user-written code, thus providing applicatio">
+<meta name="twitter:image" content="http://yoursite.com/images/dotnet-framework.gif">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Xianjing&#39;s blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpeg" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpeg" />
+            <h2 id="name">Xianjing</h2>
+            <h3 id="title">learner</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/xianjing">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                36
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                2
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/xianjing" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-understanding-net-framework" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            升级.NET Framework不得不说的事 (一)：What&#39;s it
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2014/04/14/understanding-net-framework/">
+            <time datetime="2014-04-14T11:20:00.000Z" itemprop="datePublished">2014-04-14</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/works/">works</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <blockquote>
+<p>In computer programming, a software framework is an abstraction in which software providing generic functionality can be selectively changed by additional user-written code, thus providing application-specific software.</p>
+</blockquote>
+<h2 id="1-The-definition-of-Framework"><a href="#1-The-definition-of-Framework" class="headerlink" title="1. The definition of Framework"></a>1. The definition of Framework</h2><p>作为一个框架，我认为首先它是能够作为Libarary提供一些公共开发库，供开发人员使用；第二，框架是为开发人员构建应用程序服务的。应用程序代码植入框架中，在运行时被框架代码所调用; 这是识别框架和类库的最大不同。</p>
+<h2 id="2-Why-NET-Framework"><a href="#2-Why-NET-Framework" class="headerlink" title="2. Why .NET Framework"></a>2. Why .NET Framework</h2><p>在20世纪末期，微软开发平台下有C、C++等语言，然而它们的开发和运行部署各不一样。为了简化不同语言开发的复杂性、提高开发效率、统一运行部署的问题，并对当下流行的Network一词的响应，微软提出了基于.NET的下一代技术解决方案。NET这个词更多的来自于下一代网络服务(Next Generation Web Service)或者Network of all technologies，从这个词里我们可以看到当时微软对于.NET的雄心壮志。</p>
+<blockquote>
+<p>“.NET is a brilliant strategy that enables Microsoft to define the next shift in the software business.”</p>
+</blockquote>
+<blockquote>
+<p>“Gartner believes Microsoft is now providing more vision and influence regarding this shift than any other vendor.”<br>—Gartner Group</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="3-What’s-NET-Framework"><a href="#3-What’s-NET-Framework" class="headerlink" title="3. What’s .NET Framework"></a>3. What’s .NET Framework</h2><p><img src="/images/dotnet-framework.gif" alt="">{:height=”300px” width=”400px”}</p>
+<blockquote>
+<p>.Net Framework is the collection of Assemblies to support the .Net application development and .Net application execution, it is language neutral and more than that.</p>
+</blockquote>
+<p>.NET Framework（简称.NET）是微软开发的一个用来构建基于Windows应用程序的统一平台。它包括公共语言运行时 (CLR) 和 .NET Framework 类库。 2000年末发布了第一个版本，2013年发布4.5.1,至今已有十多年的历史。</p>
+<h3 id="3-1公共语言运行时-CLR"><a href="#3-1公共语言运行时-CLR" class="headerlink" title="3.1公共语言运行时(CLR)"></a>3.1公共语言运行时(CLR)</h3><blockquote>
+<p>It is a virtual machine component of the Microsoft’s .NET framework and is responsible for managing the execution of .NET programs</p>
+</blockquote>
+<p>CLR即公共语言运行时，与JAVA世界里的JVM对等，它的主要职责是加载定位和管理.NET的运行程序，同时还承担管理内存、实时编译(JIT Compiler)、安全检查、垃圾回收、异常处理、线程等职责。这里的公共语言一词指的是CLR是面向微软中间语言(MSIL)，而不是面向某一门具体的开发语言,比如C#、C等，从而保证了它能够实现统一运行环境。</p>
+<h4 id="3-1-1-程序集＝清单＋元数据＋中间语言"><a href="#3-1-1-程序集＝清单＋元数据＋中间语言" class="headerlink" title="3.1.1 程序集＝清单＋元数据＋中间语言"></a>3.1.1 程序集＝清单＋元数据＋中间语言</h4><p>程序集或是exe可执行文件或是dll文件，程序集里面包含清单(Manifest)、元数据(Metadata)和中间语言(MSIL)。</p>
+<p>清单相当于一个目录，描述了程序集本身的信息，例如程序集标识（名称、版本、文化）、程序集包含的资源（Resources）、组成程序集的文件等。</p>
+<p>元数据包括程序集包含的模块、类型、类型的成员、类型和类型成员的可见性等。元数据并不包含类型的实现，有点类似于C++中的.h头文件。如果说清单描述了程序集自身的信息，那么元数据则描述了程序集所包含的内容。运行时查看元数据的过程称为反射。</p>
+<p>MSIL中间语言是与CPU无关的机器语言，以MSIL为编码的程序集都可以在CLR中运行，这就使得编程语言以及编译器和运行环境分离开来。编译器只要将源代码编译成面向中间语言的就可以了。在CLR中可以支持这些编译器所创建出来的程序集或者程序集组合，这些也称为托管代码。如果用设计模式来理解中间语言的话，更像是一个适配不同开发语言的Adapter层。</p>
+<p>为了帮助开发者查看程序集的信息，微软提供了IL DASM（IL Disassembler，IL反汇编程序）工具。如果安装了Visual Studio，IL DASM将会随同Visual Studio一起安装，包含在 Microsoft Windows SDK Tools中。</p>
+<h4 id="3-1-2-公共类型系统-CTS-公共语言规法-CLS"><a href="#3-1-2-公共类型系统-CTS-公共语言规法-CLS" class="headerlink" title="3.1.2 公共类型系统(CTS)/公共语言规法(CLS)"></a>3.1.2 公共类型系统(CTS)/公共语言规法(CLS)</h4><p>CTS和CLS是CLR的核心。CTS是一种类型系统和语言规范，它能够确保CLR能够识别和处理的类型，所有.NET开发语言中的类型，无论时VS.NET类型还是C#.NET类型最终都会被编译成CLR能够识别的CTS类型，因此CTS是.NET平台类型的抽象，满足这套规则的语言就称为面向.NET框架的开发语言，从而能够由编译器生成中间语言代码。例如VB.NET中的integer类型和C#中的int类型都编译成CTS的System.Int32类型,它们只不过是微软开发的一套符合CTS规范的语言，还存在Delphi.NET等其它符合CTS规范的语言，也可以将自身的类型编译成符合CTS规范的类型，从而能够在CLR中运行。如果某种语言编写的程序能够在CLR上运行，并不能说明这种语言完全符合CTS的规范。例如使用C++编写的代码，部分代码并不符合CTS规范，在编译时把这部分不符合CTS的代码会被编译成原始代码本地CPU指令而非中间代码。</p>
+<p>.NET的运行环境是无关开发语言的，不仅可以运行C#构建的程序集，而且可以运行VB.NET构建的程序集。那么运行在统一环境下的不同语言构建的程序集就有可能产生互相调用的需求，比如C#编写程序时可以直接引用并使用VB.NET编写的类库。为了达到这样的交互，制定出一个新的规范：CLS规范来定义一些常见的、大多数语言都共有的语言特性，只要这些语言实现的公开部分能够满足这些规范，就能够被其他语言的程序集所使用。这个规范就叫做CLS （Common Language Specification，公共语言规范）。CLS是CTS的一个子集，所有.NET语言都应该遵循此规则才能创建与其他语言可互操作的应用程序，它是在.NET平台上运行语言的最小规范。在.NET框架本身提供的所有类库（并非所有）都是与CLS兼容的，在查看MSDN文档时，不兼容的类和方法都被特别标记为不兼容，例如C#中的System.UInt32就标记为”此API不兼容CLS。兼容 CLS的替代API为 Int64。“，这说明并不是所有的语言(例如VB.NET或J#)都支持无符号的数据类型，但这种数据类型与CLS不兼容的。</p>
+<h4 id="3-1-3-编译"><a href="#3-1-3-编译" class="headerlink" title="3.1.3 编译"></a>3.1.3 编译</h4><p><img src="/images/CLR.compile.png" alt="">{:height=”300px” width=”400px”}</p>
+<p>上图摘自Reference[7].一段开发代码能够在CLR中运行有两个阶段的编译，一是静态代码编译，这时需要CLS编译器负责将源代码编译成程序集，写入元数据和中间语言信息。二是运行时，由CLR中实时编译器（JIT Compiler）要将这些程序集中的中间语言根据元数据信息编译成机器指令。它只在需要执行程序集的时候才会进行，所以是Just In Time编译器。</p>
+<h4 id="3-1-4-托管"><a href="#3-1-4-托管" class="headerlink" title="3.1.4 托管"></a>3.1.4 托管</h4><p>托管意味着程序集不能够独立运行，须委托给CLR进行运行和管理，并由CLR处理内存、线程等其他事项。托管模块和托管代码（即MSIL代码）就是这个意思。而非托管代码，即可以独立于CLR运行的代码，比如C的运行程序集，这些代码则需要自己处理内存等其它事项。</p>
+<h4 id="3-1-5-CLR与操作系统，"><a href="#3-1-5-CLR与操作系统，" class="headerlink" title="3.1.5 CLR与操作系统，"></a>3.1.5 CLR与操作系统，</h4><p>CLR运行会占用在操作系统的一个进程，对于多个托管的应用程序集，CLR中的AppDomain来负责管理，每个托管的应用程序有自己的独立地址空间，可以在一个AppDomain中执行。</p>
+<h4 id="3-1-6-CLR加载程序集"><a href="#3-1-6-CLR加载程序集" class="headerlink" title="3.1.6 CLR加载程序集"></a>3.1.6 CLR加载程序集</h4><p>程序集分为两类exe文件或者dll文件。exe文件运行在操作系统的进程中，所以当启动exe时，Windows操作系统会根据exe文件的CLR头信息进行判断是否32位或64位，然后加载响应的CLR环境。对于dll则是不同的，因为dll的加载时在CLR中发生的，那么这个时候CLR的环境已经确定，CLR会根据dll的元数据信息进行加载，如果出现环境不匹配的情况就会由CLR进行异常处理。</p>
+<h3 id="3-2-基本类库"><a href="#3-2-基本类库" class="headerlink" title="3.2 基本类库"></a>3.2 基本类库</h3><h4 id="3-2-1-基础类库（Base-Class-Library）"><a href="#3-2-1-基础类库（Base-Class-Library）" class="headerlink" title="3.2.1 基础类库（Base Class Library）"></a>3.2.1 基础类库（Base Class Library）</h4><p>BCL是公共编程框架，称为基类库，主要包括：执行网络操作，执行I/O操作，安全管理，文本操作，数据库操作，XML操作，与事件日志交互，跟踪和一些诊断操作，提供基础支持。</p>
+<h4 id="3-2-2-框架类库（Framework-Class-Library）"><a href="#3-2-2-框架类库（Framework-Class-Library）" class="headerlink" title="3.2.2 框架类库（Framework Class Library）"></a>3.2.2 框架类库（Framework Class Library）</h4><p>FCL提供了大粒度的编程框架，它是针对不同应用设计的框架 ，FCL大部分实现都基于BCL，如ASP.NET、MVC、WCF和WPF等等，提供了针对不同层面的编程框架 。</p>
+<h4 id="3-2-3-ADO-NET"><a href="#3-2-3-ADO-NET" class="headerlink" title="3.2.3 ADO.NET"></a>3.2.3 ADO.NET</h4><p>指数据和XML处理的库。</p>
+<h2 id="4-公共语言基础-Common-Language-Infrastructure）"><a href="#4-公共语言基础-Common-Language-Infrastructure）" class="headerlink" title="4. 公共语言基础(Common Language Infrastructure）"></a>4. 公共语言基础(Common Language Infrastructure）</h2><p>.net Framework是CLI在Windows操作平台的一个具体实现，Mono是CLI的另一个实现，目标是将.NET框架多平台化，使其可以运行在各种平台上，包括Mac OS、Linux等。</p>
+<h2 id="5-概念解释"><a href="#5-概念解释" class="headerlink" title="5. 概念解释"></a>5. 概念解释</h2><table>
+<thead>
+<tr>
+<th><strong>概念</strong></th>
+<th style="text-align:left"><strong> 描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CLR</td>
+<td style="text-align:left">Common Language Runtime, it is almost same as JVM</td>
+</tr>
+<tr>
+<td>CTS</td>
+<td style="text-align:left">Common Type System</td>
+</tr>
+<tr>
+<td>CLS</td>
+<td style="text-align:left">Common Lanaguage Specification</td>
+</tr>
+<tr>
+<td>MSIL</td>
+<td style="text-align:left">Intermediate Language，similar as .class file(byte code) in java, but IL is more powerful. It is CLR’s language.</td>
+</tr>
+<tr>
+<td>Assembly</td>
+<td style="text-align:left">DLL or exe file + Metadata, it is self-descibed with meta information embedded inside and IL. There are two types of assembly, weakly named assembly and strongly named assembly. The difference is strongly named assembly will be signed to avoid modification by hackers. It does have four aspects, Name, Version, signature, inside meta to identify it is the original assembly.</td>
+</tr>
+<tr>
+<td>JIT compiler</td>
+<td style="text-align:left">compile a method’s IL code into native CPU instructions</td>
+</tr>
+<tr>
+<td>Managed Module</td>
+<td style="text-align:left">this module will be managed by CLR not itself</td>
+</tr>
+<tr>
+<td>Un-managed Module/Assembly</td>
+<td style="text-align:left">this module or assembly will run by themselves, such as exe file compiled by previous compiler/com component that could access operating system directly</td>
+</tr>
+<tr>
+<td>Global Assembly Cache</td>
+<td style="text-align:left">a place that shared assembly is installed</td>
+</tr>
+</tbody>
+</table>
+<h2 id="6-Reference"><a href="#6-Reference" class="headerlink" title="6. Reference"></a>6. Reference</h2><ol>
+<li><p><a href="http://en.wikipedia.org/wiki/List_of_.NET_Framework_versions" target="_blank" rel="noopener">List_of_.NET_Framework_versions</a></p>
+</li>
+<li><p><a href="http://msdn.microsoft.com/zh-cn/library/hh425099.aspx" target="_blank" rel="noopener">.NET Framework 入门</a></p>
+</li>
+<li><p><a href="http://www.codeproject.com/Articles/708690/Why-NET-is-NET" target="_blank" rel="noopener">Why-NET-is-NET</a></p>
+</li>
+<li><p><a href="http://www.luisleo.net/the-atom-of-the-net-framework/" target="_blank" rel="noopener">the-atom-of-the-net-framework</a></p>
+</li>
+<li><p><a href="http://www.tracefact.net/CLR-and-Framework/DotNet-Framework.aspx" target="_blank" rel="noopener">DotNet-Framework</a></p>
+</li>
+<li><p><a href="http://www.xcode.me/?p=250" target="_blank" rel="noopener">关于CLR、CIL、CTS、CLS、CLI、BCL和FCL</a></p>
+</li>
+</ol>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2014/04/14/understanding-net-framework/" data-id="cjlbz54us0018ss6shfmquspd" class="article-share-link"><i class="fas fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2014/04/14/understanding-net-framework/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2014/04/14/understanding-net-framework/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2014/04/14/why-4-dot-5/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    升级.NET Framework不得不说的事 (二)：Why 4.5.1
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2014/03/26/break-the-wall-of-your-mindset/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">拆掉思维的墙，“拥抱客户” - 当开发人员站到客户面前</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/cxo-guide-microservices/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://lh4.googleusercontent.com/A7tEGUUzYq2LAC45i3e_hKuN7X3JKJqUPxQnk4K523ZSaFzvC2dudPXWL7w7yRJY07gKbl2xwc8ubjC4vCuZKH2dFWcJtoTnN4bAxjy4Gvm9GRHa896njBSnZLuexDXc_diTd-9h)" alt="[翻译] 给CxO的微服务指南" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/cxo-guide-microservices/" class="title">[翻译] 给CxO的微服务指南</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:11:42.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/abilities/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://upload-images.jianshu.io/upload_images/1825822-32344c7ba682ad9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)" alt="你需要了解的那些Abilities(一)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/abilities/" class="title">你需要了解的那些Abilities(一)</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:08:14.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/token/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/car.png)" alt="谁动了我的Token" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/05/25/token/" class="title">谁动了我的Token</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T07:03:47.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/insights/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/insights.jpeg)" alt="如何培养技术洞见力" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/05/25/insights/" class="title">如何培养技术洞见力</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T00:45:32.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/02/01/refactoring/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/refactoring.png)" alt="重构的七宗罪" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/02/01/refactoring/" class="title">重构的七宗罪</a></p>
+                            <p class="item-date"><time datetime="2016-02-01T06:59:00.000Z" itemprop="datePublished">2016-02-01</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/coding/">coding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/thought/">thought</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/works/">works</a><span class="category-list-count">20</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture/">architecture</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture-microservices/">architecture,microservices</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/architecture/" style="font-size: 10px;">architecture</a> <a href="/tags/architecture-microservices/" style="font-size: 10px;">architecture,microservices</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Xianjing Zhuo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'http://yoursite.com/2014/04/14/understanding-net-framework/';
+        
+        this.page.identifier = 'understanding-net-framework';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'xianjing' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

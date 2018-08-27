@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>玩转Grunt（一）: Minification | Xianjing&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="1. Preface在上一期Grunt初探一文中提到，Grunt将Javascript项目的构建任务（合并压缩、单元测试、测试覆盖率、静态代码检查等）自动化，大大优化了前端开发的工作流。今天让我们来看一看Grunt是如何帮助我们在持续部署的环境下解决Minification的相关问题。 2. Minification在开始Grunt集成之前，我们来看一下什么是Minification。Minifi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="玩转Grunt（一）: Minification">
+<meta property="og:url" content="http://yoursite.com/2013/10/07/grunt-minify/index.html">
+<meta property="og:site_name" content="Xianjing&#39;s blog">
+<meta property="og:description" content="1. Preface在上一期Grunt初探一文中提到，Grunt将Javascript项目的构建任务（合并压缩、单元测试、测试覆盖率、静态代码检查等）自动化，大大优化了前端开发的工作流。今天让我们来看一看Grunt是如何帮助我们在持续部署的环境下解决Minification的相关问题。 2. Minification在开始Grunt集成之前，我们来看一下什么是Minification。Minifi">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/useminPrepare.png">
+<meta property="og:image" content="http://yoursite.com/images/final.png">
+<meta property="og:updated_time" content="2017-08-11T09:47:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="玩转Grunt（一）: Minification">
+<meta name="twitter:description" content="1. Preface在上一期Grunt初探一文中提到，Grunt将Javascript项目的构建任务（合并压缩、单元测试、测试覆盖率、静态代码检查等）自动化，大大优化了前端开发的工作流。今天让我们来看一看Grunt是如何帮助我们在持续部署的环境下解决Minification的相关问题。 2. Minification在开始Grunt集成之前，我们来看一下什么是Minification。Minifi">
+<meta name="twitter:image" content="http://yoursite.com/images/useminPrepare.png">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Xianjing&#39;s blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpeg" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpeg" />
+            <h2 id="name">Xianjing</h2>
+            <h3 id="title">learner</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/xianjing">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                36
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                2
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/xianjing" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-grunt-minify" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            玩转Grunt（一）: Minification
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2013/10/07/grunt-minify/">
+            <time datetime="2013-10-07T04:19:00.000Z" itemprop="datePublished">2013-10-07</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/works/">works</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="1-Preface"><a href="#1-Preface" class="headerlink" title="1. Preface"></a>1. Preface</h2><p>在上一期<a href="http://xianjing.github.io/blog/2013/05/16/grunt/" target="_blank" rel="noopener">Grunt初探</a>一文中提到，Grunt将Javascript项目的构建任务（合并压缩、单元测试、测试覆盖率、静态代码检查等）自动化，大大优化了前端开发的工作流。今天让我们来看一看Grunt是如何帮助我们在持续部署的环境下解决Minification的相关问题。</p>
+<h2 id="2-Minification"><a href="#2-Minification" class="headerlink" title="2. Minification"></a>2. Minification</h2><p>在开始Grunt集成之前，我们来看一下什么是Minification。Minification简单的说就是为了减小前端js/css文件大小，通过去掉多余的注释和换行缩进等，使得下载和运行更快，提高用户体验。</p>
+<h2 id="2-1-When-minify-under-continous-deployment"><a href="#2-1-When-minify-under-continous-deployment" class="headerlink" title="2.1. When minify under continous deployment"></a>2.1. When minify under continous deployment</h2><p>那么Minification需要解决哪些问题呢？<br><a id="more"></a></p>
+<h3 id="2-1-1-It-should-create-a-minified-file"><a href="#2-1-1-It-should-create-a-minified-file" class="headerlink" title="2.1.1 It should create a minified file"></a>2.1.1 It should create a minified file</h3><p>众所周知，为解决前端Javascript、css加载的性能问题，前端代码在部署到产品环境时通常会进行Minify，也即合并压缩，将多个文件合并成一个文件，并对代码进行优化处理。那么我们所要解决的第一个问题是， Grunt需要能够对指定的一组Javascript或css文件(下面将以javascript文件为例)进行压缩处理。</p>
+<figure class="highlight javascript"><figcaption><span>index.html</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// to be minified javascript files =&gt; app.min.js</span></span><br><span class="line">&lt;script src=<span class="string">"js/app.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;script src=<span class="string">"js/services.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;script src=<span class="string">"js/controllers.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;script src=<span class="string">"js/filters.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;script src=<span class="string">"js/directives.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="21-2-It-should-replace-the-html-fragement-with-minified-file"><a href="#21-2-It-should-replace-the-html-fragement-with-minified-file" class="headerlink" title="21.2 It should replace the html fragement with minified file"></a>21.2 It should replace the html fragement with minified file</h3><p>第二，在前端项目中通常javascript文件被包含在一段html模版页面中，压缩完成后需要将压缩完成的文件替换，在没有Grunt之前往往需要人工替换或者写各式各样的脚本来进行文件操作，没有一致的处理脚本。那么我们要解决的第二个问题是，Grunt需要能够将被压缩的javascript目标文件用统一的API替换为压缩后的文件。</p>
+<figure class="highlight javascript"><figcaption><span>explore metadata</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;html lang=<span class="string">"en"</span>&gt;</span><br><span class="line">…</span><br><span class="line">&lt;body&gt;</span><br><span class="line">….</span><br><span class="line"> <span class="comment">// replace all javascript files by app.min.js</span></span><br><span class="line"> &lt;script src=<span class="string">"js/app.min.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/body&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="2-1-3-It-should-not-impact-the-development-env"><a href="#2-1-3-It-should-not-impact-the-development-env" class="headerlink" title="2.1.3 It should not impact the development env"></a>2.1.3 It should not impact the development env</h3><p>也就是说开发环境中保持源代码与压缩后的代码同时存在，互不影响，开发人员可以持续在开发环境中开发调试部署。</p>
+<h3 id="2-1-4-It-should-be-fast"><a href="#2-1-4-It-should-be-fast" class="headerlink" title="2.1.4 It should be fast"></a>2.1.4 It should be fast</h3><h3 id="2-1-5-It-should-be-able-to-debug"><a href="#2-1-5-It-should-be-able-to-debug" class="headerlink" title="2.1.5 It should be able to debug"></a>2.1.5 It should be able to debug</h3><h2 id="2-2-Minification-tools"><a href="#2-2-Minification-tools" class="headerlink" title="2.2 Minification tools"></a>2.2 Minification tools</h2><p>提到Minification不得不说一下各种高端大气工具，包括Google的<a href="https://developers.google.com/closure/compiler/" target="_blank" rel="noopener">Closure Compiler</a>，<a href="http://lisperator.net/uglifyjs/" target="_blank" rel="noopener">Uglify</a>，<a href="http://yuilibrary.com/" target="_blank" rel="noopener">YUI Compressor</a>。在第一部分已经提到了Minification的目的就是减小文件大小，那么要实现一个Minification工具需要包含代码解析器，它需要理解代码语法；需要包含压缩规则，它需要对代码进行规则匹配；需要包含规则处理器，在代码满足一定规则时进行代码替换，并输出压缩结果。Minification工具的不同即体现在以上解析器、规则匹配以及处理算法。</p>
+<p>那么我们如何选取一个适合项目的Minification工具呢？ 结合我们所要达到的目标，压缩的正确性、压缩速度、压缩大小以及工具的易用性、可扩展性都在考量之内，其中前三条是重中之重。</p>
+<h3 id="2-2-1-压缩正确性"><a href="#2-2-1-压缩正确性" class="headerlink" title="2.2.1 压缩正确性"></a>2.2.1 压缩正确性</h3><p>Closure Compiler提供了两种压缩模式，simple和advance。这两种模式中都有一些对代码的限制，在simple方式下不能够处理with与eval；而advance，代码必须严格按照某些convention才能获取压缩上的性能优势，然而即使如此也会导致压缩后的代码出现破坏。</p>
+<p>Uglify2同样有一个可与Closure Compiler媲美的解析器，但没有对被压缩代码的严格限制，能够理解eval和with关键词。它能够产生以object组织的<a href="http://en.wikipedia.org/wiki/Abstract_syntax_tree" target="_blank" rel="noopener">AST</a>，其它的压缩操作均基于此AST，包括source map, scope analyzer, transform等，并且它有大量的测试代码保证了压缩结果的正确性。</p>
+<h3 id="2-2-2-压缩速度"><a href="#2-2-2-压缩速度" class="headerlink" title="2.2.2 压缩速度"></a>2.2.2 压缩速度</h3><p>基于Uglify提供的数据以及项目代码上的测试，Uglify的压缩速度要远远快于Closure Compiler，基本上是数量级提升。在需要快速反馈持续部署的环境下，不得不承认这个优点很吸引人。</p>
+<h3 id="2-2-3-压缩大小"><a href="#2-2-3-压缩大小" class="headerlink" title="2.2.3 压缩大小"></a>2.2.3 压缩大小</h3><p>Uglify2在压缩字节上并不占优势，然而在Gzip之后是具有可比性的。</p>
+<h3 id="2-2-4-易用性"><a href="#2-2-4-易用性" class="headerlink" title="2.2.4 易用性"></a>2.2.4 易用性</h3><p>Closure Compiler和YUI Compressor都是基于Java的，而Uglify是基于JavaScript，在nodejs平台开发，使用npm进行包管理，这样前端项目的依赖管理开发平台趋向一致，降低维护成本。</p>
+<p>综上分析，我们选用了Uglify v2.</p>
+<h2 id="3-Make-it-by-Powerful-Grunt-plugins"><a href="#3-Make-it-by-Powerful-Grunt-plugins" class="headerlink" title="3. Make it by Powerful Grunt plugins"></a>3. Make it by Powerful Grunt plugins</h2><p>在选定了压缩工具后，我们今天的主角, Grunt Plugins，<a href="https://github.com/gruntjs/grunt-contrib-uglify" target="_blank" rel="noopener">Uglify</a>、<a href="https://github.com/yeoman/grunt-usemin" target="_blank" rel="noopener">useMin</a>、<a href="https://github.com/gruntjs/grunt-contrib-clean" target="_blank" rel="noopener">Clean</a>、<a href="https://github.com/gruntjs/grunt-contrib-copy" target="_blank" rel="noopener">Copy</a>和<a href="https://github.com/gruntjs/grunt-contrib-concat" target="_blank" rel="noopener">Concat</a>就开始一一出场了。</p>
+<h2 id="3-1-Project-Requirement"><a href="#3-1-Project-Requirement" class="headerlink" title="3.1 Project Requirement"></a>3.1 Project Requirement</h2><p>给定我们的项目文件index.html，包含一组javascript文件，如下<br><figure class="highlight javascript"><figcaption><span>index.html</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;html lang=<span class="string">"en"</span>&gt;</span><br><span class="line"> …</span><br><span class="line"> &lt;body&gt;</span><br><span class="line"> ….</span><br><span class="line">  &lt;script src=<span class="string">"js/app.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">  &lt;script src=<span class="string">"js/services.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">  &lt;script src=<span class="string">"js/controllers.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">  &lt;script src=<span class="string">"js/filters.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">  &lt;script src=<span class="string">"js/directives.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"> …</span><br><span class="line"> &lt;<span class="regexp">/body&gt;</span></span><br><span class="line"><span class="regexp"> &lt;/</span>html&gt;</span><br></pre></td></tr></table></figure></p>
+<p>需要将其中javascript自动压缩为一个文件，并替换。</p>
+<h2 id="3-2-Step1-Concat-files"><a href="#3-2-Step1-Concat-files" class="headerlink" title="3.2 Step1: Concat files"></a>3.2 Step1: Concat files</h2><p>使用插件Concat，目的将所有javascript文件合并成一个文件，具体配置参数参见<a href="https://github.com/gruntjs/grunt-contrib-concat" target="_blank" rel="noopener">文档</a>。</p>
+<figure class="highlight javascript"><figcaption><span>Gruntfile.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">grunt</span>) </span>&#123;</span><br><span class="line"><span class="meta">    'use strict'</span>;</span><br><span class="line">…</span><br><span class="line">grunt.initConfig(&#123;</span><br><span class="line"> concat:</span><br><span class="line"> &#123; <span class="string">'app/dest/app.all.js'</span>:</span><br><span class="line">  [ <span class="string">'app/dest/js/*.js'</span>]</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"> grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>);</span><br><span class="line">        </span><br><span class="line"> grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'concat'</span>]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="3-3-Step2-Minify-by-Uglify2"><a href="#3-3-Step2-Minify-by-Uglify2" class="headerlink" title="3.3 Step2: Minify by Uglify2"></a>3.3 Step2: Minify by Uglify2</h2><p>使用插件Uglify2，目的将第一步产生的文件压缩，具体配置参见<a href="https://github.com/gruntjs/grunt-contrib-uglify" target="_blank" rel="noopener">文档</a>，这里只采用了uglify的缺省配置。</p>
+<figure class="highlight javascript"><figcaption><span>Gruntfile.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">grunt</span>) </span>&#123;</span><br><span class="line"><span class="meta">    'use strict'</span>;</span><br><span class="line">…</span><br><span class="line">grunt.initConfig(&#123;</span><br><span class="line"> concat:</span><br><span class="line">  &#123; </span><br><span class="line">  	<span class="string">'app/dest/app.all.js'</span>:  [ <span class="string">'app/dest/js/*.js'</span>]</span><br><span class="line">  &#125;,</span><br><span class="line"> uglify:</span><br><span class="line"> &#123; </span><br><span class="line">	<span class="string">'app/dest/app.min.js'</span>: <span class="string">'app/dest/app.all.js'</span>,</span><br><span class="line">	options: &#123;</span><br><span class="line">		report: <span class="string">'min'</span></span><br><span class="line">	&#125;</span><br><span class="line"> &#125;</span><br><span class="line"> grunt.loadNpmTasks(<span class="string">'grunt-contrib-uglify'</span>);</span><br><span class="line"> grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>);</span><br><span class="line"> grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'concat'</span>, <span class="string">'uglify'</span>]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="3-4-Step3-Replace-references-to-minified-file"><a href="#3-4-Step3-Replace-references-to-minified-file" class="headerlink" title="3.4 Step3: Replace references to minified file"></a>3.4 Step3: Replace references to minified file</h2><p>使用插件usemin，目的将index页面中的javascript块用第二步产生的mini文件替换，具体配置参数参见<a href="https://github.com/yeoman/grunt-usemin" target="_blank" rel="noopener">文档</a>。</p>
+<p>在开始之前我们先来看看usemin插件，usemin是一个多任务插件，它包括两个任务，useminPrepare和usemin。</p>
+<p>useminPrepare提供了一个API，用来检测html页面中的脚本块，包括脚本文件的源路径，目的路径，从而更新后续需要使用到的Grunt任务的配置信息，i.e. concat，uglify，cssmin以及requirejs。useminPrepare只是分析文件，获取文件及路径信息，不更新内容。而usemin则进行文件引用替换，将源文件中的文件块替换为压缩文件。</p>
+<h3 id="3-4-1-useminPrepare"><a href="#3-4-1-useminPrepare" class="headerlink" title="3.4.1 useminPrepare"></a>3.4.1 useminPrepare</h3><figure class="highlight javascript"><figcaption><span>Gruntfile.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">grunt</span>) </span>&#123;</span><br><span class="line"><span class="meta">    'use strict'</span>;</span><br><span class="line">…</span><br><span class="line">grunt.initConfig(&#123;</span><br><span class="line">   useminPrepare : &#123;</span><br><span class="line">            html: [<span class="string">'&lt;%= pkgInfo.sourceDir %&gt;/index*.html'</span>], <span class="comment">//search target files</span></span><br><span class="line">            options: &#123;</span><br><span class="line">                dest: <span class="string">'&lt;%= pkgInfo.packageDir %&gt;'</span> <span class="comment">//output of concat/uglify,etc.</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"> grunt.loadNpmTasks(<span class="string">'grunt-usemin'</span>);</span><br><span class="line"> grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'useminPrepare'</span>]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>在命令行运行grunt，得到如下结果。</p>
+<p><img src="/images/useminPrepare.png" alt="image"></p>
+<p>可以看到useminPrepare已经帮助我们自动配置了concat，uglify针对的源文件以及目的文件的路径信息，相应的step1和step2中的配置就可以去掉了。一个修改后的完整版Gruntfile.js如下:<br><figure class="highlight javascript"><figcaption><span>Gruntfile.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">grunt</span>) </span>&#123;</span><br><span class="line"><span class="meta">    'use strict'</span>;</span><br><span class="line">…</span><br><span class="line">grunt.initConfig(&#123;</span><br><span class="line">   useminPrepare : &#123;</span><br><span class="line">            html: [<span class="string">'&lt;%= pkgInfo.sourceDir %&gt;/index*.html'</span>], <span class="comment">//search target files</span></span><br><span class="line">            options: &#123;</span><br><span class="line">                dest: <span class="string">'&lt;%= pkgInfo.packageDir %&gt;'</span> <span class="comment">//output of concat/uglify,etc.</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">   uglify: &#123;</span><br><span class="line">        options: &#123;</span><br><span class="line">			report: <span class="string">'min'</span></span><br><span class="line">		&#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>);</span><br><span class="line">   grunt.loadNpmTasks(<span class="string">'grunt-contrib-uglify'</span>);</span><br><span class="line">   grunt.loadNpmTasks(<span class="string">'grunt-usemin'</span>);</span><br><span class="line">   grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'useminPrepare'</span>, <span class="string">'concat'</span>, <span class="string">'uglify'</span>]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-4-2-usemin"><a href="#3-4-2-usemin" class="headerlink" title="3.4.2 usemin"></a>3.4.2 usemin</h3><p>压缩文件准备完成后，我们就进行最重要的文件引用替换部分。</p>
+<figure class="highlight javascript"><figcaption><span>Gruntfile.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> usemin:&#123;</span><br><span class="line">            html: [<span class="string">'&lt;%= pkgInfo.packageDir %&gt;/index*.html'</span>],</span><br><span class="line">            options: &#123;</span><br><span class="line">                dirs: [<span class="string">'&lt;%= pkgInfo.packageDir %&gt;'</span>]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'useminPrepare'</span>, <span class="string">'concat'</span>, <span class="string">'uglify'</span>, <span class="string">'usemin'</span>]);</span><br><span class="line">        </span><br></pre></td></tr></table></figure>
+<p>运行结果看看。</p>
+<p><img src="/images/final.png" alt="image"></p>
+<p>Yeah! 大功告成！index.html页面中的javascript代码块被成功替换。</p>
+<p>最终的Grunt文件参见我的Github项目<a href="https://github.com/xianjing/grunt-integration/blob/master/Gruntfile.js" target="_blank" rel="noopener">Grunt-Integration</a>，文件中多了clean与copy两个任务，那是干什么的呢，就留给诸位了。</p>
+<h3 id="3-5-不得不说的angularJS-Minification"><a href="#3-5-不得不说的angularJS-Minification" class="headerlink" title="3.5 不得不说的angularJS Minification"></a>3.5 不得不说的angularJS Minification</h3><p>在对angularJS项目进行minify的时候需要注意，angularJS 定义对象时需要使用string字符串方式注入，也就是</p>
+<figure class="highlight javascript"><figcaption><span>Gruntfile.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">angular.module(<span class="string">'myModuleName'</span>).controller(<span class="string">'MyCtrl'</span>, [<span class="string">'$scope'</span>,<span class="function"><span class="keyword">function</span> (<span class="params">$scope</span>) </span>&#123; <span class="comment">//注意$scope</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;]);</span><br></pre></td></tr></table></figure>
+<p>而不是</p>
+<figure class="highlight javascript"><figcaption><span>Gruntfile.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">angular.module(<span class="string">'myModuleName'</span>).controller(<span class="string">'MyCtrl'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">$scope</span>) </span>&#123; <span class="comment">//注意$scope</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/btford/grunt-ngmin" target="_blank" rel="noopener">ngmin</a>插件可以对其进行提前处理，将第二种方式转换为第一种，但我个人并不推荐使用ngmin。理由很简单，我认为团队需要在如何使用API问题上达成一致，由团队成员讨论不同方式的优点与缺点，并最终选择一种API使用方式，而不是多种并存。利用ngmin预处理是隐藏了问题，而不是解决问题。</p>
+<h2 id="4-Summary"><a href="#4-Summary" class="headerlink" title="4. Summary"></a>4. Summary</h2><p>通过上述实践可以看出Grunt的巨大优势，它帮助我们用统一的接口配置需要完成的各种任务，将各种前台工具无缝嵌入到构建脚本中，能够快速实现持续集成、持续部署，同时降低维护成本。你也来试试吧。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://developers.google.com/closure/compiler/docs/limitations?hl=zh-cn" target="_blank" rel="noopener">https://developers.google.com/closure/compiler/docs/limitations?hl=zh-cn</a></li>
+<li><a href="http://webreflection.blogspot.com/2013/01/5-reasons-to-avoid-closure-compiler-in.html" target="_blank" rel="noopener">http://webreflection.blogspot.com/2013/01/5-reasons-to-avoid-closure-compiler-in.html</a></li>
+<li><a href="https://speakerdeck.com/hulufei/li-yong-gruntda-zao-qian-duan-gong-zuo-liu" target="_blank" rel="noopener">https://speakerdeck.com/hulufei/li-yong-gruntda-zao-qian-duan-gong-zuo-liu</a></li>
+<li><a href="http://docs.angularjs.org/guide/di" target="_blank" rel="noopener">http://docs.angularjs.org/guide/di</a></li>
+<li><a href="http://lisperator.net/uglifyjs" target="_blank" rel="noopener">http://lisperator.net/uglifyjs</a></li>
+<li><a href="https://github.com/btford/ngmin" target="_blank" rel="noopener">https://github.com/btford/ngmin</a></li>
+</ul>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2013/10/07/grunt-minify/" data-id="cjlbz54tt000bss6sk8m4x807" class="article-share-link"><i class="fas fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2013/10/07/grunt-minify/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2013/10/07/grunt-minify/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2013/10/10/grunt-api/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    玩转Grunt（二）: Gruntfile 详解
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2013/08/05/test-automation/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Test Automation</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/cxo-guide-microservices/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://lh4.googleusercontent.com/A7tEGUUzYq2LAC45i3e_hKuN7X3JKJqUPxQnk4K523ZSaFzvC2dudPXWL7w7yRJY07gKbl2xwc8ubjC4vCuZKH2dFWcJtoTnN4bAxjy4Gvm9GRHa896njBSnZLuexDXc_diTd-9h)" alt="[翻译] 给CxO的微服务指南" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/cxo-guide-microservices/" class="title">[翻译] 给CxO的微服务指南</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:11:42.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/abilities/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://upload-images.jianshu.io/upload_images/1825822-32344c7ba682ad9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)" alt="你需要了解的那些Abilities(一)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/abilities/" class="title">你需要了解的那些Abilities(一)</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:08:14.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/token/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/car.png)" alt="谁动了我的Token" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/05/25/token/" class="title">谁动了我的Token</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T07:03:47.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/insights/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/insights.jpeg)" alt="如何培养技术洞见力" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/05/25/insights/" class="title">如何培养技术洞见力</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T00:45:32.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/02/01/refactoring/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/refactoring.png)" alt="重构的七宗罪" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/02/01/refactoring/" class="title">重构的七宗罪</a></p>
+                            <p class="item-date"><time datetime="2016-02-01T06:59:00.000Z" itemprop="datePublished">2016-02-01</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/coding/">coding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/thought/">thought</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/works/">works</a><span class="category-list-count">20</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture/">architecture</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture-microservices/">architecture,microservices</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/architecture/" style="font-size: 10px;">architecture</a> <a href="/tags/architecture-microservices/" style="font-size: 10px;">architecture,microservices</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Xianjing Zhuo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'http://yoursite.com/2013/10/07/grunt-minify/';
+        
+        this.page.identifier = 'grunt-minify';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'xianjing' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

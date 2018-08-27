@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Effective Keyboard Shortcuts for Window Operation in Visual Studio | Xianjing&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="如果你有时候会像我一样不小心将窗口弄成了下面这个样子，只能羞愧的或者愤愤的用鼠标关掉，尝试一下Shift + Esc和Window.Dock设置。  这实际上是Visual Studio提供的快捷方式，平常除了用Resharper之外其实Visual Studio也提供了很多快捷键，让我们的键盘操作更高效。今天我分享一下Shift + Esc 和 如何设置Visual Studio中Window操">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Effective Keyboard Shortcuts for Window Operation in Visual Studio">
+<meta property="og:url" content="http://yoursite.com/2013/12/19/effective-keyboard-shortcuts-in-visual-studio/index.html">
+<meta property="og:site_name" content="Xianjing&#39;s blog">
+<meta property="og:description" content="如果你有时候会像我一样不小心将窗口弄成了下面这个样子，只能羞愧的或者愤愤的用鼠标关掉，尝试一下Shift + Esc和Window.Dock设置。  这实际上是Visual Studio提供的快捷方式，平常除了用Resharper之外其实Visual Studio也提供了很多快捷键，让我们的键盘操作更高效。今天我分享一下Shift + Esc 和 如何设置Visual Studio中Window操">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/float.png">
+<meta property="og:image" content="http://yoursite.com/images/window.dock.png">
+<meta property="og:image" content="http://yoursite.com/images/window.close.png">
+<meta property="og:updated_time" content="2017-08-11T09:47:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Effective Keyboard Shortcuts for Window Operation in Visual Studio">
+<meta name="twitter:description" content="如果你有时候会像我一样不小心将窗口弄成了下面这个样子，只能羞愧的或者愤愤的用鼠标关掉，尝试一下Shift + Esc和Window.Dock设置。  这实际上是Visual Studio提供的快捷方式，平常除了用Resharper之外其实Visual Studio也提供了很多快捷键，让我们的键盘操作更高效。今天我分享一下Shift + Esc 和 如何设置Visual Studio中Window操">
+<meta name="twitter:image" content="http://yoursite.com/images/float.png">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Xianjing&#39;s blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpeg" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpeg" />
+            <h2 id="name">Xianjing</h2>
+            <h3 id="title">learner</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/xianjing">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                36
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                2
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/xianjing" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-effective-keyboard-shortcuts-in-visual-studio" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Effective Keyboard Shortcuts for Window Operation in Visual Studio
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2013/12/19/effective-keyboard-shortcuts-in-visual-studio/">
+            <time datetime="2013-12-19T13:13:00.000Z" itemprop="datePublished">2013-12-19</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/works/">works</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>如果你有时候会像我一样不小心将窗口弄成了下面这个样子，只能羞愧的或者愤愤的用鼠标关掉，尝试一下Shift + Esc和Window.Dock设置。</p>
+<p><img src="/images/float.png" alt=""></p>
+<p>这实际上是Visual Studio提供的快捷方式，平常除了用Resharper之外其实Visual Studio也提供了很多快捷键，让我们的键盘操作更高效。今天我分享一下Shift + Esc 和 如何设置Visual Studio中Window操作的快捷键。</p>
+<p>在开始之前需要了解一下Visual Studio中的窗口概念。</p>
+<h2 id="Visual-Studio的窗口"><a href="#Visual-Studio的窗口" class="headerlink" title="Visual Studio的窗口"></a>Visual Studio的窗口</h2><p>Visual Studio的窗口有两种，文档窗口和工具窗口。文档窗口是我们平常最多见的，即打开类代码时出现的窗口，这种窗口可以进行文本编辑或者form编辑。这类窗口可以dock, float, close；这类窗口可以打开多个，通常也以Tab页的形式展现。第二类是工具窗口，包括Solution Explorer，Properties, Output, Error, Usage, Exception, File Structure, Unit Test Session等这些都称为工具窗口。工具窗口可以dock, float, close, hide。</p>
+<p>这些快捷键均可通过Visual Studio -&gt; Tools -&gt; Options -&gt; Keyboard进行显示设置，当我们理解了ToolWindow和Document Window后就比较容易找到相应的快捷键。<br><a id="more"></a></p>
+<h2 id="Dock-操作"><a href="#Dock-操作" class="headerlink" title="Dock 操作"></a>Dock 操作</h2><p>Dock中文翻译指停留，固定，就是将窗口固定于某个具体的位置，比如Output窗口通常会停留在Visual Studio的下方区域。</p>
+<ul>
+<li>快捷键设置</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>窗口类别</strong></th>
+<th style="text-align:center"><strong>快捷键设置选项</strong></th>
+<th style="text-align:center"><strong>Predefined Shortcut(个人推荐)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tool Window</td>
+<td style="text-align:center">Window.Dock</td>
+<td style="text-align:center">None (Alt W + Alt D)</td>
+</tr>
+<tr>
+<td>Document Window</td>
+<td style="text-align:center">Wndow.DockasTabbedDocumentNone</td>
+<td style="text-align:center">None (Alt W + Alt T)</td>
+</tr>
+</tbody>
+</table>
+<p>  <img src="/images/window.dock.png" alt="">{:height=”300px” width=”400px”}</p>
+<h2 id="Float-操作"><a href="#Float-操作" class="headerlink" title="Float 操作"></a>Float 操作</h2><ul>
+<li>将当前聚焦的工具窗口 浮动于Visual Studio的窗口区  </li>
+<li>快捷键设置选项：<ul>
+<li>Window.Float </li>
+</ul>
+</li>
+</ul>
+<h2 id="Close"><a href="#Close" class="headerlink" title="Close"></a>Close</h2><p>关闭当前窗口，Document窗口经常采用Ctrl + F4. Shift+Esc是我们不经常采用的，但非常有效的一个快捷键。</p>
+<table>
+<thead>
+<tr>
+<th><strong>窗口类别</strong></th>
+<th style="text-align:center"><strong>快捷键设置选项</strong></th>
+<th style="text-align:center"><strong>Predefined Shortcut(个人推荐)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tool Window</td>
+<td style="text-align:center">Window.CloseToolWindow</td>
+<td style="text-align:center">Shift + Esc</td>
+</tr>
+<tr>
+<td>Document Window</td>
+<td style="text-align:center">Window.CloseDocumentWindow</td>
+<td style="text-align:center">Ctrl + F4</td>
+</tr>
+</tbody>
+</table>
+<p>  <img src="/images/window.close.png" alt="">{:height=”300px” width=”400px”}</p>
+<h2 id="其它Window-操作快捷键"><a href="#其它Window-操作快捷键" class="headerlink" title="其它Window 操作快捷键"></a>其它Window 操作快捷键</h2><table>
+<thead>
+<tr>
+<th><strong>快捷键设置选项</strong></th>
+<th style="text-align:center"><strong>Predefined Shortcut(个人推荐)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>View.FullScreen</td>
+<td style="text-align:center">Window.FullScreen</td>
+<td style="text-align:center">SHIFT+ALT+ENTER</td>
+</tr>
+<tr>
+<td>Edit.GoToNextLocation</td>
+<td style="text-align:center">F8</td>
+</tr>
+<tr>
+<td>View.PropertiesWindow</td>
+<td style="text-align:center">F4</td>
+</tr>
+</tbody>
+</table>
+<p>Note: F8是跳到下一个Location，即使在Tool Window中一样使用，比如编译错误，Error Window的下一个，Find Result的下一个。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="http://msdn.microsoft.com/en-us/library/da5kh0wa.aspx" target="_blank" rel="noopener">Visual Studio Predefined Shortcuts</a></li>
+<li><a href="http://msdn.microsoft.com/en-us/library/dn320181.aspx" target="_blank" rel="noopener">Tips and Tricks for Visual Studio</a></li>
+<li><a href="http://msdn.microsoft.com/en-us/library/jj153218.aspx" target="_blank" rel="noopener">Productivity Tips for Visual Studio</a></li>
+</ul>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2013/12/19/effective-keyboard-shortcuts-in-visual-studio/" data-id="cjlbz54ug000wss6s2k6jau3h" class="article-share-link"><i class="fas fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2013/12/19/effective-keyboard-shortcuts-in-visual-studio/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2013/12/19/effective-keyboard-shortcuts-in-visual-studio/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2013/12/29/a-try-about-separate-of-concern/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    关注点分离的一次尝试
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2013/12/17/accept/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">接纳自我 － 有感于演讲技巧培训</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/cxo-guide-microservices/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://lh4.googleusercontent.com/A7tEGUUzYq2LAC45i3e_hKuN7X3JKJqUPxQnk4K523ZSaFzvC2dudPXWL7w7yRJY07gKbl2xwc8ubjC4vCuZKH2dFWcJtoTnN4bAxjy4Gvm9GRHa896njBSnZLuexDXc_diTd-9h)" alt="[翻译] 给CxO的微服务指南" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/cxo-guide-microservices/" class="title">[翻译] 给CxO的微服务指南</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:11:42.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/abilities/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://upload-images.jianshu.io/upload_images/1825822-32344c7ba682ad9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)" alt="你需要了解的那些Abilities(一)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/abilities/" class="title">你需要了解的那些Abilities(一)</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:08:14.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/token/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/car.png)" alt="谁动了我的Token" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/05/25/token/" class="title">谁动了我的Token</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T07:03:47.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/insights/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/insights.jpeg)" alt="如何培养技术洞见力" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/05/25/insights/" class="title">如何培养技术洞见力</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T00:45:32.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/02/01/refactoring/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/refactoring.png)" alt="重构的七宗罪" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/02/01/refactoring/" class="title">重构的七宗罪</a></p>
+                            <p class="item-date"><time datetime="2016-02-01T06:59:00.000Z" itemprop="datePublished">2016-02-01</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/coding/">coding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/thought/">thought</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/works/">works</a><span class="category-list-count">20</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture/">architecture</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture-microservices/">architecture,microservices</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/architecture/" style="font-size: 10px;">architecture</a> <a href="/tags/architecture-microservices/" style="font-size: 10px;">architecture,microservices</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Xianjing Zhuo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'http://yoursite.com/2013/12/19/effective-keyboard-shortcuts-in-visual-studio/';
+        
+        this.page.identifier = 'effective-keyboard-shortcuts-in-visual-studio';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'xianjing' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

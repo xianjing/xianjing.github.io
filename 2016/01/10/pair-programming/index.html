@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>结对编程的正确姿势，你会了吗？ | Xianjing&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="2015年度Review已经拉开帷幕，今年你都收到了哪些醉人的反馈呢？和往常一样，作为开发的我听到最多的话题当属结对了：  “我的小伙伴总拿着键盘不放，只听过麦霸，来到骚窝竟然还有键霸！”“我总算明白为什么面前会有两个键盘子了，如果再给我一次机会（请用湖南话脑补）”“我不知道我的小伙伴在做什么，我跟不上，很沮丧，要不玩会手机算了”“我的小伙伴特别忙，有时候一天也找不到，我怎么办…”“我的小伙伴是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="结对编程的正确姿势，你会了吗？">
+<meta property="og:url" content="http://yoursite.com/2016/01/10/pair-programming/index.html">
+<meta property="og:site_name" content="Xianjing&#39;s blog">
+<meta property="og:description" content="2015年度Review已经拉开帷幕，今年你都收到了哪些醉人的反馈呢？和往常一样，作为开发的我听到最多的话题当属结对了：  “我的小伙伴总拿着键盘不放，只听过麦霸，来到骚窝竟然还有键霸！”“我总算明白为什么面前会有两个键盘子了，如果再给我一次机会（请用湖南话脑补）”“我不知道我的小伙伴在做什么，我跟不上，很沮丧，要不玩会手机算了”“我的小伙伴特别忙，有时候一天也找不到，我怎么办…”“我的小伙伴是">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/pair.png">
+<meta property="og:updated_time" content="2017-08-11T09:47:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="结对编程的正确姿势，你会了吗？">
+<meta name="twitter:description" content="2015年度Review已经拉开帷幕，今年你都收到了哪些醉人的反馈呢？和往常一样，作为开发的我听到最多的话题当属结对了：  “我的小伙伴总拿着键盘不放，只听过麦霸，来到骚窝竟然还有键霸！”“我总算明白为什么面前会有两个键盘子了，如果再给我一次机会（请用湖南话脑补）”“我不知道我的小伙伴在做什么，我跟不上，很沮丧，要不玩会手机算了”“我的小伙伴特别忙，有时候一天也找不到，我怎么办…”“我的小伙伴是">
+<meta name="twitter:image" content="http://yoursite.com/images/pair.png">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Xianjing&#39;s blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpeg" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpeg" />
+            <h2 id="name">Xianjing</h2>
+            <h3 id="title">learner</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/xianjing">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                36
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                2
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/xianjing" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-pair-programming" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            结对编程的正确姿势，你会了吗？
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2016/01/10/pair-programming/">
+            <time datetime="2016-01-10T08:34:00.000Z" itemprop="datePublished">2016-01-10</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/thought/">thought</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="/images/pair.jpg" alt=""></p>
+<p>2015年度Review已经拉开帷幕，今年你都收到了哪些醉人的反馈呢？和往常一样，作为开发的我听到最多的话题当属结对了：</p>
+<blockquote>
+<p>“我的小伙伴总拿着键盘不放，只听过麦霸，来到骚窝竟然还有键霸！”<br>“我总算明白为什么面前会有两个键盘子了，如果再给我一次机会（请用湖南话脑补）”<br>“我不知道我的小伙伴在做什么，我跟不上，很沮丧，要不玩会手机算了”<br>“我的小伙伴特别忙，有时候一天也找不到，我怎么办…”<br>“我的小伙伴是个急性子，总说‘XX你做的太慢了，客户着急要，还是我来做吧’”……</p>
+</blockquote>
+<p>那么结对时，你的小伙伴碰到这样的问题怎么办呢？当你遇到键霸、手机哥、上网君的时候怎么破呢？<br><a id="more"></a> </p>
+<p>在展开之前让我们先来回顾一下<a href="https://en.wikipedia.org/wiki/Pair_programming" target="_blank" rel="noopener">结对编程</a>的前世今生是什么。</p>
+<h2 id="结对编程"><a href="#结对编程" class="headerlink" title="结对编程"></a>结对编程</h2><p><a href="https://en.wikipedia.org/wiki/Extreme_programming_practices" target="_blank" rel="noopener">极限编程</a>是由当时Smalltalk 领域的大师级人物 <a href="https://en.wikipedia.org/wiki/Kent_Beck" target="_blank" rel="noopener">Kent Beck</a> 在1996年受聘领导克莱 斯勒公司的一个综合工资项目开发 C3(Chrysler Comprehensive Compensation)中 首次采用, 并于1999年10月出版的<a href="http://book.douban.com/subject/6828074/" target="_blank" rel="noopener">《解析极限编程》</a>一书中正式提出了这一软件开发方法，而我们今天要讨论的结对编程则是其中一项核心实践。</p>
+<p>极限编程中的“极限”(Extreme)是指将我们认同的有效软件开发原理和实践应用到极限, 如: “如果集成测试很重要,那就要在一天中进行多次集成,并且反复进行回归测试”，所以我们要做持续集成。结对编程在提出时更多的是强调 “如果代码评审很好,那么我们就一直进行代码评审”，所以我们要做结对编程。简单讲，结对编程就是由两个程序员用同一台电脑完成同一个任务，由一个人负责编写代码码，另一个负责审查代码，从而能够时时刻刻的进行代码评审。</p>
+<p>但问题来了，原先一个人工作，现在两个人了。“原来我自己写就好了，现在多一个人我还要给他讲，多浪费时间啊”；“我也讲不明白，我就是喜欢写代码而已，别逼我”（请自动脑补一个新人和一个不耐烦的老手一起编程的感觉）。这让我想起了美国AT&amp;T公司贝尔实验室的<a href="https://en.wikipedia.org/wiki/Bjarne_Stroustrup" target="_blank" rel="noopener">Bjarne Stroustrup</a>博士说过的一句话：</p>
+<blockquote>
+<p>设计和编程都是人的活动。忘记这一点，将会失去一切。- Bjarne Stroustrup</p>
+</blockquote>
+<p>从极限编程诞生到今天的26年历史中，如果说<a href="http://martinfowler.com/articles/continuousIntegration.html" target="_blank" rel="noopener">持续集成</a>是应用最广泛的一个实践，那么我认为结对编程则是最具争议的实践（没有之一）。其实这也间接印证了当时Kent Beck提出的关于“极限编程是一种社会性变革”的说法。在现代互联网如此多变和快速响应的软件行业趋势下，事实已经证明软件从此不再是一个人单打独斗的工作，而是要求越来越多的多角色多任务的协作。软件行业的工作者必须要有比以往更多的沟通和协作技巧。而这对于习惯了一个人的软件开发者而言是一个巨大的挑战，必然要有一个改变和适应的过程。这也是为什么结对编程会成为最具争议的实践。文章开头的那些现象都是一个人改变做事行为的必然过程，不信你去问一问那些老一点的骚窝，哪一个不是从抢不到键盘到键霸，又从键霸到键盘无键，键在心中的一个过程。</p>
+<p>那么结对编程除了审查代码提升代码质量，还给我们带来哪些好处呢？</p>
+<h2 id="结对编程的好处"><a href="#结对编程的好处" class="headerlink" title="结对编程的好处"></a>结对编程的好处</h2><p>第一：培养新人，促进沟通，提升团队整体能力。<br>通过结对，年轻的团队成员可以向其他小伙伴学习，包括快捷键、算法、语法、SQL、设计、解决问题的思路、做事方式等等，1对1面对面师傅带徒弟式的学习是新技能get最快的方式之一。</p>
+<p>第二：更好的知识共享和信息交流，促进团队协作。<br>结对中可以互相分享代码的上下文，交换对代码的理解，促进质量改进和团队协作，同时也使得代码集体所有制成为可能，减少团队对某些成员的依赖，降低团队风险。</p>
+<p>第三：促进团队成员的沟通，提升团队凝聚力。<br>通过结对，成员间彼此熟悉，增深了解，从而能够更好的协作完成任务。</p>
+<h2 id="如何进行结对？"><a href="#如何进行结对？" class="headerlink" title="如何进行结对？"></a>如何进行结对？</h2><p>为了达到结对的目的，保持结对有趣持续的进行，通常根据结对的双方经验不同和场景分为如下多种角色和合作模式：</p>
+<p><img src="/images/pair-mode.jpg" alt="">{:height=”300px” width=”400px”}</p>
+<ul>
+<li>1.领航员和驾驶员(Driver-Navigator) - 键霸出没请小心。</li>
+</ul>
+<p>驾驶员编写实现当前任务的代码，而领航员需要引领代码的编写并负责审查代码。除此之外，领航员通常还要考虑当前的实现方法是否正确，是否有别的做法，它是否会影响到其它功能模块，下一步是什么。驾驶员的主要任务是跟上领航员，负责完成代码的编写，保证代码质量。需要特别指出的是，微小的语法错误，多一个空行等错误，IDE会帮助我们纠正，是驾驶员关注的职责，而领航员只需进行提醒，结对时无需将此作为主要关注点。</p>
+<p>合作场景：适应于各种组合，尤其一老一新组合。</p>
+<ul>
+<li>2.乒乓模式</li>
+</ul>
+<p>这里需要提及极限编程的另一实践：测试驱动测试。结对双方可以一个人编写失败的测试，一个人写实现通过测试；然后交换角色，不断循环。对于结对双方经验相当的情况下，由于交互和交换的频率很快，就如打乒乓一般，所人们戏称这种方式为结对的乒乓模式。</p>
+<p>合作场景：适用于各种组合，尤其双方经验相当的场景。乒乓模式由于它的角色分工清晰，交换频率相对较快，所以乒乓模式可以帮助精力不集中的小伙伴快速融入，也是避免键霸出现的一个很好的方式。</p>
+<ul>
+<li>3.鼠标和键盘模式</li>
+</ul>
+<p>这是驾驶员和领航员的一种具体表现方式，其中一方使用鼠标，是领航员；另一方使用键盘完成代码的编写，是驾驶员。</p>
+<p>合作场景：适用于一老一新组合。</p>
+<p>有统计结果显示，好的结对工作效率是大于单兵作战的，能用较少的时间产生高质量的代码。那么为了保证结对的高效和高质量，我们还需要注意哪些呢？</p>
+<h2 id="几点Tips"><a href="#几点Tips" class="headerlink" title="几点Tips"></a>几点Tips</h2><ul>
+<li>1.多沟通。</li>
+</ul>
+<p>有一个人的工作变成了两个人的事，小伙伴们就要彼此尊重，多沟通。如果有其他的任务要暂时离开，请及时告诉你的小伙伴，以便彼此更好的安排工作，保证效率。</p>
+<ul>
+<li>2.确定开发任务列表（Tasking）</li>
+</ul>
+<p>结对除了沟通，另一个挑战就是如何保持结对双方共同的开发节奏：一个小伙伴在做A功能，另一个小伙伴要做B功能。结对双方通过协商开发任务列表，能够提高对开发任务理解的一致性，确保开发节奏顺利进行。</p>
+<ul>
+<li>3.定期交换小伙伴</li>
+</ul>
+<p>定期交换小伙伴可以使得知识得到充分分享，每个小伙伴都有机会充当不同的角色，了解不同的知识上下文。与此同时，新的小伙伴的加入往往可以激发新的解题思路，或帮助发现问题，同时也增加结对的乐趣。</p>
+<ul>
+<li>4.可持续的结对工作</li>
+</ul>
+<p>真正的结对会比一人工作更专注，紧凑，所以一天8小时的结对会很累，因此结对需要定时的休息，保持合理的节奏。可与结对的小伙伴一起协商休息时间，比如一个小时或两个小时休息一次，从而保证可持续的工作。</p>
+<ul>
+<li>5.多给新人机会</li>
+</ul>
+<p>与新加入的小伙伴结对，需要耐心，多给予她/她上手的时间与空间。通常建议开始时多讲解，多展示，给她/他学习的机会；比如一开始可以由熟悉代码的小伙伴写测试，而新加入的写实现；随后可采用鼠标键盘方式或者乒乓结对方式。</p>
+<ul>
+<li>6.勇敢加勇敢</li>
+</ul>
+<p>对于新加入的小伙伴，如果跟不上的时候怎么办？要勇敢的叫停，打断结对的小伙伴，弄懂这个问题，这样做才是达到了结对的目的。曾经有人说我记下来回家去弄懂，我更建议及时弄清楚。就如前面提到的，结对是一个快速让自己学习和成长的机会；而且你的小伙伴通过讲解也会梳理自己的思路，能够更深入的理解这个问题或技术，互助互学。如果这个问题发现项目中其它成员也不懂的，那么我们还可以将这个对话扩展开来，分享给整个团队，提升团队的战斗力，所以更推荐及时解决，当然深度需要适当的把握。<br>如果结对的时候遇到键霸怎么办？作为新人自带消除键霸光环，勇敢的把鼠标默默的递过去，把键盘牢牢的握在自己的手中，“亲，辛苦了，让我试一下，我来！”。</p>
+<ul>
+<li>7.反馈</li>
+</ul>
+<p>就如戴明环一样，做事情的环要闭合，有始有终，有序循环螺旋式改进。而反馈往往是最后一环，也是最有效的一环，是帮助自己和结对小伙伴的必要工具之一，温暖的“小黑屋”是可以经常光顾的。</p>
+<ul>
+<li>8.不是所有的场景都适合结对</li>
+</ul>
+<p>对于那些结果需要维护，能够促进沟通、知识传递等价值的开发行为都建议结对，而诸如方案调研、一些非常简单的问题（微小的缺陷修复如拼写错误）等是可以不用结对的。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>结对并不阻止个人的独立思考，它给我们带来了诸多软件协作的好处，但结对也不是所谓的坐在一起就可以了。结对不是一成不变的，需要根据目前的任务灵活确定是否适合结对。<br>我认为想要做好结对，首要的是有效沟通。</p>
+<p>一首打油诗说的好：<br>好结对成长快，互相监督与学习，感情信任日日增。<br>坏结对伤害大，手机上网人心离，团队早晚要散伙。<br>新人们不要怕，键盘牢牢握手中，勇气反馈早成长。<br>老人们不着急，系统把控在心中，沟通分享影响大。</p>
+<p>有了这些姿势，文章开头那些问题你是不是已经有答案了呢？</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2016/01/10/pair-programming/" data-id="cjlbz54v6001mss6shq47ecmp" class="article-share-link"><i class="fas fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2016/01/10/pair-programming/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2016/01/10/pair-programming/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/02/01/refactoring/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    重构的七宗罪
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2015/02/07/how-to-install-package-into-sublime-text/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">How to enable Chinese encoding in Sublime Text</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/cxo-guide-microservices/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://lh4.googleusercontent.com/A7tEGUUzYq2LAC45i3e_hKuN7X3JKJqUPxQnk4K523ZSaFzvC2dudPXWL7w7yRJY07gKbl2xwc8ubjC4vCuZKH2dFWcJtoTnN4bAxjy4Gvm9GRHa896njBSnZLuexDXc_diTd-9h)" alt="[翻译] 给CxO的微服务指南" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/cxo-guide-microservices/" class="title">[翻译] 给CxO的微服务指南</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:11:42.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/abilities/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://upload-images.jianshu.io/upload_images/1825822-32344c7ba682ad9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)" alt="你需要了解的那些Abilities(一)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/abilities/" class="title">你需要了解的那些Abilities(一)</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:08:14.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/token/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/car.png)" alt="谁动了我的Token" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/05/25/token/" class="title">谁动了我的Token</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T07:03:47.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/insights/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/insights.jpeg)" alt="如何培养技术洞见力" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/05/25/insights/" class="title">如何培养技术洞见力</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T00:45:32.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/02/01/refactoring/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/refactoring.png)" alt="重构的七宗罪" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/02/01/refactoring/" class="title">重构的七宗罪</a></p>
+                            <p class="item-date"><time datetime="2016-02-01T06:59:00.000Z" itemprop="datePublished">2016-02-01</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/coding/">coding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/thought/">thought</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/works/">works</a><span class="category-list-count">20</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture/">architecture</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture-microservices/">architecture,microservices</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/architecture/" style="font-size: 10px;">architecture</a> <a href="/tags/architecture-microservices/" style="font-size: 10px;">architecture,microservices</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Xianjing Zhuo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'http://yoursite.com/2016/01/10/pair-programming/';
+        
+        this.page.identifier = 'pair-programming';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'xianjing' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

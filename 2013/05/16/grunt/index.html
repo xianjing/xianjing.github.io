@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Grunt - 基于任务的Javascript构建工具 | Xianjing&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言软件项目的构建是针对项目的源代码,对其进行编译、代码质量检查、测试、打包等一系列流水线似的任务，使其成为一个可运行的软件产品的过程。而构建工具则是能够响应构建活动中一系列任务的自动化工具，它必须要简单灵活快速易扩展，从而帮助开发人员更快更高效的集成与发布。 回顾我们当前的开发语言，在.net世界里有MsBuild、NuGet和Nscaffold；在Ruby世界里有Rake、Gem和bundle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Grunt - 基于任务的Javascript构建工具">
+<meta property="og:url" content="http://yoursite.com/2013/05/16/grunt/index.html">
+<meta property="og:site_name" content="Xianjing&#39;s blog">
+<meta property="og:description" content="前言软件项目的构建是针对项目的源代码,对其进行编译、代码质量检查、测试、打包等一系列流水线似的任务，使其成为一个可运行的软件产品的过程。而构建工具则是能够响应构建活动中一系列任务的自动化工具，它必须要简单灵活快速易扩展，从而帮助开发人员更快更高效的集成与发布。 回顾我们当前的开发语言，在.net世界里有MsBuild、NuGet和Nscaffold；在Ruby世界里有Rake、Gem和bundle">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-08-11T09:47:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Grunt - 基于任务的Javascript构建工具">
+<meta name="twitter:description" content="前言软件项目的构建是针对项目的源代码,对其进行编译、代码质量检查、测试、打包等一系列流水线似的任务，使其成为一个可运行的软件产品的过程。而构建工具则是能够响应构建活动中一系列任务的自动化工具，它必须要简单灵活快速易扩展，从而帮助开发人员更快更高效的集成与发布。 回顾我们当前的开发语言，在.net世界里有MsBuild、NuGet和Nscaffold；在Ruby世界里有Rake、Gem和bundle">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Xianjing&#39;s blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpeg" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpeg" />
+            <h2 id="name">Xianjing</h2>
+            <h3 id="title">learner</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/xianjing">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                36
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                2
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/xianjing" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-grunt" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Grunt - 基于任务的Javascript构建工具
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2013/05/16/grunt/">
+            <time datetime="2013-05-16T15:08:00.000Z" itemprop="datePublished">2013-05-16</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/works/">works</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>软件项目的构建是针对项目的源代码,对其进行编译、代码质量检查、测试、打包等一系列流水线似的任务，使其成为一个可运行的软件产品的过程。而构建工具则是能够响应构建活动中一系列任务的自动化工具，它必须要简单灵活快速易扩展，从而帮助开发人员更快更高效的集成与发布。</p>
+<p>回顾我们当前的开发语言，在.net世界里有MsBuild、NuGet和<a href="https://github.com/xianjing/NScaffold" target="_blank" rel="noopener">Nscaffold</a>；在Ruby世界里有Rake、Gem和bundle; Java世界里有Ant, Maven,  Ivy, <a href="http://www.gradle.org/" target="_blank" rel="noopener">Gradle</a>，那么Javascript呢? Npm? 让我们来看一下Grunt.</p>
+<a id="more"></a>
+<h2 id="Why-Grunt"><a href="#Why-Grunt" class="headerlink" title="Why Grunt"></a>Why Grunt</h2><blockquote>
+<p>Automation</p>
+</blockquote>
+<p>作为一个Web项目，Javascript/Css是前端开发的核心技术。和其他语言一样，它的构建也包括了Javascript代码的编译、测试、打包等行为，具体包括:</p>
+<ol>
+<li>代码合并压缩</li>
+<li>CSS合并压缩</li>
+<li>静态代码检查</li>
+<li>单元测试</li>
+<li>…</li>
+<li>部署</li>
+</ol>
+<p>涉及到的前台多数的工具包，如uglify，closure，jslint，jasmine等，而如何整合不同语言工具包下的构建流程是长久以来前端项目的一个问题。<a href="http://gruntjs.com" target="_blank" rel="noopener">Grunt</a> 是这样一个Javascript语言的基于任务的命令行构建工具，它依赖于<a href="https://npmjs.org" target="_blank" rel="noopener">npm</a>进行包及插件管理，能够自动化项目定义的一系列构建任务，从而减轻开发人员在构建方面的开发成本与运行成本。</p>
+<p>目前，JQuery, Adobe, Twitter, AnguarlJS 都已经引入Grunt作为开发项目的构建工具。</p>
+<h2 id="Grunt初探"><a href="#Grunt初探" class="headerlink" title="Grunt初探"></a>Grunt初探</h2><h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h3><p>Grunt基于npm进行安装和插件管理，所以安装Grunt之前需要安装nodejs(npm)，然后安装grunt-cli以使用Grunt。</p>
+<figure class="highlight js"><figcaption><span>install</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g grunt-cli</span><br></pre></td></tr></table></figure>
+<h3 id="2-Grunt配置文件"><a href="#2-Grunt配置文件" class="headerlink" title="2. Grunt配置文件"></a>2. Grunt配置文件</h3><p>Grunt依赖于两个配置文件，Package.json 和Gruntfile.js。</p>
+<p>1) Package.json是当前项目依赖的npm modules信息，当运行 npm install时，会自动查找package.json中的dependencies信息，并进行自动安装.<br>创建Package.json文件有多种方式，可以选用npm init方式。</p>
+<figure class="highlight js"><figcaption><span>package.json</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"name"</span>: <span class="string">"my-project-name"</span>,</span><br><span class="line">  <span class="string">"version"</span>: <span class="string">"0.1.0"</span>,</span><br><span class="line">  <span class="string">"devDependencies"</span>: &#123;</span><br><span class="line">    <span class="string">"grunt"</span>: <span class="string">"~0.4.1"</span>,</span><br><span class="line">    <span class="string">"grunt-contrib-jshint"</span>: <span class="string">"~0.1.1"</span>,</span><br><span class="line">    <span class="string">""</span> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2) Gruntfile.js是Grunt工具的配置文件，定义了项目的基本信息、需要的构建任务（项目的代码路径，输出路径）、依赖的插件等内容，语法及配置非常简单易懂，具体可详见Grunt的在线文档-<a href="http://gruntjs.com/configuring-tasks" target="_blank" rel="noopener">配置任务</a></p>
+<p>可以用 <a href="https://github.com/gruntjs/grunt-init-gruntfile" target="_blank" rel="noopener">grunt-init</a> 来创建一个Gruntfile.js，也可以直接写一个，如下例。</p>
+<p>下面例子中，uglify是一个压缩的构建任务，在配置选项里定义需要被压缩的文件和输出的文件。</p>
+<figure class="highlight js"><figcaption><span>gruntfile.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">grunt</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Project configuration.</span></span><br><span class="line">  grunt.initConfig(&#123;</span><br><span class="line">    pkg: grunt.file.readJSON(<span class="string">'package.json'</span>),</span><br><span class="line">    uglify: &#123; <span class="comment">// task name</span></span><br><span class="line">      options: &#123; </span><br><span class="line">        banner: <span class="string">'banner'</span></span><br><span class="line">      &#125;,</span><br><span class="line">      build: &#123; <span class="comment">// target</span></span><br><span class="line">        src: <span class="string">'src/&lt;%= pkg.name %&gt;.js'</span>, </span><br><span class="line">        dest: <span class="string">'build/&lt;%= pkg.name %&gt;.min.js'</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Load the plugin that provides the "uglify" task.</span></span><br><span class="line">  grunt.loadNpmTasks(<span class="string">'grunt-contrib-uglify'</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Default task(s).</span></span><br><span class="line">  grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'uglify'</span>]);</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>当有了Gruntfile.js后，可以在当前项目目录下执行Grunt命令，Grunt会自动执行default任务组。</p>
+<h3 id="3-Task"><a href="#3-Task" class="headerlink" title="3. Task"></a>3. Task</h3><p>Task是Grunt运行的最基本单元。Task可以是一个npm module，也可以自定义。Task的执行是有顺序的，它的顺序依赖于注册时的先后。<br><figure class="highlight js"><figcaption><span>define task</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grunt.registerTask(taskName, [description, ] taskList)</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<p>每个Task在gruntFile.js的 grunt.initConfig 代码块中进行配置，包含Task的名字, Target，以及选项－通常是source，destination或者files，比如我们刚才看到的uglify就是一个典型任务。</p>
+<p>Grunt会默认定义一个default任务，如果Grunt运行时不带任何参数，会默认执行default 任务以及它所依赖的任务列表。</p>
+<p>Grunt支持单一任务和多任务，多任务可以有多个targets，比如对于项目的文件在编译时可以输出到不同的路径，那么就可以定义一个有两个target的多任务。</p>
+<figure class="highlight js"><figcaption><span>multi task</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">grunt.initConfig(&#123;</span><br><span class="line">  compile: &#123;</span><br><span class="line">    test: &#123;</span><br><span class="line">    	src : [],</span><br><span class="line">    	dest : &#123;&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    production: &#123;</span><br><span class="line">    	src: [],</span><br><span class="line">    	dest: &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">grunt.registerMultiTask(<span class="string">'compile'</span>, <span class="string">'compile stuff.'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  grunt.log.writeln(<span class="keyword">this</span>.target + <span class="string">': '</span> + <span class="keyword">this</span>.data);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="4-Plugins"><a href="#4-Plugins" class="headerlink" title="4. Plugins"></a>4. Plugins</h3><p>每一个插件都是一个npm module，由npm进行管理。Grunt的插件是Grunt的一大特点，实现比较简单，使得Grunt的扩展非常容易。</p>
+<p>目前常用的有:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><strong>名字</strong></th>
+<th style="text-align:center"><strong>插件</strong></th>
+<th style="text-align:center"><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"> clean</td>
+<td style="text-align:center">grunt - contrib - clean</td>
+<td style="text-align:center">删除指定目录或文件</td>
+</tr>
+<tr>
+<td style="text-align:center"> copy</td>
+<td style="text-align:center">grunt-contrib-copy</td>
+<td style="text-align:center">复制文件到指定目录 </td>
+</tr>
+<tr>
+<td style="text-align:center"> concact</td>
+<td style="text-align:center">grunt-contrib-concact</td>
+<td style="text-align:center">合并文件，包括javascript/css等</td>
+</tr>
+<tr>
+<td style="text-align:center"> uglify</td>
+<td style="text-align:center">grunt-contrib-uglify</td>
+<td style="text-align:center">对指定的javascript进行压缩</td>
+</tr>
+<tr>
+<td style="text-align:center">useminPrepare</td>
+<td style="text-align:center">grunt-usemin</td>
+<td style="text-align:center">搜索主页面加载javascript或css文件的代码，获取路径配置相关任务</td>
+</tr>
+<tr>
+<td style="text-align:center">usemin</td>
+<td style="text-align:center">grunt-usemin</td>
+<td style="text-align:center">修改主页面，将javascript/css文件块替换为压缩后的文件</td>
+</tr>
+<tr>
+<td style="text-align:center">cssmain</td>
+<td style="text-align:center">grunt-contrib-cssmain</td>
+<td style="text-align:center">压缩css文件</td>
+</tr>
+<tr>
+<td style="text-align:center">requirejs</td>
+<td style="text-align:center">grunt-contrib-requirejs</td>
+<td style="text-align:center">解析系统的requirejs及module</td>
+</tr>
+<tr>
+<td style="text-align:center">jasmine</td>
+<td style="text-align:center">grunt-contrib-jasmine</td>
+<td style="text-align:center">运行测试</td>
+</tr>
+<tr>
+<td style="text-align:center">watch</td>
+<td style="text-align:center">grunt-contrib-watch</td>
+<td style="text-align:center">检测文件修改自动执行某些既定的任务</td>
+</tr>
+</tbody>
+</table>
+<p></p><p></p><br>如何创建插件以及已有插件列表可以在<a href="https://github.com/gruntjs" target="_blank" rel="noopener">Grunt Source</a>以及网站<a href="http://gruntjs.com/plugins" target="_blank" rel="noopener">Grunt Plugins</a>查到。<p></p>
+<h3 id="5-Apply-Grunt-and-plugins"><a href="#5-Apply-Grunt-and-plugins" class="headerlink" title="5. Apply Grunt and plugins"></a>5. Apply Grunt and plugins</h3><p>上述概念了解过后，我们就可以来看一下如何安装grunt和应用插件。</p>
+<ul>
+<li>Grunt</li>
+</ul>
+<figure class="highlight js"><figcaption><span>install</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm instal grunt --save-dev</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Plugins</li>
+</ul>
+<figure class="highlight js"><figcaption><span>install</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install grunt-contrib-uglify --save-dev</span><br></pre></td></tr></table></figure>
+<p>这些基于grunt的插件信息会被更新到package.json文件中，可以参见<a href="http://gruntjs.com/getting-started#installing-grunt-and-gruntplugins" target="_blank" rel="noopener">Grunt Getting Started</a>文档。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>结合项目试用了Grunt之后，觉得很喜欢。它的一大特点就是简单，简单清晰的配置文件Gruntfile.js令人爱不释手，以前需要写很多脚本的事情，现在用几个插件配一下很容易搞定；第二就是易扩展，灵活小巧的插件使得开发人员自定义功能或者扩展修改都非常的方便。这些都是在以前Javascript项目中很难短时间内做到的，极大的节省了开发成本，提高效率。</p>
+<p>回到前言中的问题，在javascript的世界里我们也有了自己的构建工具Grunt。Grunt目前为止是0.4版本，作为一个刚起步的软件构建工具，它还缺少一些必要的功能，比如依赖管理；在构建项目开发框架与IDE集成方面也可以有更多的结合。Grunt团队也在致力于将其完善与优化，力图使之灵活简单易扩展，看看它的release note，我对它的将来还是很看好的，希望它能走的很远。同时，<a href="yeoman.io">Yeo</a>、<a href="http://bower.io/" target="_blank" rel="noopener">Bower</a>、<a href="http://brunch.io/" target="_blank" rel="noopener">Brunch</a>也都是值得关注与尝试应用的项目。</p>
+<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><ul>
+<li><a href="http://weblog.bocoup.com/introducing-grunt/" target="_blank" rel="noopener">http://weblog.bocoup.com/introducing-grunt/</a></li>
+<li><a href="http://gruntjs.com" target="_blank" rel="noopener">http://gruntjs.com</a></li>
+<li><a href="http://weblog.bocoup.com/tearing-grunt-apart/" target="_blank" rel="noopener">http://weblog.bocoup.com/tearing-grunt-apart/</a></li>
+</ul>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2013/05/16/grunt/" data-id="cjlbz54te0004ss6skmlj42gl" class="article-share-link"><i class="fas fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2013/05/16/grunt/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2013/05/16/grunt/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2013/05/22/elmah-and-elmahr-a-net-logging-module-and-dashboard/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    Elmah &amp; Elmah.MVC - a .net Error Logging Modules and Handlers
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2013/05/07/reflection-in-c-sharp/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Reflection in C#</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/cxo-guide-microservices/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://lh4.googleusercontent.com/A7tEGUUzYq2LAC45i3e_hKuN7X3JKJqUPxQnk4K523ZSaFzvC2dudPXWL7w7yRJY07gKbl2xwc8ubjC4vCuZKH2dFWcJtoTnN4bAxjy4Gvm9GRHa896njBSnZLuexDXc_diTd-9h)" alt="[翻译] 给CxO的微服务指南" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/cxo-guide-microservices/" class="title">[翻译] 给CxO的微服务指南</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:11:42.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/abilities/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://upload-images.jianshu.io/upload_images/1825822-32344c7ba682ad9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)" alt="你需要了解的那些Abilities(一)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/abilities/" class="title">你需要了解的那些Abilities(一)</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:08:14.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/token/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/car.png)" alt="谁动了我的Token" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/05/25/token/" class="title">谁动了我的Token</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T07:03:47.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/insights/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/insights.jpeg)" alt="如何培养技术洞见力" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/05/25/insights/" class="title">如何培养技术洞见力</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T00:45:32.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/02/01/refactoring/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/refactoring.png)" alt="重构的七宗罪" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/02/01/refactoring/" class="title">重构的七宗罪</a></p>
+                            <p class="item-date"><time datetime="2016-02-01T06:59:00.000Z" itemprop="datePublished">2016-02-01</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/coding/">coding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/thought/">thought</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/works/">works</a><span class="category-list-count">20</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture/">architecture</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture-microservices/">architecture,microservices</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/architecture/" style="font-size: 10px;">architecture</a> <a href="/tags/architecture-microservices/" style="font-size: 10px;">architecture,microservices</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Xianjing Zhuo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'http://yoursite.com/2013/05/16/grunt/';
+        
+        this.page.identifier = 'grunt';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'xianjing' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

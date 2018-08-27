@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>The Fact of User Story | Xianjing&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="1. Preface 很多时候，当做事迷失于细节，就会忘记了当时做这件事情的本来目的，做项目也是一样。  2. What’s User Story用户故事描述的是用户想要在某一场景下达到的目标，即业务价值，用来作为需求的提示和制订计划。 3. Why User Story 当用户看到或使用软件后，通常会产生新想法  经验告诉我们，软件需求是易变的，不确定的，我们不可能很好的预测到将来需求的变化。用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Fact of User Story">
+<meta property="og:url" content="http://yoursite.com/2013/07/12/the-fact-of-user-story/index.html">
+<meta property="og:site_name" content="Xianjing&#39;s blog">
+<meta property="og:description" content="1. Preface 很多时候，当做事迷失于细节，就会忘记了当时做这件事情的本来目的，做项目也是一样。  2. What’s User Story用户故事描述的是用户想要在某一场景下达到的目标，即业务价值，用来作为需求的提示和制订计划。 3. Why User Story 当用户看到或使用软件后，通常会产生新想法  经验告诉我们，软件需求是易变的，不确定的，我们不可能很好的预测到将来需求的变化。用">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-08-11T09:47:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The Fact of User Story">
+<meta name="twitter:description" content="1. Preface 很多时候，当做事迷失于细节，就会忘记了当时做这件事情的本来目的，做项目也是一样。  2. What’s User Story用户故事描述的是用户想要在某一场景下达到的目标，即业务价值，用来作为需求的提示和制订计划。 3. Why User Story 当用户看到或使用软件后，通常会产生新想法  经验告诉我们，软件需求是易变的，不确定的，我们不可能很好的预测到将来需求的变化。用">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Xianjing&#39;s blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpeg" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpeg" />
+            <h2 id="name">Xianjing</h2>
+            <h3 id="title">learner</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/xianjing">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                36
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                2
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/xianjing" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-the-fact-of-user-story" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            The Fact of User Story
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2013/07/12/the-fact-of-user-story/">
+            <time datetime="2013-07-12T00:07:00.000Z" itemprop="datePublished">2013-07-12</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/thought/">thought</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="1-Preface"><a href="#1-Preface" class="headerlink" title="1. Preface"></a>1. Preface</h2><blockquote>
+<p>很多时候，当做事迷失于细节，就会忘记了当时做这件事情的本来目的，做项目也是一样。</p>
+</blockquote>
+<h2 id="2-What’s-User-Story"><a href="#2-What’s-User-Story" class="headerlink" title="2. What’s User Story"></a>2. What’s User Story</h2><p>用户故事描述的是用户想要在某一场景下达到的目标，即业务价值，用来作为需求的<strong>提示</strong>和制订计划。</p>
+<h2 id="3-Why-User-Story"><a href="#3-Why-User-Story" class="headerlink" title="3. Why User Story"></a>3. Why User Story</h2><blockquote>
+<p>当用户看到或使用软件后，通常会产生新想法</p>
+</blockquote>
+<p>经验告诉我们，软件需求是易变的，不确定的，我们不可能很好的预测到将来需求的变化。用户在看到或使用软件后通常会产生新的想法。这种需求的不可控是软件项目中最大的风险与痛点，也正是这种不确定性的存在使得我们必须关注用户需求的核心目标，并且频繁的，以最快的速度将已工作的软件与用户进行沟通，及时捕获用户的新想法或新需求。</p>
+<p>用户故事就是在这样一种大的环境下随着迭代式轻量级开发方法的出现而出现。<br><a id="more"></a></p>
+<h2 id="4-The-Fact-of-User-Story"><a href="#4-The-Fact-of-User-Story" class="headerlink" title="4. The Fact of User Story"></a>4. The Fact of User Story</h2><blockquote>
+<p>It is about the <strong>Intent</strong></p>
+</blockquote>
+<p>在多变的需求中，通常用户完成需求的目标和业务价值是不变的，所以用户故事更多的是关注用户所要达到的目标，而非具体的解决方案或某一个细节。这也是它与传统的需求规格说明书最大的不同。</p>
+<p>为什么不一开始就讨论细节呢？</p>
+<p>第一，软件需求是多变的，过早的涉及细节往往是一种浪费。到真正开发的时候这些细节通常会发生新的变化。<br>第二，开发中开发人员对需求存在不同的解读，不可能一次性作对。<br>第三，过早的涉及细节，会使得开发人员陷入实现的过程中，只是为了实现而实现，而忘记了需求的目的，从而可能丧失了选择其它更加有效的解决方案的机会；另外，这样的用户故事也会变得不可协商，等同于传统的软件需求规格说明书，在敏捷开发中应该尽量避免。</p>
+<blockquote>
+<p>It is a <strong>PlaceHolder</strong></p>
+</blockquote>
+<p>用户故事代表着用户的需求而不是记录用户的需求，用来制订计划和需求提示。</p>
+<blockquote>
+<p>It is about <strong>Conversation</strong></p>
+</blockquote>
+<p>用户故事强调的是口头的交流，”听我来讲故事”，阐述着用户故事背后的真正目的。需求的细节需随着开发的进行而在频繁的“对话“中获得，从而能够一定程度上应对多变的需求。</p>
+<p>Ron Jeffries用3个C来描述用户故事，卡片（Card）、交谈（Conversation）和确认（Confirmation）。卡片一般是一张小纸片，写着用户的故事描述。如果故事卡上面已经无法继续书写了，那么需要使用更小的故事卡，这迫使我们更好的关注目标而非细节。</p>
+<h2 id="5-How-User-Story-Plays-its-Role"><a href="#5-How-User-Story-Plays-its-Role" class="headerlink" title="5. How User Story Plays its Role"></a>5. How User Story Plays its Role</h2><p>用户故事是随着项目的进展逐渐演进的。</p>
+<p>在业务分析阶段(Inception)，捕获用户的业务流，提取用户故事。业务流节点上的任何有效一步都可以作为一个用户故事或者多个用户故事。这个时候得到的是粗粒度的用户故事，通常称为master story。</p>
+<p>当项目进入开发阶段时，用户故事需要进一步拆分，使其大小适合于开发与计划；同时增加一些开发假设或相关的约定使之能够被开发。进入开发中，开发团队实现用户故事，与业务分析员和用户协商其中的解决方案与实现，在协商沟通的方式中可工作的软件胜于详尽的文档。</p>
+<p>开发完成后，测试人员基于完成的用户故事进行测试，完成部署，最后由用户对已交付的用户故事进行验收，验收通过，也意味着该用户故事就此结束。</p>
+<p>用户故事驱动着整个项目的开发过程，需求由不确定到确定，直至最终完结。</p>
+<h2 id="6-What’s-a-Good-User-Story"><a href="#6-What’s-a-Good-User-Story" class="headerlink" title="6. What’s a Good User Story"></a>6. What’s a Good User Story</h2><h3 id="6-1-Reflect-its-intent"><a href="#6-1-Reflect-its-intent" class="headerlink" title="6.1 Reflect its intent"></a>6.1 Reflect its intent</h3><p>用户故事通常按照如下的格式来表达：　　<br><figure class="highlight js"><figcaption><span>story</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">As a &lt;Persona&gt;, </span><br><span class="line">I<span class="string">'d like to/want to &lt;Action&gt;, </span></span><br><span class="line"><span class="string">so that I achieve &lt;Goal/Benefit&gt;.</span></span><br></pre></td></tr></table></figure></p>
+<p>或者</p>
+<figure class="highlight js"><figcaption><span>story</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">In order to achieve &lt;Goal/Benefit&gt;, </span><br><span class="line">&lt;Persona&gt; want to &lt;Action&gt;…</span><br></pre></td></tr></table></figure>
+<p>举例：</p>
+<figure class="highlight js"><figcaption><span>story</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">作为工作单处理人员，</span><br><span class="line">我希望能够查询待处理的工作单，</span><br><span class="line">以便了解当前需要处理的订单，及时完成订单的处理。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这样来表达的好处是显而易见的，它是从用户角度关注业务目标，是采用用户和开发团队都可以理解的业务语言去编写，而不是技术语言。开发人员在理解了业务价值后会有助于技术方案的决策，帮助更快速地开发，而这样的用户故事也会鼓励用户的参与，从而帮助项目。</p>
+<p>比如&lt;&lt;用户故事与敏捷方法&gt;&gt;一书中提到的”该产品应该有4个轮子”描述，这时候我们往往会联想到汽车，然而其实用户想要的是一个割草机，所以这个用户故事应该表达割草的目标，而非4个轮子的细节或解决方案。<br><figure class="highlight js"><figcaption><span>story</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">As Lisa,</span><br><span class="line">I want to have a tool</span><br><span class="line">so that I can quickly weed my lawn.</span><br></pre></td></tr></table></figure></p>
+<h3 id="6-2-Follow-INVEST-Principle"><a href="#6-2-Follow-INVEST-Principle" class="headerlink" title="6.2 Follow INVEST Principle"></a>6.2 Follow <strong>INVEST</strong> Principle</h3><p>用户故事的INVEST原则可以指导我们写一个好的用户故事。</p>
+<h3 id="6-2-1-Independent"><a href="#6-2-1-Independent" class="headerlink" title="6.2.1 Independent"></a>6.2.1 Independent</h3><p>用户故事应该是端到端的，可独立开发，独立部署、独立交付的功能点。在整个业务流中, 应尽量避免故事之间的相互依赖，这种依赖会使得制订计划与开发都变得更加困难。</p>
+<h3 id="6-2-2-Negotiable"><a href="#6-2-2-Negotiable" class="headerlink" title="6.2.2. Negotiable"></a>6.2.2. Negotiable</h3><p>用户故事代表的是用户的目标，不是Specification，所以一切能够达到用户故事目标的解决方案与实现细节都是可以协商的。故事卡本身的简单描述，也是在提示用户与开发团队，这不是具体的需求，也不是最终的解决方案。开发团队应发挥主动能动性参与到这些解决方案与细节的商谈中，从而帮助用户更好的更有效的达到目标。</p>
+<h3 id="6-2-3-Valuable"><a href="#6-2-3-Valuable" class="headerlink" title="6.2.3 Valuable"></a>6.2.3 Valuable</h3><p>每个故事必须给用户带来价值，从业务角度而非实现角度。</p>
+<h3 id="6-2-4-Estimatable"><a href="#6-2-4-Estimatable" class="headerlink" title="6.2.4 Estimatable"></a>6.2.4 Estimatable</h3><p>可估算的，帮助制定项目计划，故事之间不能相差太多, 整个项目开发周期中一致性胜于准确性。</p>
+<h3 id="6-2-5-Small-Size-Appropriate"><a href="#6-2-5-Small-Size-Appropriate" class="headerlink" title="6.2.5 Small/Size Appropriate"></a>6.2.5 Small/Size Appropriate</h3><p>用户故事的大小需要合适，过大过小都不利于制定计划。一般它的大小取决于迭代长度。如果一个用户故事不能够在一个迭代内完成，那么就会影计划，也意味着不能够对它进行部署，不能尽快拿到反馈，用户故事的不确定性就会增加。</p>
+<p>我们一般会对过大的用户故事进行拆分或重新组合。拆分用户故事不管什么方法，最重要的是保证用户故事是端到端的，可独立交付，而如创建用户API，创建用户UI这样的用户故事是不好的。</p>
+<h3 id="6-2-6-Testable"><a href="#6-2-6-Testable" class="headerlink" title="6.2.6 Testable"></a>6.2.6 Testable</h3><p>每个用户故事都是可独立测试的.</p>
+<h2 id="7-Summary"><a href="#7-Summary" class="headerlink" title="7. Summary"></a>7. Summary</h2><p>综上所述，用户故事描述的是用户的目标和业务价值，而不是解决方案；用户故事不是传统的需求规格说明书，不是用例，不是既定的合同或契约，它是可协商的；用户故事代表了用户的需求，而不是记录用户的需求。它时时提醒我们需要以可工作的软件与客户进行有效的沟通，快速反馈，及时捕捉新的需求。</p>
+<p>用户故事是面向用户的，强调口头沟通；鼓励延迟细节的处理；用户故事的大小适合制定作计划；用户故事必须是可估计的，以便帮助计划。用户故事必须是独立可开发可交付的；用户故事之间如果存在依赖，将会影响我们制订计划。</p>
+<p>“<strong>It is all about the intent.</strong>“，以我们的核心技术能力，帮助用户达成目标实现业务价值是敏捷开发团队的关键目标。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2013/07/12/the-fact-of-user-story/" data-id="cjlbz54tv000css6sgi9oi8m7" class="article-share-link"><i class="fas fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2013/07/12/the-fact-of-user-story/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2013/07/12/the-fact-of-user-story/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2013/08/05/test-automation/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    Test Automation
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2013/05/27/refactor/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Refactoring － 为重构正名</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/cxo-guide-microservices/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://lh4.googleusercontent.com/A7tEGUUzYq2LAC45i3e_hKuN7X3JKJqUPxQnk4K523ZSaFzvC2dudPXWL7w7yRJY07gKbl2xwc8ubjC4vCuZKH2dFWcJtoTnN4bAxjy4Gvm9GRHa896njBSnZLuexDXc_diTd-9h)" alt="[翻译] 给CxO的微服务指南" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/cxo-guide-microservices/" class="title">[翻译] 给CxO的微服务指南</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:11:42.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/abilities/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://upload-images.jianshu.io/upload_images/1825822-32344c7ba682ad9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)" alt="你需要了解的那些Abilities(一)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/abilities/" class="title">你需要了解的那些Abilities(一)</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:08:14.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/token/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/car.png)" alt="谁动了我的Token" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/05/25/token/" class="title">谁动了我的Token</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T07:03:47.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/insights/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/insights.jpeg)" alt="如何培养技术洞见力" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/05/25/insights/" class="title">如何培养技术洞见力</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T00:45:32.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/02/01/refactoring/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/refactoring.png)" alt="重构的七宗罪" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/02/01/refactoring/" class="title">重构的七宗罪</a></p>
+                            <p class="item-date"><time datetime="2016-02-01T06:59:00.000Z" itemprop="datePublished">2016-02-01</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/coding/">coding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/thought/">thought</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/works/">works</a><span class="category-list-count">20</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture/">architecture</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture-microservices/">architecture,microservices</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/architecture/" style="font-size: 10px;">architecture</a> <a href="/tags/architecture-microservices/" style="font-size: 10px;">architecture,microservices</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Xianjing Zhuo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'http://yoursite.com/2013/07/12/the-fact-of-user-story/';
+        
+        this.page.identifier = 'the-fact-of-user-story';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'xianjing' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

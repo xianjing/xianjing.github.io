@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Elmah &amp; Elmah.MVC - a .net Error Logging Modules and Handlers | Xianjing&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="What’s ElmahElmah，Error Logging Modules and Hanlders，是一个基于.net平台的日志管理和处理的工具包，可以与Asp.net Web应用项目进行集成，包括Asp.net Web MVC和Web Api。 Elmah可以帮助记录系统中没有处理的异常，同时它也提供Api允许开发人员记录当前上下文中捕获的异常；它的一个颇具特色的优点是，Elmah提供一个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elmah &amp; Elmah.MVC - a .net Error Logging Modules and Handlers">
+<meta property="og:url" content="http://yoursite.com/2013/05/22/elmah-and-elmahr-a-net-logging-module-and-dashboard/index.html">
+<meta property="og:site_name" content="Xianjing&#39;s blog">
+<meta property="og:description" content="What’s ElmahElmah，Error Logging Modules and Hanlders，是一个基于.net平台的日志管理和处理的工具包，可以与Asp.net Web应用项目进行集成，包括Asp.net Web MVC和Web Api。 Elmah可以帮助记录系统中没有处理的异常，同时它也提供Api允许开发人员记录当前上下文中捕获的异常；它的一个颇具特色的优点是，Elmah提供一个">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/elmah/elmahErrorPage.png">
+<meta property="og:image" content="http://yoursite.com/images/elmah/installation.png">
+<meta property="og:image" content="http://yoursite.com/images/elmah/errorFiles.png">
+<meta property="og:image" content="http://yoursite.com/images/elmah/errorDetail.png">
+<meta property="og:updated_time" content="2017-08-11T09:47:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Elmah &amp; Elmah.MVC - a .net Error Logging Modules and Handlers">
+<meta name="twitter:description" content="What’s ElmahElmah，Error Logging Modules and Hanlders，是一个基于.net平台的日志管理和处理的工具包，可以与Asp.net Web应用项目进行集成，包括Asp.net Web MVC和Web Api。 Elmah可以帮助记录系统中没有处理的异常，同时它也提供Api允许开发人员记录当前上下文中捕获的异常；它的一个颇具特色的优点是，Elmah提供一个">
+<meta name="twitter:image" content="http://yoursite.com/images/elmah/elmahErrorPage.png">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Xianjing&#39;s blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpeg" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpeg" />
+            <h2 id="name">Xianjing</h2>
+            <h3 id="title">learner</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/xianjing">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                36
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                2
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/xianjing" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-elmah-and-elmahr-a-net-logging-module-and-dashboard" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Elmah &amp; Elmah.MVC - a .net Error Logging Modules and Handlers
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2013/05/22/elmah-and-elmahr-a-net-logging-module-and-dashboard/">
+            <time datetime="2013-05-21T23:26:00.000Z" itemprop="datePublished">2013-05-22</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/works/">works</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="What’s-Elmah"><a href="#What’s-Elmah" class="headerlink" title="What’s Elmah"></a>What’s Elmah</h2><p><a href="https://code.google.com/p/elmah/" target="_blank" rel="noopener">Elmah</a>，Error Logging Modules and Hanlders，是一个基于.net平台的日志管理和处理的工具包，可以与Asp.net Web应用项目进行集成，包括Asp.net Web MVC和Web Api。</p>
+<p>Elmah可以帮助记录系统中没有处理的异常，同时它也提供Api允许开发人员记录当前上下文中捕获的异常；它的一个颇具特色的优点是，Elmah提供一个查看日志的Web网页，包含详细的异常Call-Stack，方便进行调试诊断问题；系统支持人员可以通过Web服务本地或远程访问，也可以下载日志到本地进行详细诊断；</p>
+<p><img src="/images/elmah/elmahErrorPage.png" alt="image"></p>
+<blockquote>
+<p><em>这里要注意的一个问题就是远程访问的安全问题，毕竟日志会暴露系统很多的实现细节，比如cookie，访问Url等，一旦日志泄露，将会使得系统存在被侵入的风险。</em></p>
+</blockquote>
+<p>从实现技术讲，Elmah捕捉异常的方式主要基于 Asp.net Http Pipeline中IHttpModule和IHttpHandler模块对请求、响应、上下文以及异常事件的处理能力，依赖Web.config对其进行配置，所以可以很容易的与系统集成。</p>
+<p>Elmah支持日志的多种存储，可以以文件方式(xml)进行存储，也可以存储于SqlServer, Oracle, SQLite，mySql等数据库中。同时Elmah还支持邮件，Rss feed等方式分发日志。<br><a id="more"></a></p>
+<h2 id="Why-Elmah"><a href="#Why-Elmah" class="headerlink" title="Why Elmah"></a>Why Elmah</h2><p>在.net领域中记录日志有log4net, Nlog, Elmah等多种选择，很长一段时间我们的系统(Asp.net Web应用)在使用<a href="http://nlog-project.org/" target="_blank" rel="noopener">Nlog</a>。但是在引入Elmah后，我更喜欢Elmah一些。</p>
+<p>基于Elmah核心库的<a href="nuget.org/packages/Elmah.MVC">Elmah.MVC扩展</a>使得Elmah与Asp.net MVC的应用集成更简单，无痛配置，很容易的就使得系统可以基于当前HttpContext自动捕获未处理的异常记录日志；同时，Elmah提供查看异常日志详细信息的Web页面给它加分很多，相对于从浩瀚的文本内容中搜寻错误，Web页面要更便利；</p>
+<p>另一方面,Elmah在<a href="nuget.org">NuGet Gallery</a>的下载排行榜中非常活跃，经常处于top10 of the last 6 week的位置，也是我们选择它的一个原因。</p>
+<h2 id="Integrate-Elmah-MVC"><a href="#Integrate-Elmah-MVC" class="headerlink" title="Integrate Elmah.MVC"></a>Integrate Elmah.MVC</h2><h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1.安装"></a>1.安装</h3><p>在Visual Studio中选中需要使用Elmah的项目，在Reference -&gt; Manage NuGet Packages，找到Elmah.MVC 包即可安装，如下图所示。</p>
+<p><img src="/images/elmah/installation.png" alt="image"></p>
+<p>也可以通过VisualStudio的Package Manager Console.</p>
+<figure class="highlight plain"><figcaption><span>installation lang: powershell</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Install-Package Elmah.MVC</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>安装后会自动在Web.config文件中添加Elmah的配置项，包括记日志的相关modules和空白的elmah节点.</p>
+<figure class="highlight xml"><figcaption><span>web.config</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">sectionGroup</span> <span class="attr">name</span>=<span class="string">"elmah"</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">section</span> <span class="attr">name</span>=<span class="string">"security"</span> <span class="attr">requirePermission</span>=<span class="string">"false"</span> <span class="attr">type</span>=<span class="string">"Elmah.SecuritySectionHandler, Elmah"</span> /&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">section</span> <span class="attr">name</span>=<span class="string">"errorLog"</span> <span class="attr">requirePermission</span>=<span class="string">"false"</span> <span class="attr">type</span>=<span class="string">"Elmah.ErrorLogSectionHandler, Elmah"</span> /&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">section</span> <span class="attr">name</span>=<span class="string">"errorMail"</span> <span class="attr">requirePermission</span>=<span class="string">"false"</span> <span class="attr">type</span>=<span class="string">"Elmah.ErrorMailSectionHandler, Elmah"</span> /&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">section</span> <span class="attr">name</span>=<span class="string">"errorFilter"</span> <span class="attr">requirePermission</span>=<span class="string">"false"</span> <span class="attr">type</span>=<span class="string">"Elmah.ErrorFilterSectionHandler, Elmah"</span> /&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">sectionGroup</span>&gt;</span></span><br><span class="line">   ….</span><br><span class="line">   <span class="tag">&lt;<span class="name">appSettings</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">add</span> <span class="attr">key</span>=<span class="string">"elmah.mvc.disableHandler"</span> <span class="attr">value</span>=<span class="string">"false"</span> /&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">add</span> <span class="attr">key</span>=<span class="string">"elmah.mvc.disableHandleErrorFilter"</span> <span class="attr">value</span>=<span class="string">"false"</span> /&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">add</span> <span class="attr">key</span>=<span class="string">"elmah.mvc.requiresAuthentication"</span> <span class="attr">value</span>=<span class="string">"false"</span> /&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">add</span> <span class="attr">key</span>=<span class="string">"elmah.mvc.allowedRoles"</span> <span class="attr">value</span>=<span class="string">"*"</span> /&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">add</span> <span class="attr">key</span>=<span class="string">"elmah.mvc.route"</span> <span class="attr">value</span>=<span class="string">"elmah"</span> /&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="name">appSettings</span>&gt;</span></span><br><span class="line">     …..</span><br><span class="line">    <span class="tag">&lt;<span class="name">httpModules</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">add</span> <span class="attr">name</span>=<span class="string">"ErrorLog"</span> <span class="attr">type</span>=<span class="string">"Elmah.ErrorLogModule, Elmah"</span> /&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">add</span> <span class="attr">name</span>=<span class="string">"ErrorMail"</span> <span class="attr">type</span>=<span class="string">"Elmah.ErrorMailModule, Elmah"</span> /&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">add</span> <span class="attr">name</span>=<span class="string">"ErrorFilter"</span> <span class="attr">type</span>=<span class="string">"Elmah.ErrorFilterModule, Elmah"</span> /&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">httpModules</span>&gt;</span></span><br><span class="line">   </span><br><span class="line">   <span class="tag">&lt;<span class="name">elmah</span>&gt;</span><span class="tag">&lt;/<span class="name">elmah</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-Configuration"><a href="#2-Configuration" class="headerlink" title="2.Configuration"></a>2.Configuration</h3><p>Elmah的配置主要包括日志的存储方式，安全方面，和ErrorLog的Filter。</p>
+<p>1) Storage</p>
+<p>可配置基于Xml/SqlServer等的存储，只能定义一种，也就是errorLog节点只能出现一次。</p>
+<figure class="highlight xml"><figcaption><span>web.config</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">elmah</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- save to xml file --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">errorLog</span> <span class="attr">type</span>=<span class="string">"Elmah.XmlFileErrorLog, Elmah"</span> <span class="attr">logPath</span>=<span class="string">"~/Logs"</span> /&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- save to database --&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">errorLog</span> <span class="attr">type</span>=<span class="string">"Elmah.SqlErrorLog, Elmah"</span> <span class="attr">connectionStringName</span>=<span class="string">"YourConnectionStringName"</span> <span class="attr">applicationName</span>=<span class="string">"YourWebsiteName"</span> /&gt;</span></span><br><span class="line">    ….</span><br><span class="line"><span class="tag">&lt;/<span class="name">elmah</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果我们选用Xml文件存储，配置完后错误日志就会以Xml的形式存在于上述config定义的路径下，每一个异常对应一个XML存在。</p>
+<p><img src="/images/elmah/errorFiles.png" alt="image"></p>
+<p>2) Remote access for web view page</p>
+<p>远程访问一旦打开就要同时配置访问的安全问题，具体可能根据项目的不同而不同。在我们的项目因为没有打开远程访问，所以允许所有用户可以查看日志。</p>
+<figure class="highlight xml"><figcaption><span>web.config</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">system.web</span>&gt;</span></span><br><span class="line">…</span><br><span class="line"><span class="tag">&lt;<span class="name">location</span> <span class="attr">path</span>=<span class="string">"elmah"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">system.web</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">autorization</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">allow</span> <span class="attr">users</span>= <span class="string">"*"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">authorization</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">system.web</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">location</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">system.web</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">elmah</span>&gt;</span></span><br><span class="line">….</span><br><span class="line"><span class="tag">&lt;<span class="name">security</span> <span class="attr">allowRemoteAccess</span>=<span class="string">"false"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">elmah</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-Filter"><a href="#3-Filter" class="headerlink" title="3.Filter"></a>3.Filter</h3><p>Elmah Filter主要用来过滤那些不需要关注的错误异常，主要基于ErrorLogFilterModule，可通过编程也可配置。</p>
+<blockquote>
+<p>ErrorFilterModule takes care of subscribing to the Filtering event of the modules that precede it. When the logging and mailing modules fire their Filtering event, ErrorFilterModule runs through one or more assertions to decide whether to dismiss the exception or not. If the assertions test true, the exception is dismissed. </p>
+</blockquote>
+<blockquote>
+<p>Dismissing an exception does not clear the error so it still continues to surface as an unhandled exception. Dismissing here means that the module will not log it.</p>
+</blockquote>
+<p>下面给的例子在Web.config中进行配置，如果test的表达式满足，那么相关的Exception就不会被记录。</p>
+<figure class="highlight xml"><figcaption><span>web.config</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">elmah</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="tag">&lt;<span class="name">errorFilter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">test</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">equal</span> <span class="attr">binding</span>=<span class="string">"HttpStatusCode"</span> <span class="attr">value</span>=<span class="string">"404"</span> <span class="attr">type</span>=<span class="string">"Int32"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">test</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">errorFilter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">elmah</span>&gt;</span></span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+<h3 id="4-Customized-Error-Log-Message"><a href="#4-Customized-Error-Log-Message" class="headerlink" title="4.Customized Error Log Message"></a>4.Customized Error Log Message</h3><p>Elmah根据系统抛出的异常以及当前Contxt记录日志，有时候缺省的call-stack并不能给我们带来足够的信息，我们可以通过override customizedException.ToString()方法从而可以记录更多的信息，以方便调试。</p>
+<figure class="highlight c"><figcaption><span>customzied exception#</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyException</span> :</span> Exception&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MyException</span><span class="params">(MyModule <span class="keyword">module</span>, Response response)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.myModule = <span class="keyword">module</span>;</span><br><span class="line">		<span class="keyword">this</span>.response = response;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> oerride <span class="built_in">string</span> <span class="title">ToString</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">string</span>.format(<span class="string">"&#123;0&#125;&#123;1&#125;&#123;2&#125;"</span>, JSonConvert.SerializeObject(<span class="keyword">new</span> &#123;</span><br><span class="line">								name = myModule.Name,</span><br><span class="line">								info = myModule.Info,</span><br><span class="line">								statusCode = response.Statuscode,</span><br><span class="line">								…..</span><br><span class="line">							&#125;),</span><br><span class="line">							Environment.NewLine, </span><br><span class="line">							base.ToString());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+<p><img src="/images/elmah/errorDetail.png" alt="image"></p>
+<h3 id="5-API-to-log-with-Custom-Errors"><a href="#5-API-to-log-with-Custom-Errors" class="headerlink" title="5.API to log with Custom Errors"></a>5.API to log with Custom Errors</h3><p>Elmah除了能够自动捕获系统中未处理的异常，同时也提供ErrorLog和ErrorSignal API允许开发人员为系统中捕获的异常记录日志，比如对于一些系统已知的异常通常捕获并转向对用户友好的错误页面。Elmah的API可以让开发人员在处理异常的同时将其记录。</p>
+<figure class="highlight c"><figcaption><span>customzied exception#</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Elmah.ErrorSignal.FromCurrentContext().Raise(exception);</span><br><span class="line">Elmah.ErrorLog.GetDefault(HttpContext).Log(<span class="keyword">new</span> Error(exception, httpContext));</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>Elmah的亮点在于集成简单和查询日志的Web服务，但是它有一个问题就是只能记录异常。如果要想追踪系统运行的流程，记录一些文本信息，可以通过其他方式进行。我自己的经验是在很长的系统维护周期中，异常以及其上下文是最能帮助我们发现和诊断问题。而其他的例如Audit之类的日志功能，我自己理解不属于Elmah解决问题的范畴，可以通过其他工具诸如Nlog,Log4j等方式。</p>
+<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><ol>
+<li><a href="https://code.google.com/p/elmah/" target="_blank" rel="noopener">https://code.google.com/p/elmah/</a></li>
+<li><a href="http://www.codeproject.com/Articles/516626/Elmah" target="_blank" rel="noopener">http://www.codeproject.com/Articles/516626/Elmah</a></li>
+<li><a href="http://msdn.microsoft.com/en-us/library/aa479332.aspx" target="_blank" rel="noopener">http://msdn.microsoft.com/en-us/library/aa479332.aspx</a></li>
+</ol>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2013/05/22/elmah-and-elmahr-a-net-logging-module-and-dashboard/" data-id="cjlbz54tk0005ss6s4cd253sc" class="article-share-link"><i class="fas fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2013/05/22/elmah-and-elmahr-a-net-logging-module-and-dashboard/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2013/05/22/elmah-and-elmahr-a-net-logging-module-and-dashboard/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2013/05/27/refactor/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    Refactoring － 为重构正名
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2013/05/16/grunt/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Grunt - 基于任务的Javascript构建工具</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/cxo-guide-microservices/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://lh4.googleusercontent.com/A7tEGUUzYq2LAC45i3e_hKuN7X3JKJqUPxQnk4K523ZSaFzvC2dudPXWL7w7yRJY07gKbl2xwc8ubjC4vCuZKH2dFWcJtoTnN4bAxjy4Gvm9GRHa896njBSnZLuexDXc_diTd-9h)" alt="[翻译] 给CxO的微服务指南" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/cxo-guide-microservices/" class="title">[翻译] 给CxO的微服务指南</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:11:42.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/abilities/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://upload-images.jianshu.io/upload_images/1825822-32344c7ba682ad9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)" alt="你需要了解的那些Abilities(一)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/abilities/" class="title">你需要了解的那些Abilities(一)</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:08:14.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/token/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/car.png)" alt="谁动了我的Token" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/05/25/token/" class="title">谁动了我的Token</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T07:03:47.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/insights/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/insights.jpeg)" alt="如何培养技术洞见力" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/05/25/insights/" class="title">如何培养技术洞见力</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T00:45:32.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/02/01/refactoring/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/refactoring.png)" alt="重构的七宗罪" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/02/01/refactoring/" class="title">重构的七宗罪</a></p>
+                            <p class="item-date"><time datetime="2016-02-01T06:59:00.000Z" itemprop="datePublished">2016-02-01</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/coding/">coding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/thought/">thought</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/works/">works</a><span class="category-list-count">20</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture/">architecture</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture-microservices/">architecture,microservices</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/architecture/" style="font-size: 10px;">architecture</a> <a href="/tags/architecture-microservices/" style="font-size: 10px;">architecture,microservices</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Xianjing Zhuo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'http://yoursite.com/2013/05/22/elmah-and-elmahr-a-net-logging-module-and-dashboard/';
+        
+        this.page.identifier = 'elmah-and-elmahr-a-net-logging-module-and-dashboard';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'xianjing' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

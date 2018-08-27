@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Reflection in C# | Xianjing&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Why Reflection反射是一种计算机在运行时查看和修改对象内部结构与行为的一种能力，它是1982年由Brain Cantwell Smith博士提出的。反射语言的特性最早出现在汇编语言中，汇编语言可以针对指令进行编程，在运行时将指令作为数据对其进行修改，从而修改系统运行的行为。 反射是计算机语言非常有价值的一个特性，具体的说，反射可以获取运行时对象的数据、方法、构造以及行为，并对其进行操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Reflection in C#">
+<meta property="og:url" content="http://yoursite.com/2013/05/07/reflection-in-c-sharp/index.html">
+<meta property="og:site_name" content="Xianjing&#39;s blog">
+<meta property="og:description" content="Why Reflection反射是一种计算机在运行时查看和修改对象内部结构与行为的一种能力，它是1982年由Brain Cantwell Smith博士提出的。反射语言的特性最早出现在汇编语言中，汇编语言可以针对指令进行编程，在运行时将指令作为数据对其进行修改，从而修改系统运行的行为。 反射是计算机语言非常有价值的一个特性，具体的说，反射可以获取运行时对象的数据、方法、构造以及行为，并对其进行操作">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/figure23-1.png">
+<meta property="og:updated_time" content="2017-08-11T09:47:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Reflection in C#">
+<meta name="twitter:description" content="Why Reflection反射是一种计算机在运行时查看和修改对象内部结构与行为的一种能力，它是1982年由Brain Cantwell Smith博士提出的。反射语言的特性最早出现在汇编语言中，汇编语言可以针对指令进行编程，在运行时将指令作为数据对其进行修改，从而修改系统运行的行为。 反射是计算机语言非常有价值的一个特性，具体的说，反射可以获取运行时对象的数据、方法、构造以及行为，并对其进行操作">
+<meta name="twitter:image" content="http://yoursite.com/images/figure23-1.png">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Xianjing&#39;s blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpeg" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpeg" />
+            <h2 id="name">Xianjing</h2>
+            <h3 id="title">learner</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/xianjing">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                36
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                2
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/xianjing" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-reflection-in-c-sharp" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Reflection in C#
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2013/05/07/reflection-in-c-sharp/">
+            <time datetime="2013-05-07T09:36:00.000Z" itemprop="datePublished">2013-05-07</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/works/">works</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="Why-Reflection"><a href="#Why-Reflection" class="headerlink" title="Why Reflection"></a>Why Reflection</h2><p>反射是一种计算机在运行时查看和修改对象内部结构与行为的一种能力，它是1982年由Brain Cantwell Smith博士提出的。反射语言的特性最早出现在汇编语言中，汇编语言可以针对指令进行编程，在运行时将指令作为数据对其进行修改，从而修改系统运行的行为。</p>
+<p>反射是计算机语言非常有价值的一个特性，具体的说，反射可以获取运行时对象的数据、方法、构造以及行为，并对其进行操作。反射可以在运行时基于某些条件或映射关系加载特定类型，也可以应用于需要理解类型的定义来提供丰富功能的类库，有了它晚绑定成为可能，有了它元编程成为可能，有了它对象的序列化变得简单直接等等。它的存在使得程序设计更加的开放与灵活，减少了很多硬编码的场景，从而能够产生更具表达力，更整洁易维护的代码。</p>
+<h2 id="Refelction-in-C"><a href="#Refelction-in-C" class="headerlink" title="Refelction in C"></a>Refelction in C</h2><p>在.net领域中反射应用在很多场景，比如：<br><a id="more"></a></p>
+<ul>
+<li>解析路由构建Controller</li>
+<li>解析类型中的<a href="http://msdn.microsoft.com/en-us/library/5x6cd29c.aspx" target="_blank" rel="noopener">attribute</a></li>
+<li>ModelBinder</li>
+<li>对象序列化与反序列化(e.g. Json.net)</li>
+<li>对象关系映射(e.g. Fluent Nhibernate)</li>
+<li>测试框架(e.g. Xunit Runner, Gallio)</li>
+<li>代码质量分析工具(e.g. FxCop, Fortify)</li>
+<li>Windows视窗系统</li>
+<li>NLog</li>
+</ul>
+<p>要实现反射机制，就要求语言能够表达对象的元数据，提供获得元数据和操作对象的机制以及运行时的上下文。.net应用程序在生成程序集和模块的同时会生成一份所包含的类型数据表，也即元数据信息，包括程序集中定义的类型成员等。C#反射接口则提供了封装程序集、模块和类型的对象，通过这些对象可以轻松的获得元数据表中定义的类型，从而能够实现反射的特性，比如创建类型的实例，将类型绑定到现有对象，或从现有对象中获取类型，调用类型的方法访问其字段和属性并修改之。</p>
+<blockquote>
+<p><em>.net应用程序中包含程序集(Assembly), 模块(Module)和类型(class)，程序集是.net程序的最小运行单位，比如dll，exe文件。程序集包含模块，模块包含类型。</em></p>
+</blockquote>
+<blockquote>
+<p><em>命名空间(namespace)是用来对相关的类型进行逻辑性分组，它与程序集并非一一对应关系。一个程序集可以包含多个命名空间，命名空间也可以存在多个程序集中；它们的关系取决于程序集的设计，理论上是不相互矛盾的。比如System.IO.FileStream是包含在MSCorLib.dll中，而System.IO.FileStreamWatcher则在System.dll程序集中。</em></p>
+</blockquote>
+<h3 id="1-发现程序集中的类型及其成员"><a href="#1-发现程序集中的类型及其成员" class="headerlink" title="1) 发现程序集中的类型及其成员"></a>1) 发现程序集中的类型及其成员</h3><p>.net中每个对象都有一个类型(Type)，这个类型可以由System.Object对象提供的GetType()非虚方法获得。Type是执行类型和对象反射的起点，通过Type对象可以找到对于该类型元数据的定义，包括成员(MemberInfo), 属性(PropertyInfo), 字段(FieldInfo)，方法(MethodInfo), 事件(EventInfo), 构造函数(ConstructorInfo), 参数(ParameterInfo)等。</p>
+<figure class="highlight c"><figcaption><span>explore metadata#</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SomeObject</span>&#123;</span>  <span class="comment">//Type</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> someName; <span class="comment">//Field</span></span><br><span class="line">    <span class="keyword">public</span> event someEvent; <span class="comment">//Event</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> SomeValue&#123;get;<span class="built_in">set</span>;&#125; <span class="comment">//Property</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SomeObject</span><span class="params">()</span></span>&#123;  <span class="comment">//Constructor</span></span><br><span class="line">        someName = “some name”;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Load</span><span class="params">(System.Type type)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.GetType() == typeof(<span class="string">"Some object"</span>) )&#123; <span class="comment">//Verify Type</span></span><br><span class="line">            Assembly.load(<span class="string">"Some.dll"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span></span>&#123; <span class="comment">//Method</span></span><br><span class="line">        System.Type type = <span class="keyword">this</span>.GetType();</span><br><span class="line">        var fields = type.GetFields();</span><br><span class="line">        fields.forEach(…)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>常用的发现类型及其成员的反射接口层次结构如下图所示: </li>
+</ul>
+<p><img src="/images/figure23-1.png" alt="">{:height=”300px” width=”400px”}</p>
+<table>
+<thead>
+<tr>
+<th><strong>名字</strong></th>
+<th style="text-align:center"><strong>说明  </strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Assembly</td>
+<td style="text-align:center">定义和加载程序集，加载程序集清单中列出的模块和类型</td>
+</tr>
+<tr>
+<td>MemberInfo</td>
+<td style="text-align:center">获取成员名称，类型</td>
+</tr>
+<tr>
+<td>Type</td>
+<td style="text-align:center">获得类型</td>
+</tr>
+<tr>
+<td>PropertyInfo</td>
+<td style="text-align:center">获取属性的名称，类型，只读或可写状态，访问修饰符，和当前值</td>
+</tr>
+<tr>
+<td>FieldInfo</td>
+<td style="text-align:center">获取字段的名称，类型，访问修饰符和实现详细信息，和当前值</td>
+</tr>
+<tr>
+<td>MethodInfo</td>
+<td style="text-align:center">获取方法的名称，返回类型，参数，访问修饰符</td>
+</tr>
+<tr>
+<td>ParameterInfo</td>
+<td style="text-align:center">获取参数的名称，类型，位置，输入输出</td>
+</tr>
+<tr>
+<td>ConstructorInfo</td>
+<td style="text-align:center">了解構造函數的名称，参数，访问修饰符</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>Binding Flags - 筛选返回的成员种类</p>
+<p>类型的成员可以分为实例成员，公共成员，非公共成员，静态成员，非基类成员(DeclaredOnly)，基类型定义的静态成员等多种。BindingFlags就是这样一个用于描述类型成员种类的枚举类型，它可以在获取类型的成员时对返回结构进行过滤，比如Type.GetMemebers(), Type.GetFields()等。</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>符号</strong></th>
+<th style="text-align:center"><strong>值 </strong></th>
+<th style="text-align:center"><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Default</td>
+<td style="text-align:center">0x00</td>
+<td style="text-align:center">代表未指定任何标志的一个占位符</td>
+</tr>
+<tr>
+<td>IgnoreCase</td>
+<td style="text-align:center">0x01</td>
+<td style="text-align:center">返回与指定字符串匹配的成员(忽略大小写)</td>
+</tr>
+<tr>
+<td>DeclaredOnly</td>
+<td style="text-align:center">0x02</td>
+<td style="text-align:center">当前类型声明的类型成员，不包括继承的成员</td>
+</tr>
+<tr>
+<td>Instance</td>
+<td style="text-align:center">0x04</td>
+<td style="text-align:center">实例成员</td>
+</tr>
+<tr>
+<td>Static</td>
+<td style="text-align:center">0x08</td>
+<td style="text-align:center">静态成员</td>
+</tr>
+<tr>
+<td>Public</td>
+<td style="text-align:center">0x10</td>
+<td style="text-align:center">公共成员</td>
+</tr>
+<tr>
+<td>NonPublic</td>
+<td style="text-align:center">0x20</td>
+<td style="text-align:center">非公共成员</td>
+</tr>
+<tr>
+<td>FlatternHiearcy</td>
+<td style="text-align:center">0x40</td>
+<td style="text-align:center">基类型定义的静态成员</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p> 如果在使用这些接口时不指定BindingFlags，那么缺省会返回公共成员，也就是BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static.</p>
+<h3 id="2-构建类型的实例"><a href="#2-构建类型的实例" class="headerlink" title="2) 构建类型的实例"></a>2) 构建类型的实例</h3><p>.net Reflection API中提供了多种方式来构建类型的实例，比如Activiator,Type.InvokeMemeber, ConstructorInfo.Invoke，具体的都可以在文档中查到，下面给出Activator的例子。</p>
+<p>Activator.CreateInstance</p>
+<figure class="highlight c"><figcaption><span>explore metadata#</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> SomeObject <span class="title">Load</span><span class="params">(System.Type type)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.GetType() == typeof(<span class="string">"Some object"</span>) )&#123; <span class="comment">//Verify Type</span></span><br><span class="line">        <span class="keyword">return</span> System.Activator.CreateInstance(type);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="3-调用类型的成员"><a href="#3-调用类型的成员" class="headerlink" title="3) 调用类型的成员"></a>3) 调用类型的成员</h3><p>在获得对象的类型后就可以对类型的成员进行操作，比如修改某个成员的值。这些操作都可以通过类型成员提供的方法进行，具体可参考<a href="http://msdn.microsoft.com/zh-cn/library/136wx94f.aspx" target="_blank" rel="noopener">MSDN</a></p>
+<figure class="highlight c"><figcaption><span>explore metadata#</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> SomeObject <span class="title">Load</span><span class="params">(System.Type type)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.GetType() == typeof(<span class="string">"Some object"</span>) )&#123; </span><br><span class="line">        var someObject = System.Activator.CreateInstance(type);</span><br><span class="line">        var properties = someObject.GetType().GetPrpertyInfo();</span><br><span class="line">        properties.ForEach( p=&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span>(p.CanWrite)&#123;</span><br><span class="line">                p.SetValue(type, <span class="keyword">new</span> &#123;&#125;); </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="几点Concern"><a href="#几点Concern" class="headerlink" title="几点Concern"></a>几点Concern</h2><p>反射是很强大的机制，它允许在运行时发现并使用编译时还不了解的类型和成员。但是它也存在一些不可避免的问题。</p>
+<p>1) 无法保证类型安全</p>
+<p>由于反射在取得类型的时候依赖于字符串，比如Type.GetType(“some object”)，所以会丧失编译时的类型安全性。因为一旦名字写错，就会在运行时出错。</p>
+<p>2) 速度慢</p>
+<p>这是众所周知的问题。因为使用反射在程序集中查找类型匹配的的时候，需要依赖于程序集中的元数据信息，而元数据信息中用字符串标示每个类型和成员，所以查找类型扫描元数据实际就是不断进行字符串搜索，而字符串搜索的算法是相对较慢的，自然速度就会受到影响。另一个调用成员的时候，需要经过打包解包，以及安全检查的操作，也会影响性能问题。</p>
+<p>#####参考:</p>
+<ul>
+<li>CLR via C#</li>
+<li><a href="http://en.wikipedia.org/wiki/Reflection_%28computer_science%29" target="_blank" rel="noopener">http://en.wikipedia.org/wiki/Reflection_%28computer_science%29</a></li>
+<li><a href="http://msdn.microsoft.com/en-us/library/ms173183.aspx" target="_blank" rel="noopener">http://msdn.microsoft.com/en-us/library/ms173183.aspx</a></li>
+<li><a href="http://msdn.microsoft.com/en-us/library/f7ykdhsy.aspx" target="_blank" rel="noopener">http://msdn.microsoft.com/en-us/library/f7ykdhsy.aspx</a></li>
+</ul>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2013/05/07/reflection-in-c-sharp/" data-id="cjlbz54t90003ss6scdtnl69u" class="article-share-link"><i class="fas fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2013/05/07/reflection-in-c-sharp/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2013/05/07/reflection-in-c-sharp/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2013/05/16/grunt/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    Grunt - 基于任务的Javascript构建工具
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2013/05/07/javascript-yan-ge-mo-shi/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">JavaScript 严格模式</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/cxo-guide-microservices/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://lh4.googleusercontent.com/A7tEGUUzYq2LAC45i3e_hKuN7X3JKJqUPxQnk4K523ZSaFzvC2dudPXWL7w7yRJY07gKbl2xwc8ubjC4vCuZKH2dFWcJtoTnN4bAxjy4Gvm9GRHa896njBSnZLuexDXc_diTd-9h)" alt="[翻译] 给CxO的微服务指南" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/cxo-guide-microservices/" class="title">[翻译] 给CxO的微服务指南</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:11:42.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/abilities/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://upload-images.jianshu.io/upload_images/1825822-32344c7ba682ad9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)" alt="你需要了解的那些Abilities(一)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/abilities/" class="title">你需要了解的那些Abilities(一)</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:08:14.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/token/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/car.png)" alt="谁动了我的Token" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/05/25/token/" class="title">谁动了我的Token</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T07:03:47.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/insights/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/insights.jpeg)" alt="如何培养技术洞见力" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/05/25/insights/" class="title">如何培养技术洞见力</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T00:45:32.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/02/01/refactoring/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/refactoring.png)" alt="重构的七宗罪" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/02/01/refactoring/" class="title">重构的七宗罪</a></p>
+                            <p class="item-date"><time datetime="2016-02-01T06:59:00.000Z" itemprop="datePublished">2016-02-01</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/coding/">coding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/thought/">thought</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/works/">works</a><span class="category-list-count">20</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture/">architecture</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture-microservices/">architecture,microservices</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/architecture/" style="font-size: 10px;">architecture</a> <a href="/tags/architecture-microservices/" style="font-size: 10px;">architecture,microservices</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Xianjing Zhuo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'http://yoursite.com/2013/05/07/reflection-in-c-sharp/';
+        
+        this.page.identifier = 'reflection-in-c-sharp';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'xianjing' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

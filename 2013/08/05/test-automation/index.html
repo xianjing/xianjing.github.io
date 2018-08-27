@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Test Automation | Xianjing&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="测试自动化是每个敏捷团队必须坚持的实践。  1. Why Test Automation在敏捷开发中的迭代有两层含义。第一，迭代是交付式的，仅仅开发工作的完成是不够的，迭代结束时需要交付可工作的软件，从而能够部署上线并取得反馈。第二，迭代是增量式的。随着开发过程的进行，系统完成的功能点逐渐增多，每个迭代交付的内容除了本次迭代开发完成的工作，还需要包括以前所有迭代交付的内容。这也就意味着，每次迭代">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Test Automation">
+<meta property="og:url" content="http://yoursite.com/2013/08/05/test-automation/index.html">
+<meta property="og:site_name" content="Xianjing&#39;s blog">
+<meta property="og:description" content="测试自动化是每个敏捷团队必须坚持的实践。  1. Why Test Automation在敏捷开发中的迭代有两层含义。第一，迭代是交付式的，仅仅开发工作的完成是不够的，迭代结束时需要交付可工作的软件，从而能够部署上线并取得反馈。第二，迭代是增量式的。随着开发过程的进行，系统完成的功能点逐渐增多，每个迭代交付的内容除了本次迭代开发完成的工作，还需要包括以前所有迭代交付的内容。这也就意味着，每次迭代">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/test-scope.jpg">
+<meta property="og:updated_time" content="2017-08-11T09:47:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Test Automation">
+<meta name="twitter:description" content="测试自动化是每个敏捷团队必须坚持的实践。  1. Why Test Automation在敏捷开发中的迭代有两层含义。第一，迭代是交付式的，仅仅开发工作的完成是不够的，迭代结束时需要交付可工作的软件，从而能够部署上线并取得反馈。第二，迭代是增量式的。随着开发过程的进行，系统完成的功能点逐渐增多，每个迭代交付的内容除了本次迭代开发完成的工作，还需要包括以前所有迭代交付的内容。这也就意味着，每次迭代">
+<meta name="twitter:image" content="http://yoursite.com/images/test-scope.jpg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Xianjing&#39;s blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpeg" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpeg" />
+            <h2 id="name">Xianjing</h2>
+            <h3 id="title">learner</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/xianjing">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                36
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                2
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/xianjing" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-test-automation" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Test Automation
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2013/08/05/test-automation/">
+            <time datetime="2013-08-05T08:29:00.000Z" itemprop="datePublished">2013-08-05</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/works/">works</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <blockquote>
+<p>测试自动化是每个敏捷团队必须坚持的实践。</p>
+</blockquote>
+<h2 id="1-Why-Test-Automation"><a href="#1-Why-Test-Automation" class="headerlink" title="1. Why Test Automation"></a>1. Why Test Automation</h2><p>在敏捷开发中的迭代有两层含义。第一，迭代是交付式的，仅仅开发工作的完成是不够的，迭代结束时需要交付可工作的软件，从而能够部署上线并取得反馈。第二，迭代是增量式的。随着开发过程的进行，系统完成的功能点逐渐增多，每个迭代交付的内容除了本次迭代开发完成的工作，还需要包括以前所有迭代交付的内容。这也就意味着，每次迭代的测试不止要保证本次迭代增加的新内容得到验证，同时以前迭代交付的内容也必须得到验证，也即通过回归测试保证以前交付的历史功能不受到影响。</p>
+<p>然，回归测试的工作量随着开发完成功能点的增多，往往是成指数级增长。用传统的人工测试方式已经不能够满足当下快速开发及交付的节奏，所以要想保证项目成功的交付，就必须进行测试自动化。<br><a id="more"></a></p>
+<p><img src="/images/test-scope.jpg" alt="">{:height=”300px” width=”400px”}</p>
+<h2 id="2-What’s-Test-Automation"><a href="#2-What’s-Test-Automation" class="headerlink" title="2. What’s Test Automation"></a>2. What’s Test Automation</h2><p>测试自动化是将传统的简单重复的手工测试由计算机系统来承担并自动完成，其目的是持续的、及时的获得对产品质量的快速反馈。测试自动化包括测试环境的准备、被测对象的自动安装、测试过程的自动执行、测试结果的自动处理以及测试报告的自动生成等。</p>
+<p>测试自动化可以适用于一切能够自动化的测试场景，包括那些机械的、重复的以及不依赖主观判断的测试，比如</p>
+<ul>
+<li>单元测试</li>
+<li>基于数据的服务间集成测试</li>
+<li>回归测试</li>
+<li>基于大数据的压力测试、</li>
+<li>基于时间持续执行的性能测试</li>
+</ul>
+<p>测试自动化大大提升了测试的效率，有助于减少手工测试过程中人为出现的错误，同时测试人员可以有时间参与到其它更有价值的测试活动，比如探索性测试。</p>
+<h2 id="3-A-Good-Automated-Test"><a href="#3-A-Good-Automated-Test" class="headerlink" title="3. A Good Automated Test"></a>3. A Good Automated Test</h2><p>一个好的自动化测试必须要满足以下几个要素：</p>
+<h3 id="3-1-Valueable"><a href="#3-1-Valueable" class="headerlink" title="3.1 Valueable"></a>3.1 Valueable</h3><p>敏捷以价值为导向，我们的测试自动化也是一样，需要衡量投入产出比。</p>
+<p>做任何事请都是有成本的，包括构建自动化测试环境、脚本和编写测试，同时这些一旦产生，马上会进入维护期，产生维护成本。所以很多时候我们都可以问一下，“这么做值不值？”。比如，如果用很大的成本(80)去自动化一个测试，而只得到很少的受益(2)，那么我们就需要权衡是否一定自动化。另外，需求变动频繁的模块，自动化测试需随着需求的变动而变动，投入大而产出低，更应谨慎的选择。</p>
+<h3 id="3-2-Fast"><a href="#3-2-Fast" class="headerlink" title="3.2 Fast"></a>3.2 Fast</h3><p>测试自动化的目的是能够获得对产品质量的快速反馈。如果自动化测试的执行花费了很长时间，那么它不再为我们带来价值，而是我们持续交付的障碍，这种测试可能被停掉，可能被扔到一个没人注意的角落，其实也就相当于被停掉。如果这些测试是必须的，那么一定要让它跑的快。</p>
+<h3 id="3-3-Idempotent"><a href="#3-3-Idempotent" class="headerlink" title="3.3 Idempotent"></a>3.3 Idempotent</h3><p>一个好的测试应该是等幂的，能够重复的被执行，稳定的得到同一个验证结果。当测试失败的时候能够快速的重现，从而发现问题所在。一个好的测试应该与环境无关的，与基础数据无关的。一个显示依赖于基础数据的测试明显增加了测试维护成本，当测试失败时，首先需要检测基础数据是否正确。</p>
+<h3 id="3-4-Stable"><a href="#3-4-Stable" class="headerlink" title="3.4 Stable"></a>3.4 Stable</h3><p>测试结果应该是稳定。在同一运行环境中应得到同样的结果，一个不稳定的测试对项目是具有伤害性的，它不能保证它的反馈的正确性，同时经常阻碍持续集成，久而久之这种测试有就等于没有，它对产品质量的保护已经起不到预期的作用。</p>
+<h3 id="3-5-Simple-Appropriate-Test"><a href="#3-5-Simple-Appropriate-Test" class="headerlink" title="3.5 Simple/Appropriate Test"></a>3.5 Simple/Appropriate Test</h3><p>简单，选择合适的测试粒度与组合，以及组成合适的测试。</p>
+<pre><code>1.  合适的测试粒度与组合
+</code></pre><p>一般，软件开发团队中测试活动包括单元测试，集成测试，Smoke测试，回归测试等。理想状态下，每一项测试的覆盖率达到100%，然，并不是所有的用例都能够被很容易的自动化，并且能够快速稳定的运行。就如马丁在<a href="http://martinfowler.com/bliki/TestPyramid.html" target="_blank" rel="noopener">测试金字塔</a>一文中提到的项目中底层单元测试应多于依赖GUI的高层端到端测试。底层单元测试运行速度快，稳定，能够更快的定位问题；而端到端的测试往往相对脆弱、编写成本高，而且运行耗时。</p>
+<pre><code>2. 并不是所有的东西都能够自动化。
+</code></pre><p>手工测试不能被完全取代。统计结果表明，自动测试只能发现15-30%的缺陷，而手工测试可以发现70-85%的缺陷。所以自动化测试不适合软件的新功能测试，而适合那些简单重复性的测试，比如回归测试，可以保证对已经测试过部分进行测试的准确性和客观性。</p>
+<h2 id="4-Summary"><a href="#4-Summary" class="headerlink" title="4. Summary"></a>4. Summary</h2><p>测试自动化带来的好处是显而易见的，然而在构建自动化测试的时候应根据项目的实际情况进行决策，不能一味的追求测试覆盖率，而导致构建和维护成本的明显上升，运行一个小时的集成测试显然是项目测试策略的一个很大的坏味道。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="http://www.infoq.com/cn/articles/test-no-agile-enough" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/test-no-agile-enough</a></li>
+<li><a href="http://martinfowler.com/bliki/TestPyramid.html" target="_blank" rel="noopener">http://martinfowler.com/bliki/TestPyramid.html</a></li>
+<li><a href="http://baike.baidu.com/view/1303916.htm" target="_blank" rel="noopener">http://baike.baidu.com/view/1303916.htm</a></li>
+<li><a href="http://www.infoq.com/cn/articles/thoughts-on-test-automation-in-agile" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/thoughts-on-test-automation-in-agile</a></li>
+<li><a href="http://blog.csdn.net/KerryZhu/article/category/217672/2" target="_blank" rel="noopener">http://blog.csdn.net/KerryZhu/article/category/217672/2</a></li>
+<li><a href="http://www.kuqin.com/testing/20110710/92231.html" target="_blank" rel="noopener">http://www.kuqin.com/testing/20110710/92231.html</a></li>
+</ol>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2013/08/05/test-automation/" data-id="cjlbz54tq0008ss6sbaoqtp4i" class="article-share-link"><i class="fas fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2013/08/05/test-automation/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2013/08/05/test-automation/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2013/10/07/grunt-minify/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    玩转Grunt（一）: Minification
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2013/07/12/the-fact-of-user-story/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">The Fact of User Story</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/cxo-guide-microservices/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://lh4.googleusercontent.com/A7tEGUUzYq2LAC45i3e_hKuN7X3JKJqUPxQnk4K523ZSaFzvC2dudPXWL7w7yRJY07gKbl2xwc8ubjC4vCuZKH2dFWcJtoTnN4bAxjy4Gvm9GRHa896njBSnZLuexDXc_diTd-9h)" alt="[翻译] 给CxO的微服务指南" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/cxo-guide-microservices/" class="title">[翻译] 给CxO的微服务指南</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:11:42.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/abilities/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://upload-images.jianshu.io/upload_images/1825822-32344c7ba682ad9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)" alt="你需要了解的那些Abilities(一)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/abilities/" class="title">你需要了解的那些Abilities(一)</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:08:14.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/token/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/car.png)" alt="谁动了我的Token" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/05/25/token/" class="title">谁动了我的Token</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T07:03:47.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/insights/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/insights.jpeg)" alt="如何培养技术洞见力" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/05/25/insights/" class="title">如何培养技术洞见力</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T00:45:32.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/02/01/refactoring/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/refactoring.png)" alt="重构的七宗罪" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/02/01/refactoring/" class="title">重构的七宗罪</a></p>
+                            <p class="item-date"><time datetime="2016-02-01T06:59:00.000Z" itemprop="datePublished">2016-02-01</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/coding/">coding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/thought/">thought</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/works/">works</a><span class="category-list-count">20</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture/">architecture</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture-microservices/">architecture,microservices</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/architecture/" style="font-size: 10px;">architecture</a> <a href="/tags/architecture-microservices/" style="font-size: 10px;">architecture,microservices</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Xianjing Zhuo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'http://yoursite.com/2013/08/05/test-automation/';
+        
+        this.page.identifier = 'test-automation';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'xianjing' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

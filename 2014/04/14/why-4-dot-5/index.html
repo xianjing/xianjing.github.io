@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>升级.NET Framework不得不说的事 (二)：Why 4.5.1 | Xianjing&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="1.NET Framework‘s History{:height=”300px” width=”400px”} 微软早在20世纪90年代末就开始开发.NET Framework，在2000年发布.NET Framework1.0 Beta版，开启了微软的下一代语言开发平台。在随后的十几年里，发布了3.0、3.5、4.0直至今天的4.5.1，涵盖了互联网应用开发和手机移动开发等多个领域，随之更新的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="升级.NET Framework不得不说的事 (二)：Why 4.5.1">
+<meta property="og:url" content="http://yoursite.com/2014/04/14/why-4-dot-5/index.html">
+<meta property="og:site_name" content="Xianjing&#39;s blog">
+<meta property="og:description" content="1.NET Framework‘s History{:height=”300px” width=”400px”} 微软早在20世纪90年代末就开始开发.NET Framework，在2000年发布.NET Framework1.0 Beta版，开启了微软的下一代语言开发平台。在随后的十几年里，发布了3.0、3.5、4.0直至今天的4.5.1，涵盖了互联网应用开发和手机移动开发等多个领域，随之更新的">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/DotNet.svg.png">
+<meta property="og:updated_time" content="2017-08-11T09:47:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="升级.NET Framework不得不说的事 (二)：Why 4.5.1">
+<meta name="twitter:description" content="1.NET Framework‘s History{:height=”300px” width=”400px”} 微软早在20世纪90年代末就开始开发.NET Framework，在2000年发布.NET Framework1.0 Beta版，开启了微软的下一代语言开发平台。在随后的十几年里，发布了3.0、3.5、4.0直至今天的4.5.1，涵盖了互联网应用开发和手机移动开发等多个领域，随之更新的">
+<meta name="twitter:image" content="http://yoursite.com/images/DotNet.svg.png">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Xianjing&#39;s blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpeg" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpeg" />
+            <h2 id="name">Xianjing</h2>
+            <h3 id="title">learner</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/xianjing">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                36
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                2
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/xianjing" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-why-4-dot-5" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            升级.NET Framework不得不说的事 (二)：Why 4.5.1
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2014/04/14/why-4-dot-5/">
+            <time datetime="2014-04-14T11:53:00.000Z" itemprop="datePublished">2014-04-14</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/works/">works</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="1-NET-Framework‘s-History"><a href="#1-NET-Framework‘s-History" class="headerlink" title="1.NET Framework‘s History"></a>1.NET Framework‘s History</h2><p><img src="/images/DotNet.svg.png" alt="">{:height=”300px” width=”400px”}</p>
+<p>微软早在20世纪90年代末就开始开发.NET Framework，在2000年发布.NET Framework1.0 Beta版，开启了微软的下一代语言开发平台。在随后的十几年里，发布了3.0、3.5、4.0直至今天的4.5.1，涵盖了互联网应用开发和手机移动开发等多个领域，随之更新的还包括Visual Studio开发IDE(2013)。这些充分展示了微软.NET技术的发展，紧跟时代的潮流，然而也一如既往的让大家对它的复制和独创诟病已久。</p>
+<h2 id="2-Why-4-5"><a href="#2-Why-4-5" class="headerlink" title="2.Why 4.5+"></a>2.Why 4.5+</h2><p>2013年10月微软正式发布.net Framework4.5.1以及Visual Studio 2013，在多个方面进行了提升。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">NET Framework 版本</th>
+<th style="text-align:left">CLR 版本</th>
+<th style="text-align:left">IDE</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">4.5</td>
+<td style="text-align:left">4.0.0.0</td>
+<td style="text-align:left">Visual Studio 2012</td>
+<td style="text-align:center">包括 CLR 4 的更新版本，支持生成 Windows 应用商店应用，以及对 WPF、WCF、WF 和 ASP.NET (WEB API)的更新。</td>
+</tr>
+<tr>
+<td style="text-align:center">4.5.1</td>
+<td style="text-align:left">4.0.0.0</td>
+<td style="text-align:left">Visual Studio 2013</td>
+<td style="text-align:center">包括性能和调试改进、支持自动绑定重定向以及 Windows 应用商店应用的扩展支持。</td>
+</tr>
+</tbody>
+</table>
+<p>4.5.1的发布已经有一段时间了，其中一些新的特性促使我们将升级提上了日程。是什么呢？开发效率和性能方面的提升以及对ASP.NET WEB API2的支持、WIF built in Framework让我对它都产生了很大的期待。</p>
+<h2 id="2-1-Async-Programming-Model"><a href="#2-1-Async-Programming-Model" class="headerlink" title="2.1 Async Programming Model"></a>2.1 Async Programming Model</h2><p>从Visual Studio 2012开始，增加了关键字async and await 使得异步编程更方便和提供更多的信息进行调试，具体请参考<a href="(http://msdn.microsoft.com/en-us/library/hh191443.aspx">异步编程模型</a>。<br><a id="more"></a></p>
+<h2 id="2-2-内置-Zip开发组件"><a href="#2-2-内置-Zip开发组件" class="headerlink" title="2.2 内置.Zip开发组件"></a>2.2 内置.Zip开发组件</h2><p>压缩成为基本类库，存放于System.IO.Compression命名空间，无须引用第三方库或者应用程序自己处理。</p>
+<h2 id="2-3-WIF-in-4-5"><a href="#2-3-WIF-in-4-5" class="headerlink" title="2.3 WIF in 4.5"></a>2.3 WIF in 4.5</h2><p>Windows Identity Foundation(WIF)在4.5中成为作为.NET Framework一部分。WIF可以为应用程序提供Claims-Based Authentication的解决方案，包括single sign-on，其中mscorlib包含主要的claim类文件。请参考<a href="http://www.cloudidentity.com/blog/2012/03/15/windows-identity-foundation-in-the-net-framework-4-5-beta-tools-samples-claims-everywhere-2/" target="_blank" rel="noopener">Windows Identity Foundation in the .NET Framework 4.5 Beta</a>。</p>
+<h2 id="2-4-ASP-NET-WEB-API2"><a href="#2-4-ASP-NET-WEB-API2" class="headerlink" title="2.4 ASP.NET WEB API2"></a>2.4 ASP.NET WEB API2</h2><p>它依赖于.NET Framework4.5，其中对于API2中的Owin SelfHosting特性非常关注，提供了多种Hosting服务的可能性，可以某种程度上缓解IIS功能过于庞大和由来已久的性能问题。</p>
+<h2 id="2-5-垃圾回收－垃圾后台清理"><a href="#2-5-垃圾回收－垃圾后台清理" class="headerlink" title="2.5 垃圾回收－垃圾后台清理"></a>2.5 垃圾回收－垃圾后台清理</h2><p>通过服务器后台垃圾回收提高性能 当在 .NET Framework 4.5 中使用服务器垃圾回收时，后台垃圾回收自动启用，修正了4.0中停止应用进程的缺陷。</p>
+<h2 id="2-6-Visual-Studio-2013"><a href="#2-6-Visual-Studio-2013" class="headerlink" title="2.6 Visual Studio 2013"></a>2.6 Visual Studio 2013</h2><p>2013也是基于.NET Framework 4.5的，2013增加了很多对于应用程序以及性能方面的调试和诊断工具。</p>
+<h2 id="2-7-Auto-Binding-Redirection-for-assemblies（4-5-1）"><a href="#2-7-Auto-Binding-Redirection-for-assemblies（4-5-1）" class="headerlink" title="2.7 Auto Binding Redirection for assemblies（4.5.1）"></a>2.7 Auto Binding Redirection for assemblies（4.5.1）</h2><p>.NET Framework 4.5.1提供了一个可以自动导向其它版本的程序集的配置，为遗留系统的集成提供了方便。</p>
+<h2 id="2-8-Large-Object-Heap-4-5-1"><a href="#2-8-Large-Object-Heap-4-5-1" class="headerlink" title="2.8 Large Object Heap(4.5.1)"></a>2.8 Large Object Heap(4.5.1)</h2><p>后台实时 (JIT) 编译，可在多核处理器上使用此功能改进应用程序性能。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="http://en.wikipedia.org/wiki/.NET_Framework" target="_blank" rel="noopener">.NET Framework</a></li>
+<li><a href="http://blog.jobbole.com/51271/" target="_blank" rel="noopener">.NET Framework 4.5的五个很棒的特性</a></li>
+<li><a href="http://msdn.microsoft.com/en-us/magazine/dn574802.aspx" target="_blank" rel="noopener">Explore the Microsoft .NET Framework 4.5.1</a></li>
+<li><a href="http://blogs.msdn.com/b/msdntaiwan/archive/2013/09/10/net-framework-4-5-1.aspx" target="_blank" rel="noopener">犀利的小改款：.NET Framework 4.5.1</a></li>
+<li><a href="http://blogs.msdn.com/b/dotnet/archive/2011/09/26/compatibility-of-net-framework-4-5.aspx" target="_blank" rel="noopener">compatibility-of-net-framework-4-5</a></li>
+</ul>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2014/04/14/why-4-dot-5/" data-id="cjlbz54uu001ass6spins47ls" class="article-share-link"><i class="fas fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2014/04/14/why-4-dot-5/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2014/04/14/why-4-dot-5/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2014/04/18/implementing-ddd-reading-strategic-design/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    Implementing DDD Reading - Strategic Design
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2014/04/14/understanding-net-framework/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">升级.NET Framework不得不说的事 (一)：What&#39;s it</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/cxo-guide-microservices/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://lh4.googleusercontent.com/A7tEGUUzYq2LAC45i3e_hKuN7X3JKJqUPxQnk4K523ZSaFzvC2dudPXWL7w7yRJY07gKbl2xwc8ubjC4vCuZKH2dFWcJtoTnN4bAxjy4Gvm9GRHa896njBSnZLuexDXc_diTd-9h)" alt="[翻译] 给CxO的微服务指南" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/cxo-guide-microservices/" class="title">[翻译] 给CxO的微服务指南</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:11:42.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/abilities/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://upload-images.jianshu.io/upload_images/1825822-32344c7ba682ad9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)" alt="你需要了解的那些Abilities(一)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/abilities/" class="title">你需要了解的那些Abilities(一)</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:08:14.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/token/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/car.png)" alt="谁动了我的Token" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/05/25/token/" class="title">谁动了我的Token</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T07:03:47.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/insights/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/insights.jpeg)" alt="如何培养技术洞见力" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/05/25/insights/" class="title">如何培养技术洞见力</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T00:45:32.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/02/01/refactoring/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/refactoring.png)" alt="重构的七宗罪" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/02/01/refactoring/" class="title">重构的七宗罪</a></p>
+                            <p class="item-date"><time datetime="2016-02-01T06:59:00.000Z" itemprop="datePublished">2016-02-01</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/coding/">coding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/thought/">thought</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/works/">works</a><span class="category-list-count">20</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture/">architecture</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture-microservices/">architecture,microservices</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/architecture/" style="font-size: 10px;">architecture</a> <a href="/tags/architecture-microservices/" style="font-size: 10px;">architecture,microservices</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Xianjing Zhuo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'http://yoursite.com/2014/04/14/why-4-dot-5/';
+        
+        this.page.identifier = 'why-4-dot-5';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'xianjing' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>JSHint在线文档翻译（一）：基本介绍 | Xianjing&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="文档JSHint是一个用来标示在JavaScript程序中容易引起问题和困扰的代码，JShint包含了它的核心类库以及一个命令行程序，这个命令行程序作为一个npm模块进行分发。 更多的文档参见：JSHint选项， CLI标志位，创建JSHint报告，FAQ 1. 基本用法安装将JSHint作为一个Node程序安装是最简单的使用方式，参加以下命令行：jshint1npm install jshint">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JSHint在线文档翻译（一）：基本介绍">
+<meta property="og:url" content="http://yoursite.com/2013/10/16/jshint-doc/index.html">
+<meta property="og:site_name" content="Xianjing&#39;s blog">
+<meta property="og:description" content="文档JSHint是一个用来标示在JavaScript程序中容易引起问题和困扰的代码，JShint包含了它的核心类库以及一个命令行程序，这个命令行程序作为一个npm模块进行分发。 更多的文档参见：JSHint选项， CLI标志位，创建JSHint报告，FAQ 1. 基本用法安装将JSHint作为一个Node程序安装是最简单的使用方式，参加以下命令行：jshint1npm install jshint">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-08-11T09:47:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JSHint在线文档翻译（一）：基本介绍">
+<meta name="twitter:description" content="文档JSHint是一个用来标示在JavaScript程序中容易引起问题和困扰的代码，JShint包含了它的核心类库以及一个命令行程序，这个命令行程序作为一个npm模块进行分发。 更多的文档参见：JSHint选项， CLI标志位，创建JSHint报告，FAQ 1. 基本用法安装将JSHint作为一个Node程序安装是最简单的使用方式，参加以下命令行：jshint1npm install jshint">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Xianjing&#39;s blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpeg" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpeg" />
+            <h2 id="name">Xianjing</h2>
+            <h3 id="title">learner</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/xianjing">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                36
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                2
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/xianjing" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-jshint-doc" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            JSHint在线文档翻译（一）：基本介绍
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2013/10/16/jshint-doc/">
+            <time datetime="2013-10-16T11:57:00.000Z" itemprop="datePublished">2013-10-16</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/works/">works</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h2><p>JSHint是一个用来标示在JavaScript程序中容易引起问题和困扰的代码，JShint包含了它的核心类库以及一个命令行程序，这个命令行程序作为一个npm模块进行分发。</p>
+<p>更多的文档参见：<a href="http://jshint.com/docs/options/" target="_blank" rel="noopener">JSHint选项</a>， <a href="http://jshint.com/docs/cli/" target="_blank" rel="noopener">CLI标志位</a>，<a href="http://jshint.com/docs/reporters/" target="_blank" rel="noopener">创建JSHint报告</a>，<a href="http://jshint.com/docs/faq/" target="_blank" rel="noopener">FAQ</a></p>
+<h2 id="1-基本用法"><a href="#1-基本用法" class="headerlink" title="1. 基本用法"></a>1. 基本用法</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>将JSHint作为一个Node程序安装是最简单的使用方式，参加以下命令行：<br><figure class="highlight powershell"><figcaption><span>jshint</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install jshint -g</span><br></pre></td></tr></table></figure></p>
+<p>-g 指JSHint将安装在系统路径；如果没有这个参数，JSHint将只安装在当前路径。<br><a id="more"></a></p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>安装完毕后就可以在命令行运行<strong>jshint</strong>，最简单的例子就是检验一个文件或者一个目录下的所有javascript文件。<br><figure class="highlight powershell"><figcaption><span>jshint</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jshint myfile.js</span><br><span class="line">myfile.js: line <span class="number">10</span>, col <span class="number">39</span>, Octal literals are not allowed <span class="keyword">in</span> strict mode.</span><br><span class="line"></span><br><span class="line"><span class="number">1</span> error</span><br></pre></td></tr></table></figure></p>
+<h2 id="2-配置"><a href="#2-配置" class="headerlink" title="2. 配置"></a>2. 配置</h2><p>JSHint定义了一些缺省的javascript代码的警告设置，它也支持用户使用自定义的配置文件覆盖和扩展JSHint的设置。JSHint提供了三种方式引用这个自定义的配置文件。</p>
+<ol>
+<li>可以通过命令行 –config参数引入自定义的JSHint配置文件</li>
+<li>配置文件以.jshintrc命名</li>
+<li>定义Package.json文件中的jshintConfig属性，引用配置文件。</li>
+</ol>
+<p>对于.jshintrc文件，JSHint首先对当前路径进行搜索以及上层的目录直至文件系统的根目录。</p>
+<p>这三种方式允许在同一项目中使用不同的配置文件，比如test和source项目。另外，如果将配置文件放在项目的根目录，JSHint的目录搜索策略也使得同一项目下不同路径的jshint得到同样的结果，因为它会使用在同一个根目录下的配置文件。</p>
+<p>配置文件就是一个简单的json文件，在这个文件里可以设置jshint的选项，加载或者关闭，比如以下配置文件中，启用了对于没有定义和没有使用的变量的警告，并告诉JSHint，这个项目允许命为MY_Global的变量存在。<br><figure class="highlight json"><figcaption><span>jshint</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"undef"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"unused"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"globals"</span>: &#123; <span class="attr">"MY_GLOBAL"</span>: <span class="literal">false</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="内联配置"><a href="#内联配置" class="headerlink" title="内联配置"></a>内联配置</h2><p>除了使用配置文件，JSHint还提供了一种使用特殊注释的方式校验代码。这些注释使用jshint或者global关键词开头。<br><figure class="highlight plain"><figcaption><span>jshint lang: javascript</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	/* jshint undef: true, unused: true */</span><br><span class="line">	/* global MY_GLOBAL */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在javascript代码中可以使用单行注释和多行注释。这些注释的使用范围是基于function的，意味着如果你把它放到一个方法里，它将只在这个方法的上下文起作用。</p>
+<h3 id="Directives"><a href="#Directives" class="headerlink" title="Directives"></a>Directives</h3><p>下面是JSHint支持的directives的配置。</p>
+<p>1.jshint<br>用来设置JSHint的选项<br><figure class="highlight plain"><figcaption><span>jshint lang: javascript</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	/* jshint strict: true */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>2.jslint<br>用来设置JSHint兼容的JSLint选项<br><figure class="highlight plain"><figcaption><span>jshint lang: javascript</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	/* jslint vars: true */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>3.globals<br>用来表示全局变量定义的directive。如果值为false，JSHint回人为这个全局变量为只读的，一般会结合undef选项使用。<br>用来设置JSHint的选项<br><figure class="highlight plain"><figcaption><span>jshint lang: javascript</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	/* global MY_LIB: false */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>同时也可以设置黑名单，机制一些全局变量在当前文件中使用。</p>
+<figure class="highlight plain"><figcaption><span>jshint lang: javascript</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	/* global -BAD_LIB*/</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>4.exported<br>用来声明一个该文件定义的全局变量，并且在其他地方使用，与unused一起使用。</p>
+<figure class="highlight plain"><figcaption><span>jshint lang: javascript</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	/* exported EXPORTED_LIB */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-选项"><a href="#3-选项" class="headerlink" title="3. 选项"></a>3. 选项</h2><p>使用JSHint首先需要了解JSHint的选项。<br>JSHint有两类选项，强制选项和宽松选项。前者使得javascript的代码更加严格，而后者则是抑制警告信息。 让我们来看看下面的例子：</p>
+<figure class="highlight plain"><figcaption><span>jshint lang: javascript</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">function main(a, b) &#123;</span><br><span class="line">	 return a == null;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>如果用缺省的选项运行jshint会报出如下警告信息：<br><figure class="highlight plain"><figcaption><span>jshint lang: javascript</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">line 2, col 14, Use &apos;===&apos; to compare with &apos;null&apos;.</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<p>例子2:<br>如果需要禁用产生的警告信息，而同时又想知道是否在代码中使用了定义但未使用的变量，JSHint提供了两个选项；eqnull 和unused，前者会禁用===null警告信息，而后者会强者启用对未使用变量的检查。<br><figure class="highlight plain"><figcaption><span>jshint lang: javascript</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/*jshint unused:true, eqnull:true */</span><br><span class="line">function main(a, b) &#123;</span><br><span class="line">	 return a == null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>运行jshint，回报出以下警告信息：</p>
+<figure class="highlight plain"><figcaption><span>jshint lang: javascript</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">demo.js: line 2, col 14, &apos;main&apos; is defined but never used.</span><br><span class="line">demo.js: line 2, col 19, &apos;b&apos; is defined but never used.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>例3:<br>JSHint在某些场合下并没有适合的选项。在这种情况下可以运用jshint directive去禁用警告信息，具体做法就是打开–verbose选项，运行jshint取得错误码，然后填到配置项中。<br><figure class="highlight plain"><figcaption><span>jshint lang: javascript</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&quot;use strict&quot;;</span><br><span class="line">/* ... */</span><br><span class="line"></span><br><span class="line">// From another file</span><br><span class="line">function b() &#123;</span><br><span class="line">  &quot;use strict&quot;;</span><br><span class="line">  /* ... */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运行jshint会报出在方法b中存在没有使用的directives, JSHint检查到该文件已经定义了全局的use strict，推测出其它代码段的同样声明为多余声明。但是在某种情况下又不想去除这些代码片段，因为这些文件是自动生成的。那么可以打开JSHint的 –verbose选项，记录警告码(在这个例子里是W034)<br><figure class="highlight plain"><figcaption><span>jshint lang: javascript</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ jshint --verbose myfile.js</span><br><span class="line">myfile.js: line 6, col 3, Unnecessary directive &quot;use strict&quot;. (W034)</span><br></pre></td></tr></table></figure></p>
+<p>然后，要想隐藏这个警告信息，需启用下面的选项：</p>
+<figure class="highlight plain"><figcaption><span>jshint lang: javascript</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/* jshint -W034 */</span><br></pre></td></tr></table></figure>
+<p>几个注意事项：</p>
+<ol>
+<li>这个语法只适用于警告(代码以W开始)，它不对错误码生效(以E开始).</li>
+<li>这个语法会禁用这类的所有警告，有一些警告会使比较通用的，可能会导致一些不知道的副作用，所以要谨慎使用。</li>
+</ol>
+<p>如果想重新启用上述的警告信息，可用以下-的方式<br><figure class="highlight plain"><figcaption><span>jshint lang: javascript</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/* jshint +W034 */</span><br></pre></td></tr></table></figure></p>
+<p>这种选项使得配置比较灵活，比较适用于一些代码片段。这些代码片段虽然有一些警告，但在当前上下文是安全的，并且不想进行处理，比如自动生成的代码或第三方代码库。在这种情况下可以在代码片段开始之前禁用，然后代码结束后启用。</p>
+<figure class="highlight plain"><figcaption><span>jshint lang: javascript</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">var y = Object.create(null);</span><br><span class="line">// ...</span><br><span class="line">/*jshint -W089 */</span><br><span class="line">for (var prop in y) &#123;</span><br><span class="line">    // ...</span><br><span class="line">&#125;</span><br><span class="line">/*jshint +W089 */</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>更详细的配置信息请参见<a href="http://jshint.com/docs/options/" target="_blank" rel="noopener">JSHint选项</a></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2013/10/16/jshint-doc/" data-id="cjlbz54u2000kss6s0seduchv" class="article-share-link"><i class="fas fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2013/10/16/jshint-doc/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2013/10/16/jshint-doc/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2013/10/21/jshint-options/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    JSHint在线文档翻译（二）: 选项
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2013/10/10/grunt-api/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">玩转Grunt（二）: Gruntfile 详解</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/cxo-guide-microservices/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://lh4.googleusercontent.com/A7tEGUUzYq2LAC45i3e_hKuN7X3JKJqUPxQnk4K523ZSaFzvC2dudPXWL7w7yRJY07gKbl2xwc8ubjC4vCuZKH2dFWcJtoTnN4bAxjy4Gvm9GRHa896njBSnZLuexDXc_diTd-9h)" alt="[翻译] 给CxO的微服务指南" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/cxo-guide-microservices/" class="title">[翻译] 给CxO的微服务指南</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:11:42.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/abilities/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://upload-images.jianshu.io/upload_images/1825822-32344c7ba682ad9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)" alt="你需要了解的那些Abilities(一)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/abilities/" class="title">你需要了解的那些Abilities(一)</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:08:14.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/token/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/car.png)" alt="谁动了我的Token" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/05/25/token/" class="title">谁动了我的Token</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T07:03:47.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/insights/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/insights.jpeg)" alt="如何培养技术洞见力" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/05/25/insights/" class="title">如何培养技术洞见力</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T00:45:32.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/02/01/refactoring/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/refactoring.png)" alt="重构的七宗罪" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/02/01/refactoring/" class="title">重构的七宗罪</a></p>
+                            <p class="item-date"><time datetime="2016-02-01T06:59:00.000Z" itemprop="datePublished">2016-02-01</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/coding/">coding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/thought/">thought</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/works/">works</a><span class="category-list-count">20</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture/">architecture</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture-microservices/">architecture,microservices</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/architecture/" style="font-size: 10px;">architecture</a> <a href="/tags/architecture-microservices/" style="font-size: 10px;">architecture,microservices</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Xianjing Zhuo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'http://yoursite.com/2013/10/16/jshint-doc/';
+        
+        this.page.identifier = 'jshint-doc';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'xianjing' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

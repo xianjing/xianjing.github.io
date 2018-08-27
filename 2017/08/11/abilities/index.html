@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>你需要了解的那些Abilities(一) | Xianjing&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="如果你去买一部手机，你会考虑什么因素呢？一般我们都会首先考虑智能手机、照相功能、多大容量等。而除了这些，我们通常还会考虑品牌、颜色、外型好不好看、时尚与否。作为一个软件产品也不例外，用户首先会期望系统要满足正常的功能需求，同时系统还要满足好用、性能好、稳定可靠等其他特性。一般我们会把这些称为非功能性需求或者跨功能性需求。系统的每一次故障和宕机对用户都是不可忽视的损失，所以这些非功能性需求也是软件">
+<meta name="keywords" content="architecture">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你需要了解的那些Abilities(一)">
+<meta property="og:url" content="http://yoursite.com/2017/08/11/abilities/index.html">
+<meta property="og:site_name" content="Xianjing&#39;s blog">
+<meta property="og:description" content="如果你去买一部手机，你会考虑什么因素呢？一般我们都会首先考虑智能手机、照相功能、多大容量等。而除了这些，我们通常还会考虑品牌、颜色、外型好不好看、时尚与否。作为一个软件产品也不例外，用户首先会期望系统要满足正常的功能需求，同时系统还要满足好用、性能好、稳定可靠等其他特性。一般我们会把这些称为非功能性需求或者跨功能性需求。系统的每一次故障和宕机对用户都是不可忽视的损失，所以这些非功能性需求也是软件">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1825822-32344c7ba682ad9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-08-14T02:43:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="你需要了解的那些Abilities(一)">
+<meta name="twitter:description" content="如果你去买一部手机，你会考虑什么因素呢？一般我们都会首先考虑智能手机、照相功能、多大容量等。而除了这些，我们通常还会考虑品牌、颜色、外型好不好看、时尚与否。作为一个软件产品也不例外，用户首先会期望系统要满足正常的功能需求，同时系统还要满足好用、性能好、稳定可靠等其他特性。一般我们会把这些称为非功能性需求或者跨功能性需求。系统的每一次故障和宕机对用户都是不可忽视的损失，所以这些非功能性需求也是软件">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1825822-32344c7ba682ad9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Xianjing&#39;s blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpeg" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpeg" />
+            <h2 id="name">Xianjing</h2>
+            <h3 id="title">learner</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/xianjing">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                36
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                2
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/xianjing" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-abilities" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            你需要了解的那些Abilities(一)
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2017/08/11/abilities/">
+            <time datetime="2017-08-11T10:08:14.000Z" itemprop="datePublished">2017-08-11</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/thought/">thought</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/architecture/">architecture</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="http://upload-images.jianshu.io/upload_images/1825822-32344c7ba682ad9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="来自泼辣有图"></p>
+<p>如果你去买一部手机，你会考虑什么因素呢？一般我们都会首先考虑智能手机、照相功能、多大容量等。而除了这些，我们通常还会考虑品牌、颜色、外型好不好看、时尚与否。作为一个软件产品也不例外，用户首先会期望系统要满足正常的功能需求，同时系统还要满足好用、性能好、稳定可靠等其他特性。一般我们会把这些称为非功能性需求或者跨功能性需求。系统的每一次故障和宕机对用户都是不可忽视的损失，所以这些非功能性需求也是软件质量非常重要的属性，是软件架构设计需要满足的目标。<br><a id="more"></a><br>在运行时的非功能需求中，我们常常会提到几个词有 Availability、Stability和Reliability，即系统要高可用、高可靠和稳定。那么可用、可靠还有稳定是什么意思呢？如何衡量？它们之间又有什么区别？我经常在不同场景下听到这几个词的混用。今天就先来谈一谈这几个ability。</p>
+<h2 id="1-Availability-可用性"><a href="#1-Availability-可用性" class="headerlink" title="1. Availability 可用性"></a>1. Availability 可用性</h2><blockquote>
+<p>Availability defines the proportion of time that the system is functional and working. It can be measured as a percentage of the total system downtime over a predefined period. Availability will be affected by system errors, infrastructure problems, malicious attacks, and system load. - Microsoft Application Architecture Guide</p>
+</blockquote>
+<p>可用性指系统在给定时间内可以正常工作的概率，通常用SLA指标来表示，如下图所示。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1825822-eb12014ebf2af7e1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="SLA指标"></p>
+<p><a href="http://baike.baidu.com/view/40544.htm" target="_blank" rel="noopener">墨菲定律</a>说“会出错的事总会出错”，可用性做到100是可望而不可及的。对于SLA指标来说，9的数字越多可用性越高，宕机时间越少，系统就可以在给定的时刻内高比例地正常工作。然而对系统的挑战就越大，投入的成本也会越高。 比如5个9要求系统每年只宕机5分钟左右，而4个9要求每年宕机时间不超过一个小时。这就使得系统需要在设计、基础设施、数据备份等不同层面采取多种方式，甚至增加基础设施投资来保证可用性。</p>
+<blockquote>
+<p>“当你的设备处理人命关天的事情，或业务中断一分钟就会损失百万美刀，那么你可以考虑99.99%的可靠性。” Robertson（Linux高可用项目开发者）</p>
+</blockquote>
+<p>不同系统的可用性要求也是不同的，比如：淘宝、京东等这些电商系统用户量很多，不同区不同时刻都有大量的用户在使用系统，这必然对系统的可用性要求很高。据以往这些系统的故障统计和不准确地测试数据推测，它们目前的可用性是在3个9到4个9左右。相对而言，企业类的工作软件因为通常只在工作时间被使用，或只在某些特定的地区使用，或只给某部分人某一特定时间使用，可用性的需求就会低一些。典型的系统就数salesforce了，经常会看到“周末又要升级了”的提示。</p>
+<p>影响可用性的因素有很多，包括系统故障、基础设施故障、数据故障、安全攻击、系统压力等等。</p>
+<h2 id="2-Reliability-可靠性"><a href="#2-Reliability-可靠性" class="headerlink" title="2. Reliability 可靠性"></a>2. Reliability 可靠性</h2><blockquote>
+<p>Reliability is a measure of the probability that an item will perform its intended function for a specified interval under stated conditions. </p>
+</blockquote>
+<p>可靠性是在给定的时间间隔和给定条件下，系统可以无故障持续运行的概率。那么可靠性和可用性有什么区别呢？在《分布式系统原理与范型》中提到的下面例子中比较准确的解释了两者的区别：</p>
+<blockquote>
+<p>如果系统在每小时崩溃1ms，那么它的可用性就超过99.9999%，但是它还是高度不可靠。与之类似，如果一个系统从来不崩溃，但是每年要停机两星期，那么它是高度可靠的，但是可用性只有96%。</p>
+</blockquote>
+<p>简而言之，可用性关注的是系统任何时刻可以持续正常工作的能力，关注的是服务总体的持续时间。系统在给定时间内总体的运行时间越长，可用性越高。而可靠性更关注系统可以无故障地持续运行的概率，关注的是故障率。故障的频率越高，可靠性越低。可靠性差一定程度上是会影响可用性的，但反过来不一定成立。</p>
+<p>这里面还有一些常用的指标来衡量可用性和可靠性：</p>
+<ul>
+<li><p>MTBF（Mean Time Between Failure）<br>即平均无故障时间，是指从新的产品在规定的工作环境条件下开始工作到出现第一个故障的时间的平均值。MTBF越长表示可靠性越高，正确工作能力越强 。</p>
+</li>
+<li><p>MTTR（Mean Time To Repair）<br>即平均修复时间。是指可修复产品的平均修复时间，就是从出现故障到修复中间的这段时间。MTTR越短表示易恢复性越好。</p>
+</li>
+<li><p>MTTF（Mean Time To Failure）<br>即平均失效时间。系统平均能够正常运行多长时间，才发生一次故障。系统的可靠性越高，平均无故障时间越长。</p>
+</li>
+</ul>
+<p>基于以上指标，可用性可以如此计算：</p>
+<blockquote>
+<p>Availability = UpTime/(UpTime+DownTime) = MTBF / (MTBF + MTTR)</p>
+</blockquote>
+<p>作为系统的响应，首要目标是先降低故障的次数，频率要低，从而提高可靠性；同时在故障出现后，要提高故障的恢复时间，速度要快，从而提高业务的可用性。</p>
+<p>影响可靠性的因素就是能够引起故障的所有因素，包括软件设计错误，编码错误，硬件故障等等。</p>
+<h2 id="3-Stability-稳定性"><a href="#3-Stability-稳定性" class="headerlink" title="3. Stability 稳定性"></a>3. Stability 稳定性</h2><blockquote>
+<p>Stability is about how many failures an application exhibits; whether that is manifested as unexpected or unintended behaviour, users receiving errors, or a catastrophic failure that brings a system down. The fewer failures that are observed the more stable an application is.</p>
+</blockquote>
+<p>软件的稳定性，指软件在一个运行周期内、在一定的压力条件下，在持续操作时间内出错的概率，性能劣化趋势等等。如果一个系统的故障率很高，它一定是高度不可靠的，也一定是不稳定的。那么如何区分稳定性和可靠性呢？</p>
+<blockquote>
+<p>对于电力系统而言，稳定性就是“人民用电不要忽明忽暗忽快忽慢”，可靠性就是”不要用着用着突然没有啦“。-知乎盛夏白日梦</p>
+</blockquote>
+<p>如果一个系统的性能时好时坏，它一定是不稳定的，而不一定是不可靠的。稳定性更关注系统在给定条件下的响应是否一致，行为是否稳定。可靠是可用的前提，稳定是可靠的进一步提升。</p>
+<p>今天在<a href="http://programmers.stackexchange.com/questions/158054/stability-vs-reliability/158056" target="_blank" rel="noopener">Stackoverflow</a>看到这样一段代码来表示这两个的区别，甚为有趣：</p>
+<pre><code>Reliable but unstable:
+    add(a,b):
+     if randomInt mod 5 == 0: 
+        throw exception
+     else
+        print a+b        
+Stable but unreliable:
+  add(a,b):
+    if randomInt mod 5 == 0: 
+        print a+a
+    else
+        print a+b
+</code></pre><p>不知道写到这里，你是否对可用性、可靠性和稳定性有了更清晰的了解了呢？有了这些指标可以帮助我们去分析系统存在的问题，比如说故障频率较高，故障恢复时间较长，那么系统的可靠性可用性一定很低，对用户的影响一定很高，就可以促使我们去从各个角度去改进和提高，去找架构设计的问题，去找系统实现的缺陷，去找依赖的基础设施问题等等，从而改善我们的系统。尤其是在当下复杂的分布式系统下，这些显得尤为重要。</p>
+<p>那么，最后请问我们常见的容错处理、蓝绿部署、回滚、cluster、灾备会有助于提高以上哪个ability呢？</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2017/08/11/abilities/" data-id="cjlbz54vf001vss6svxp37nu0" class="article-share-link"><i class="fas fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2017/08/11/abilities/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/08/11/abilities/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/08/11/cxo-guide-microservices/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    [翻译] 给CxO的微服务指南
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2016/05/25/token/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">谁动了我的Token</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/cxo-guide-microservices/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://lh4.googleusercontent.com/A7tEGUUzYq2LAC45i3e_hKuN7X3JKJqUPxQnk4K523ZSaFzvC2dudPXWL7w7yRJY07gKbl2xwc8ubjC4vCuZKH2dFWcJtoTnN4bAxjy4Gvm9GRHa896njBSnZLuexDXc_diTd-9h)" alt="[翻译] 给CxO的微服务指南" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/cxo-guide-microservices/" class="title">[翻译] 给CxO的微服务指南</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:11:42.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/abilities/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://upload-images.jianshu.io/upload_images/1825822-32344c7ba682ad9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)" alt="你需要了解的那些Abilities(一)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/abilities/" class="title">你需要了解的那些Abilities(一)</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:08:14.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/token/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/car.png)" alt="谁动了我的Token" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/05/25/token/" class="title">谁动了我的Token</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T07:03:47.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/insights/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/insights.jpeg)" alt="如何培养技术洞见力" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/05/25/insights/" class="title">如何培养技术洞见力</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T00:45:32.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/02/01/refactoring/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/refactoring.png)" alt="重构的七宗罪" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/02/01/refactoring/" class="title">重构的七宗罪</a></p>
+                            <p class="item-date"><time datetime="2016-02-01T06:59:00.000Z" itemprop="datePublished">2016-02-01</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/coding/">coding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/thought/">thought</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/works/">works</a><span class="category-list-count">20</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture/">architecture</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture-microservices/">architecture,microservices</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/architecture/" style="font-size: 10px;">architecture</a> <a href="/tags/architecture-microservices/" style="font-size: 10px;">architecture,microservices</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Xianjing Zhuo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'http://yoursite.com/2017/08/11/abilities/';
+        
+        this.page.identifier = 'abilities';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'xianjing' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

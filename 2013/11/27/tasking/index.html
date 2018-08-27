@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>should not start TDD if no tasking | Xianjing&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="没有做Tasking（开发任务分解）请不要开始写代码。  1. Preface我在用户故事开发过程中，经常听到这样的对话：哎呀，这个用户故事开发了20多天，这个故事太大了，解决方案变来变去的；我也不知道做到哪儿了，今天应该做完吧（但实际上5天后才真正完成开发）；哦，昨天我们部署环境挂了，修了一天部署脚本；啊，不知道，这个功能也包含在这个故事里？；我们昨天没有提交，一个测试还没写完。；showca">
+<meta property="og:type" content="article">
+<meta property="og:title" content="should not start TDD if no tasking">
+<meta property="og:url" content="http://yoursite.com/2013/11/27/tasking/index.html">
+<meta property="og:site_name" content="Xianjing&#39;s blog">
+<meta property="og:description" content="没有做Tasking（开发任务分解）请不要开始写代码。  1. Preface我在用户故事开发过程中，经常听到这样的对话：哎呀，这个用户故事开发了20多天，这个故事太大了，解决方案变来变去的；我也不知道做到哪儿了，今天应该做完吧（但实际上5天后才真正完成开发）；哦，昨天我们部署环境挂了，修了一天部署脚本；啊，不知道，这个功能也包含在这个故事里？；我们昨天没有提交，一个测试还没写完。；showca">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/tasking-list.png">
+<meta property="og:updated_time" content="2017-08-11T09:47:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="should not start TDD if no tasking">
+<meta name="twitter:description" content="没有做Tasking（开发任务分解）请不要开始写代码。  1. Preface我在用户故事开发过程中，经常听到这样的对话：哎呀，这个用户故事开发了20多天，这个故事太大了，解决方案变来变去的；我也不知道做到哪儿了，今天应该做完吧（但实际上5天后才真正完成开发）；哦，昨天我们部署环境挂了，修了一天部署脚本；啊，不知道，这个功能也包含在这个故事里？；我们昨天没有提交，一个测试还没写完。；showca">
+<meta name="twitter:image" content="http://yoursite.com/images/tasking-list.png">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Xianjing&#39;s blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpeg" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpeg" />
+            <h2 id="name">Xianjing</h2>
+            <h3 id="title">learner</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/xianjing">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                36
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                2
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/xianjing" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-tasking" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            should not start TDD if no tasking
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2013/11/27/tasking/">
+            <time datetime="2013-11-27T08:25:00.000Z" itemprop="datePublished">2013-11-27</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/thought/">thought</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <blockquote>
+<p>没有做Tasking（开发任务分解）请不要开始写代码。</p>
+</blockquote>
+<h2 id="1-Preface"><a href="#1-Preface" class="headerlink" title="1. Preface"></a>1. Preface</h2><p>我在用户故事开发过程中，经常听到这样的对话：哎呀，这个用户故事开发了20多天，这个故事太大了，解决方案变来变去的；我也不知道做到哪儿了，今天应该做完吧（但实际上5天后才真正完成开发）；哦，昨天我们部署环境挂了，修了一天部署脚本；啊，不知道，这个功能也包含在这个故事里？；我们昨天没有提交，一个测试还没写完。；showcase? 不行，我刚把后台接口做完，前台没做呢。每每听到这些，我都有些抓狂。同学，做任务分解了么？多少个任务？完成多少了？一个任务至少一次提交吧？没做任务分解咋写代码？啥啥，任务列表在哪儿？心里？好吧~~~</p>
+<p>让我们来回顾一下开发任务分解以及它的专业范。</p>
+<h2 id="1-What’s-Tasking-in-TDD"><a href="#1-What’s-Tasking-in-TDD" class="headerlink" title="1. What’s Tasking in TDD"></a>1. What’s Tasking in TDD</h2><p>Tasking是指在用户故事开发之前针对需求进行的任务分解。它一定是为了开发的任务分解，不是单纯的需求分析，否则变成了用户故事拆分。尽管用户故事拆分可以是开发任务分解的一个副产品。</p>
+<p>开发任务分解后会得到一系列的开发任务列表，该任务列表反映开发人员从技术解决方案角度对需求的理解；它指导开发人员进行编写代码；随着开发任务的逐一完成，用户故事的开发进度也清晰的展现；与此同时，开发人员对需求理解不断得到加深，从中实时调整开发任务，保证用户故事的顺利开发。<br><a id="more"></a></p>
+<h2 id="2-How-tasking-helps"><a href="#2-How-tasking-helps" class="headerlink" title="2. How tasking helps"></a>2. How tasking helps</h2><h3 id="2-1-帮助分析用户故事，弄清需求的范畴"><a href="#2-1-帮助分析用户故事，弄清需求的范畴" class="headerlink" title="2.1 帮助分析用户故事，弄清需求的范畴"></a>2.1 帮助分析用户故事，弄清需求的范畴</h3><p>通过对需求进行实现层面的任务分解，开发人员可以很好的理解用户故事，掌握用户故事的整个范畴，能够及时发现用户故事是否可独立交付，是否需要切分，可以快速反馈用户故事本身的合理性，可以反馈项目交付计划；同时，通过需求分析，能够发现可能缺失的业务需求，非功能性需求，比如安全、性能等问题。尤其在一些复杂场景下，团队成员集体进行的任务分解更能体现这一优点，可以快速高效的让团队对当前的用户故事保持在同一page，减少无效的重复讨论。一句话，就是知道要做什么。</p>
+<h3 id="2-2-驱动开发，及早集成"><a href="#2-2-驱动开发，及早集成" class="headerlink" title="2.2 驱动开发，及早集成"></a>2.2 驱动开发，及早集成</h3><p>任务分解完后得到一组开发任务列表，其中每一个任务代表独立的交付价值，都可以转换为一个或多个测试用例，做分解的过程其实也是设计测试用例的过程。开发人员可以根据任务编写测试，从而驱动代码开发，使得代码实现能够反映当下的需求。一个独立交付的开发任务的完成就可以对应一次完整的提交；开发任务的粒度越小，越容易及时集成。</p>
+<h3 id="2-3-制定开发计划，追踪开发进度，降低风险"><a href="#2-3-制定开发计划，追踪开发进度，降低风险" class="headerlink" title="2.3 制定开发计划，追踪开发进度，降低风险"></a>2.3 制定开发计划，追踪开发进度，降低风险</h3><p>开发任务列表能够让开发人员从整体上了解开发任务，做系统的安排。开发人员可以清楚知道各个任务的优先级，容易确定先做什么；开发过程中，开发人员保持对开发任务的持续更新，任务列表的状况清楚的反映当前的开发进度，有助于及时发现问题，降低风险。</p>
+<h3 id="2-4-保持开发上下文，减少发散"><a href="#2-4-保持开发上下文，减少发散" class="headerlink" title="2.4 保持开发上下文，减少发散"></a>2.4 保持开发上下文，减少发散</h3><p>结对编程中，任务列表能够保持开发上下文，即使交换开发人员，通过任务列表仍然能够知道整个用户故事的开发状况；同时，在开发过程中容易出现一些突发状况或处理遗留问题，比如某段代码是否需要重构，比如构建脚本的问题，比如发现了代码缺陷；任务列表可以帮助我们保持当前开发任务，将这些突发的事情变为新的开发任务，放到列表中统筹安排。针对任务的开发也便于Pair双方对正在进行的开发任务有针对性的交流，减少发散的讨论。</p>
+<h2 id="3-When-do-tasking"><a href="#3-When-do-tasking" class="headerlink" title="3. When do tasking"></a>3. When do tasking</h2><p>在用户故事开始开发之前，或者开发过程中当发现需求变化或新的开发内容增加的时候都可以进行任务分解与更新。</p>
+<h2 id="4-How"><a href="#4-How" class="headerlink" title="4. How"></a>4. How</h2><h3 id="4-1-基于用户流程的开发任务分解"><a href="#4-1-基于用户流程的开发任务分解" class="headerlink" title="4.1 基于用户流程的开发任务分解"></a>4.1 基于用户流程的开发任务分解</h3><p>如何把一个复杂的用户需求拆分成一个个好的开发任务列表呢？要回答这个问题比较困难，按照知识漏斗的理论这个问题实际上是一个mystery。它需要基于现有的系统以及团队成员的开发经验。<a href="http://blog.vincentx.info/" target="_blank" rel="noopener">八叉同学</a>的<a href="http://www.infoq.com/cn/articles/xh-four-color-modeling/" target="_blank" rel="noopener">基于数据形成链条的分析建模方法</a>是一个比较好的启发式的参考。</p>
+<p>一般我会以用户使用系统的场景为主线，细化流程进行需求分析，并隔离不必要的系统约束。比如停车场可以停车这个需求，用户的使用场景就是去停车场停车，正常情况是有空位停车成功；否则就是停车场满了无法停车，这就是两个典型的开发任务。比如一个web应用用户登陆的需求，用户的使用流程是打开页面，输入用户名密码，提交表单。这个需求如何推导任务列表呢？这里隐藏着一个约束，创建系统用户，而这个约束可以排除在当前需求的范畴之内，那么在任务分解时可将此约束隔离，即假定已存在用户test/test可以登陆系统。有些像Inception中user journey的分析，只是着眼于开发角度而已。</p>
+<p>例：用户登陆的任务列表</p>
+<pre><code>1）假定用户打开登陆表单，当用户输入任意用户名，用户可以登陆成功 
+
+2）假定test为系统合法用户，打开登陆表单，当用户输入test/test，用户可以登陆成功
+
+3）假定用户打开登陆表单，当用户输入错误用户名和密码，用户登陆失败
+</code></pre><h3 id="4-2-一个好的开发任务"><a href="#4-2-一个好的开发任务" class="headerlink" title="4.2 一个好的开发任务"></a>4.2 一个好的开发任务</h3><p>任务分解完成了，但并不能说这些任务都是好的开发任务，都可以很好的驱动实现。一个好的开发任务分解可以帮我们将问题简化，更好的推导实现。那么什么是一个好的开发任务呢？一个好的开发任务需要是粒度合适的、可验证的、端到端的，反映需求而不是某个技术实现细节、可独立交付，能够小步合适的驱动开发。似乎比较难，下面举两个例子。</p>
+<ul>
+<li>第一个例子：停车场可以停车</li>
+</ul>
+<p>在这个需求中要求在有空位的时候可以停车，在停车场满的时候无法停车。那么计算停车场剩余车位数的开发任务就是技术实现细节，而非反映停车的需求，就不是一个开发任务。</p>
+<p>我经常会采用Given/When/Then的三段式描述样本，可以更好的帮助我们将开发任务转变成测试用例。</p>
+<pre><code>1. Given a parking lots with 1 available place
+
+When park a car
+
+Should return a valid ticket.
+
+2. Given a parking lots which is full
+
+when park a car
+
+should fail (throw LotsIsFullException). 
+</code></pre><ul>
+<li>第二个例子：用户可以登陆系统</li>
+</ul>
+<p>任务列表：</p>
+<pre><code>1）创建用户表，导入用户
+2）实现登陆API
+3）创建表单
+4）集成
+</code></pre><p>这样的一个列表就是不好的，有什么问题呢？任务不带来独立的交付价值，一个完成了是不能够进行showcase，及时获得反馈；还有些什么问题呢？</p>
+<ul>
+<li>任务分解要多细，多长时间</li>
+</ul>
+<p>经常有人问，任务列表要做到什么程度。我的观点还是取决于你要解决的问题，就和我们的敏捷开发是一样的，开始时不需完美详尽的任务列表，否则岂不重蹈瀑布开发过度之辙。<a href="http://blog.vincentx.info/" target="_blank" rel="noopener">八叉同学</a>同学曾经提到如果已知的需求能支持一下午的开发那就去做。我们对于事物的认识是渐进的，随着我们对问题的深入理解，对需要做的任务也会逐渐的清晰起来，在那个时候我们就有更大的把握对不清楚的需求进行更详细准确的任务分解，加上我们的开发能力，总能一步一步的演化和推导我们的代码实现。</p>
+<h3 id="4-3-将开发任务记录下来"><a href="#4-3-将开发任务记录下来" class="headerlink" title="4.3 将开发任务记录下来"></a>4.3 将开发任务记录下来</h3><p>有很多人会说哎呀，我自己都分析了，不用写下来吧。我的答案是:要写下来。</p>
+<p>开发任务往往不是一天就可以完成的，往往也是复杂的，过多的上下文很容易遗忘，很多场景下有可能需要重新回归需求对已确定的问题进行讨论分析，导致资源上的不必要浪费；另外，交换Pair的时候也会造成信息的丢失。写下来同时是验证开发任务的一个方式。</p>
+<p>写在哪呢，这取决于开发人员的习惯，写在一个明显的，能找得到，能够随时更新的地方就可以了，可以是简单的sticker，notebook，也可以是高端大气的<a href="https://trello.com" target="_blank" rel="noopener">trello</a>，只要能满足开发的需要，这些工具都不是主要问题。当然，如果让我决定，我会说都尝试一下，对于那些简单的很快就完成的任务，那么可能sticker就够了；而对于那些复杂的开发任务，可能持续多天，或者可能需求不清楚的，我建议用trello，trello会很好的帮助你组织管理这些任务列表的状态，就如下图所示。</p>
+<p><img src="/images/tasking-list.png" alt="">{:height=”300px” width=”400px”}</p>
+<h2 id="4-4-指导开发"><a href="#4-4-指导开发" class="headerlink" title="4.4. 指导开发"></a>4.4. 指导开发</h2><p>前面提到任务列表其实就是一个或一组测试用例，任务列表对于开发有较强的指导作用。通常任务列表的选取是按照高风险高价价值的原则；而从开发实现的角度，通常建议深度优先的原则，后续的任务需在前一个基础上进行扩展，尽量保持是同一组测试用例或者同一类，这样保证在每一步的代码实现或设计都比较简单，使得算法的出现水到渠成。如果选了两个任务跨度很大，比如涉及到多个接口和业务模型，那么会使得开发又变得复杂起来。</p>
+<h2 id="5-Summary"><a href="#5-Summary" class="headerlink" title="5. Summary"></a>5. Summary</h2><p>简单讲，Tasking实际就是将一个用户故事分而治之的过程，将用户故事分解为一个个相对独立的开发任务，驱动开发人员小步的快速的循序渐进的完成用户故事的开发。而要做到好的任务分解，需要对需求业务场景以及代码实现具有较丰厚的经验与逻辑分析的能力，需要不断的练习与总结。</p>
+<p>跳出软件开发特定领域来看任务列表这个问题，发现这种任务列表于我们管理好日常生活工作也是很有效的。GTD方法中的第一步就是收集，将要完成的事情整理成任务，划分成可以完成可管理的点，并对任务列表做系统的时间安排与状态跟踪。对于经常处于思维发散的我来说，这是一个保持聚焦，高效工作的好方法。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2013/11/27/tasking/" data-id="cjlbz54ub000sss6s0xldd7ut" class="article-share-link"><i class="fas fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2013/11/27/tasking/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2013/11/27/tasking/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2013/12/17/accept/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    接纳自我 － 有感于演讲技巧培训
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2013/10/22/q-in-angularjs/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">anglarjs翻译: $q</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/cxo-guide-microservices/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://lh4.googleusercontent.com/A7tEGUUzYq2LAC45i3e_hKuN7X3JKJqUPxQnk4K523ZSaFzvC2dudPXWL7w7yRJY07gKbl2xwc8ubjC4vCuZKH2dFWcJtoTnN4bAxjy4Gvm9GRHa896njBSnZLuexDXc_diTd-9h)" alt="[翻译] 给CxO的微服务指南" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/cxo-guide-microservices/" class="title">[翻译] 给CxO的微服务指南</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:11:42.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/abilities/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://upload-images.jianshu.io/upload_images/1825822-32344c7ba682ad9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)" alt="你需要了解的那些Abilities(一)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/abilities/" class="title">你需要了解的那些Abilities(一)</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:08:14.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/token/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/car.png)" alt="谁动了我的Token" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/05/25/token/" class="title">谁动了我的Token</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T07:03:47.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/insights/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/insights.jpeg)" alt="如何培养技术洞见力" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/05/25/insights/" class="title">如何培养技术洞见力</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T00:45:32.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/02/01/refactoring/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/refactoring.png)" alt="重构的七宗罪" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/02/01/refactoring/" class="title">重构的七宗罪</a></p>
+                            <p class="item-date"><time datetime="2016-02-01T06:59:00.000Z" itemprop="datePublished">2016-02-01</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/coding/">coding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/thought/">thought</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/works/">works</a><span class="category-list-count">20</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture/">architecture</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture-microservices/">architecture,microservices</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/architecture/" style="font-size: 10px;">architecture</a> <a href="/tags/architecture-microservices/" style="font-size: 10px;">architecture,microservices</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Xianjing Zhuo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'http://yoursite.com/2013/11/27/tasking/';
+        
+        this.page.identifier = 'tasking';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'xianjing' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>玩转Grunt（三）: JSHint静态代码检查 | Xianjing&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="在这篇文章中让我们来看一下JShint静态代码检查工具以及它如何与Grunt集成。 1. 静态代码检查 静态程序分析（Static program analysis）是指在不执行计算机程序的条件下，进行程序分析的方法。-wikipedia  静态代码检查通过分析程序的语法、结构、调用流程等来检查正确性、是否满足编写规范，找出其中可能隐藏的错误与缺陷，比如错误的逻辑表达式，比如程序中不安全不明确模糊">
+<meta property="og:type" content="article">
+<meta property="og:title" content="玩转Grunt（三）: JSHint静态代码检查">
+<meta property="og:url" content="http://yoursite.com/2013/10/21/grunt-quality/index.html">
+<meta property="og:site_name" content="Xianjing&#39;s blog">
+<meta property="og:description" content="在这篇文章中让我们来看一下JShint静态代码检查工具以及它如何与Grunt集成。 1. 静态代码检查 静态程序分析（Static program analysis）是指在不执行计算机程序的条件下，进行程序分析的方法。-wikipedia  静态代码检查通过分析程序的语法、结构、调用流程等来检查正确性、是否满足编写规范，找出其中可能隐藏的错误与缺陷，比如错误的逻辑表达式，比如程序中不安全不明确模糊">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2013/10/21/grunt-quality/images/jshint-output.png">
+<meta property="og:updated_time" content="2017-08-11T09:47:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="玩转Grunt（三）: JSHint静态代码检查">
+<meta name="twitter:description" content="在这篇文章中让我们来看一下JShint静态代码检查工具以及它如何与Grunt集成。 1. 静态代码检查 静态程序分析（Static program analysis）是指在不执行计算机程序的条件下，进行程序分析的方法。-wikipedia  静态代码检查通过分析程序的语法、结构、调用流程等来检查正确性、是否满足编写规范，找出其中可能隐藏的错误与缺陷，比如错误的逻辑表达式，比如程序中不安全不明确模糊">
+<meta name="twitter:image" content="http://yoursite.com/2013/10/21/grunt-quality/images/jshint-output.png">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Xianjing&#39;s blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpeg" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpeg" />
+            <h2 id="name">Xianjing</h2>
+            <h3 id="title">learner</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/xianjing">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                36
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                2
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/xianjing" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-grunt-quality" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            玩转Grunt（三）: JSHint静态代码检查
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2013/10/21/grunt-quality/">
+            <time datetime="2013-10-21T08:06:00.000Z" itemprop="datePublished">2013-10-21</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/works/">works</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>在这篇文章中让我们来看一下JShint静态代码检查工具以及它如何与Grunt集成。</p>
+<h2 id="1-静态代码检查"><a href="#1-静态代码检查" class="headerlink" title="1. 静态代码检查"></a>1. 静态代码检查</h2><blockquote>
+<p>静态程序分析（Static program analysis）是指在不执行计算机程序的条件下，进行程序分析的方法。-wikipedia</p>
+</blockquote>
+<p>静态代码检查通过分析程序的语法、结构、调用流程等来检查正确性、是否满足编写规范，找出其中可能隐藏的错误与缺陷，比如错误的逻辑表达式，比如程序中不安全不明确模糊的调用部分，eval，比如无用的代码、比如死循环，比如复杂的代码嵌套等。统计证明，在整个软件开发生命周期中，30% ～ 70% 的代码逻辑设计和编码缺陷是可以通过静态代码分析来发现和修复的。</p>
+<h2 id="2-Javascript中静态代码检查工具"><a href="#2-Javascript中静态代码检查工具" class="headerlink" title="2. Javascript中静态代码检查工具"></a>2. Javascript中静态代码检查工具</h2><p>基于Javascript语言的特性，很多tricky的问题让人抓狂，不正确的使用会导致不可预测的bug，比如==比较操作，所以静态代码检查工具显得尤为重要。另外从代码规范检查角度来讲，可以有助于项目保持统一的编写风格。</p>
+<p>在Javascript语言中谈到静态代码检查就不得不提到JSLint和JSHint，其中JSLint是Douglas Crockford编写的，将他认为的那些重要的js编程实践作为静态检查项，但是因为JSLint相关检查项过于严格，无法妥协，JSLint的使用程度并不如想象中的广泛。</p>
+<p>JSHint就是在这样一种社区驱动的情况下出现的，是轻量级的JSLint，可以自定义检查选项，相对比较灵活。它的源代码是fork自JSLint，可在<a href="https://github.com/jshint/jshint" target="_blank" rel="noopener">Github JSHint</a>找到。它的检查选项主要分为四大类，语法约束、代码风格、代码复杂度和环境相关的选项（e.g.全局变量）。<br><a id="more"></a></p>
+<h3 id="3-常用的JSHint选项"><a href="#3-常用的JSHint选项" class="headerlink" title="3. 常用的JSHint选项"></a>3. 常用的JSHint选项</h3><table>
+<thead>
+<tr>
+<th><strong>名字</strong></th>
+<th style="text-align:center"><strong>说明  </strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bitwise = true</td>
+<td style="text-align:center">禁止使用位运算符</td>
+</tr>
+<tr>
+<td>camelcase = true</td>
+<td style="text-align:center">强制变量名为驼峰式</td>
+</tr>
+<tr>
+<td>curly = true</td>
+<td style="text-align:center">强制代码块有大括号</td>
+</tr>
+<tr>
+<td>eqeqeq = true</td>
+<td style="text-align:center">强制===和!==</td>
+</tr>
+<tr>
+<td>immed = true</td>
+<td style="text-align:center">禁止无括号调用函数</td>
+</tr>
+<tr>
+<td>indent = true</td>
+<td style="text-align:center">强制代码缩进</td>
+</tr>
+<tr>
+<td>latedef = true</td>
+<td style="text-align:center">禁止使用未声明的变量</td>
+</tr>
+<tr>
+<td>newcap = true</td>
+<td style="text-align:center">强制构造函数名称大写</td>
+</tr>
+<tr>
+<td>noarg = true</td>
+<td style="text-align:center">禁止arguments.caller和arguments.callee</td>
+</tr>
+<tr>
+<td>noempty = true</td>
+<td style="text-align:center">强制无空代码块</td>
+</tr>
+<tr>
+<td>undef = true</td>
+<td style="text-align:center">禁止使用显示的未声明的变量</td>
+</tr>
+<tr>
+<td>unused = true</td>
+<td style="text-align:center">警告未使用的变量</td>
+</tr>
+<tr>
+<td>strict = true</td>
+<td style="text-align:center">严格模式</td>
+</tr>
+<tr>
+<td>trailing = true</td>
+<td style="text-align:center">禁止以空格结尾</td>
+</tr>
+<tr>
+<td>asi = false</td>
+<td style="text-align:center">警告缺失分号</td>
+</tr>
+<tr>
+<td>boss = false</td>
+<td style="text-align:center">使用条件判断而不是赋值语句</td>
+</tr>
+<tr>
+<td>evil = false</td>
+<td style="text-align:center">警告使用eval</td>
+</tr>
+<tr>
+<td>lastsemic = false</td>
+<td style="text-align:center">分号</td>
+</tr>
+<tr>
+<td>laxbreak = false</td>
+<td style="text-align:center">多行字符</td>
+</tr>
+<tr>
+<td>laxcomma=false</td>
+<td style="text-align:center">以逗号开头的多行字符</td>
+</tr>
+<tr>
+<td>loopfunc=false</td>
+<td style="text-align:center">警告在循环中定义function</td>
+</tr>
+<tr>
+<td>smarttabs=true</td>
+<td style="text-align:center">隐藏关于tab与空格混合的使用</td>
+</tr>
+<tr>
+<td>maxcomplexity</td>
+<td style="text-align:center">最大圈复杂度</td>
+</tr>
+<tr>
+<td>maxdepth</td>
+<td style="text-align:center">最大嵌套深度</td>
+</tr>
+<tr>
+<td>jquery</td>
+<td style="text-align:center">允许jquery全局变量</td>
+</tr>
+<tr>
+<td>global</td>
+<td style="text-align:center">定义允许的全局变量</td>
+</tr>
+<tr>
+<td>-W026=true</td>
+<td style="text-align:center">内嵌的函数应该放在包含的方法的顶端</td>
+</tr>
+</tbody>
+</table>
+<p>更多的选项以及解释可参见<a href="http://xianjing.github.io/blog/2013/10/21/jshint-options/" target="_blank" rel="noopener">我翻译的JShint在线文档</a>，另外也可参照<a href="https://github.com/jshint/jshint/blob/2.1.4/src/shared/messages.js" target="_blank" rel="noopener">JSHint内置的警告和错误码</a>增添警告和错误码的配置，如例子中的w026, </p>
+<h2 id="4-How-to-enable-JSHint"><a href="#4-How-to-enable-JSHint" class="headerlink" title="4. How to enable JSHint"></a>4. How to enable JSHint</h2><p>有两种方式，第一，是安装JSHint的命令行工具；第二，与Grunt集成。</p>
+<h3 id="4-1-Install-JSHint-CLI"><a href="#4-1-Install-JSHint-CLI" class="headerlink" title="4.1 Install JSHint CLI"></a>4.1 Install JSHint CLI</h3><p>JSHint有一个命令行的程序，是npm的一个模块，可以通过以下方式安装jshint。</p>
+<blockquote>
+<p>npm install jshint -g</p>
+</blockquote>
+<p>具体可参见<a href="http://xianjing.github.io/blog/2013/10/16/jshint-doc/" target="_blank" rel="noopener">我翻译的JSHint在线文档</a>。</p>
+<h3 id="4-2-与Grunt集成"><a href="#4-2-与Grunt集成" class="headerlink" title="4.2 与Grunt集成"></a>4.2 与Grunt集成</h3><p>需要使用<a href="https://github.com/gruntjs/grunt-contrib-jshint" target="_blank" rel="noopener">grunt-contrib-jshint</a>帮助集成jshint到Grunt。具体安装方法和其它插件一样，这里就不详述了，可以参见第一篇<a href="http://xianjing.github.io/blog/2013/05/16/grunt/" target="_blank" rel="noopener">Grunt的博客</a>。</p>
+<h3 id="4-2-1-安装"><a href="#4-2-1-安装" class="headerlink" title="4.2.1 安装"></a>4.2.1 安装</h3><blockquote>
+<p>npm install grunt-contrib-jshint –save-dev</p>
+</blockquote>
+<h3 id="4-2-2-配置JSHint选项"><a href="#4-2-2-配置JSHint选项" class="headerlink" title="4.2.2 配置JSHint选项"></a>4.2.2 配置JSHint选项</h3><p>目前Grunt文件中JSHint任务的options与.jshintrc中的选项是不能互相merge的，所以一种可以将JSHint的选项定义在jshint构建任务的options中，另外一种是配置jshintrc选项指定jshint的配置文件，在这里采取第二种。</p>
+<figure class="highlight javascript"><figcaption><span>config jshint</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">grunt</span>) </span>&#123;</span><br><span class="line"><span class="meta">    'use strict'</span>;</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">    grunt.initConfig(&#123;</span><br><span class="line">        <span class="comment">// task configuration</span></span><br><span class="line">        pkg: <span class="string">''</span>,</span><br><span class="line">        jshint: &#123;</span><br><span class="line">            options: &#123;</span><br><span class="line">                <span class="string">'jshintrc'</span>:<span class="string">'.jshintrc'</span>,</span><br><span class="line">                <span class="string">'reporterOutput'</span>: <span class="string">'jshint.text'</span></span><br><span class="line">            &#125;,</span><br><span class="line">            all: [<span class="string">'app/js/**.js'</span>, <span class="string">'app/lib/**.js'</span>]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Load the plugin</span></span><br><span class="line">    grunt.loadNpmTasks(<span class="string">'grunt-contrib-jshint'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Default task(s)</span></span><br><span class="line">    grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'jshint'</span>]);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>配置完后在命令行运行 grunt jshint，就可以得到jshint的检查结果，包括行号，错误码以及原因，一目了然。<br><img src="images/jshint-output.png" alt="">{:height=”300px” width=”400px”}</p>
+<h3 id="4-3-Report"><a href="#4-3-Report" class="headerlink" title="4.3 Report"></a>4.3 Report</h3><p>JSHint的输出结果可以自己定制，也可以选取缺省的report工具，诸君如果感兴趣可参考<a href="http://www.jshint.com/docs/reporters/" target="_blank" rel="noopener">Writing your own reporter</a>或者<a href="https://github.com/ashwinr/jshint-path-reporter" target="_blank" rel="noopener">jshint-path-reporter</a></p>
+<h2 id="5-参考"><a href="#5-参考" class="headerlink" title="5 参考"></a>5 参考</h2><ol>
+<li>s<a href="http://jslinterrors.com/" target="_blank" rel="noopener">http://jslinterrors.com/</a></li>
+<li><a href="http://anton.kovalyov.net/p/why-jshint/" target="_blank" rel="noopener">http://anton.kovalyov.net/p/why-jshint/</a></li>
+<li><a href="http://www.elijahmanor.com/2012/09/control-complexity-of-your-javascript.html" target="_blank" rel="noopener">http://www.elijahmanor.com/2012/09/control-complexity-of-your-javascript.html</a></li>
+<li><a href="http://xianjing.github.io/blog/2013/10/16/jshint-doc/" target="_blank" rel="noopener">http://xianjing.github.io/blog/2013/10/16/jshint-doc/</a></li>
+<li><a href="http://xianjing.github.io/blog/2013/10/21/jshint-options/" target="_blank" rel="noopener">http://xianjing.github.io/blog/2013/10/21/jshint-options/</a></li>
+</ol>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2013/10/21/grunt-quality/" data-id="cjlbz54u0000hss6sj4c36znr" class="article-share-link"><i class="fas fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2013/10/21/grunt-quality/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2013/10/21/grunt-quality/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2013/10/22/q-in-angularjs/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    anglarjs翻译: $q
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2013/10/21/jshint-options/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">JSHint在线文档翻译（二）: 选项</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/cxo-guide-microservices/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://lh4.googleusercontent.com/A7tEGUUzYq2LAC45i3e_hKuN7X3JKJqUPxQnk4K523ZSaFzvC2dudPXWL7w7yRJY07gKbl2xwc8ubjC4vCuZKH2dFWcJtoTnN4bAxjy4Gvm9GRHa896njBSnZLuexDXc_diTd-9h)" alt="[翻译] 给CxO的微服务指南" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/cxo-guide-microservices/" class="title">[翻译] 给CxO的微服务指南</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:11:42.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/abilities/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://upload-images.jianshu.io/upload_images/1825822-32344c7ba682ad9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)" alt="你需要了解的那些Abilities(一)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/abilities/" class="title">你需要了解的那些Abilities(一)</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:08:14.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/token/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/car.png)" alt="谁动了我的Token" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/05/25/token/" class="title">谁动了我的Token</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T07:03:47.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/insights/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/insights.jpeg)" alt="如何培养技术洞见力" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/05/25/insights/" class="title">如何培养技术洞见力</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T00:45:32.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/02/01/refactoring/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/refactoring.png)" alt="重构的七宗罪" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/02/01/refactoring/" class="title">重构的七宗罪</a></p>
+                            <p class="item-date"><time datetime="2016-02-01T06:59:00.000Z" itemprop="datePublished">2016-02-01</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/coding/">coding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/thought/">thought</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/works/">works</a><span class="category-list-count">20</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture/">architecture</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture-microservices/">architecture,microservices</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/architecture/" style="font-size: 10px;">architecture</a> <a href="/tags/architecture-microservices/" style="font-size: 10px;">architecture,microservices</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Xianjing Zhuo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'http://yoursite.com/2013/10/21/grunt-quality/';
+        
+        this.page.identifier = 'grunt-quality';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'xianjing' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

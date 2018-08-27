@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Implementing DDD Reading - Strategic Design | Xianjing&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="To truly object-oriented design  本文是实现领域驱动设计前三章关于战略设计的读后感。 {:height=”300px” width=”400px”} 1. 概念篇1.1 领域广义上讲，领域即是一个组织所做的事情以及其中所包含的一切，也是组织的业务范围以及在其中所进行的活动。软件所讨论的领域即是这个组织的领域，应该是清晰明确的。不同的层面或粒度，领域一词承载的内容不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Implementing DDD Reading - Strategic Design">
+<meta property="og:url" content="http://yoursite.com/2014/04/18/implementing-ddd-reading-strategic-design/index.html">
+<meta property="og:site_name" content="Xianjing&#39;s blog">
+<meta property="og:description" content="To truly object-oriented design  本文是实现领域驱动设计前三章关于战略设计的读后感。 {:height=”300px” width=”400px”} 1. 概念篇1.1 领域广义上讲，领域即是一个组织所做的事情以及其中所包含的一切，也是组织的业务范围以及在其中所进行的活动。软件所讨论的领域即是这个组织的领域，应该是清晰明确的。不同的层面或粒度，领域一词承载的内容不">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/Inception.v.s.%20strategic.Design.PNG">
+<meta property="og:updated_time" content="2017-08-11T09:47:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Implementing DDD Reading - Strategic Design">
+<meta name="twitter:description" content="To truly object-oriented design  本文是实现领域驱动设计前三章关于战略设计的读后感。 {:height=”300px” width=”400px”} 1. 概念篇1.1 领域广义上讲，领域即是一个组织所做的事情以及其中所包含的一切，也是组织的业务范围以及在其中所进行的活动。软件所讨论的领域即是这个组织的领域，应该是清晰明确的。不同的层面或粒度，领域一词承载的内容不">
+<meta name="twitter:image" content="http://yoursite.com/images/Inception.v.s.%20strategic.Design.PNG">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Xianjing&#39;s blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpeg" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpeg" />
+            <h2 id="name">Xianjing</h2>
+            <h3 id="title">learner</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/xianjing">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                36
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                2
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/xianjing" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-implementing-ddd-reading-strategic-design" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Implementing DDD Reading - Strategic Design
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2014/04/18/implementing-ddd-reading-strategic-design/">
+            <time datetime="2014-04-17T16:16:00.000Z" itemprop="datePublished">2014-04-18</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/works/">works</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <blockquote>
+<p>To truly object-oriented design</p>
+</blockquote>
+<p>本文是<a href="http://www.amazon.cn/%E5%AE%9E%E7%8E%B0%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1-%E5%BC%97%E5%86%9C/dp/B00IYTVWA6/ref=sr_1_2?s=books&amp;ie=UTF8&amp;qid=1398946520&amp;sr=1-2" target="_blank" rel="noopener">实现领域驱动设计</a>前三章关于战略设计的读后感。</p>
+<p><img src="/images/Inception.v.s. strategic.Design.PNG" alt="image">{:height=”300px” width=”400px”}</p>
+<h2 id="1-概念篇"><a href="#1-概念篇" class="headerlink" title="1. 概念篇"></a>1. 概念篇</h2><h2 id="1-1-领域"><a href="#1-1-领域" class="headerlink" title="1.1 领域"></a>1.1 领域</h2><p>广义上讲，领域即是一个组织所做的事情以及其中所包含的一切，也是组织的业务范围以及在其中所进行的活动。软件所讨论的领域即是这个组织的领域，应该是清晰明确的。不同的层面或粒度，领域一词承载的内容不同。</p>
+<p>为了简化问题，避免大泥团这样的架构出现，我们认为领域拆分是必要的，可以帮我们简化问题域，是有好处的。</p>
+<p>领域不是领域模型。</p>
+<p>比如电子商务系统中电子商务是我们的领域。<br><a id="more"></a></p>
+<h2 id="1-2-子域"><a href="#1-2-子域" class="headerlink" title="1.2 子域"></a>1.2 子域</h2><p>子域是领域的一部分，领域可以划分为若干个小的逻辑独立子域，从而更好的应对问题的复杂性。子域包括核心子域、支撑子域和通用子域三种类型。子域并不一定要做的很大，子域可以只包含一套算法，只要是独立的、内聚的。在DDD实施时这种简单的子域可以称为一个独立的模块，从核心子域中划分出来，更容易重用及维护。</p>
+<p>比如电子商务系统中包含订单子域、产品目录子域、发票子域、库存子域、物流子域。</p>
+<h3 id="1-2-1-核心子域"><a href="#1-2-1-核心子域" class="headerlink" title="1.2.1 核心子域"></a>1.2.1 核心子域</h3><p>核心子域是整个业务领域的核心，是企业业务核心竞争优势，也可以是业务成功的关键因素。比如电子商务系统，订单子域就是核心子域，是整个业务的关键所在。</p>
+<h3 id="1-2-2-支撑子域"><a href="#1-2-2-支撑子域" class="headerlink" title="1.2.2 支撑子域"></a>1.2.2 支撑子域</h3><p>支撑子域关注业务的非核心方面，它对应的限界上下文可以通过创建或购买来支撑我们的业务。比如电子商务系统中发票子域、物流子域便是支撑子域。</p>
+<h3 id="1-2-3-通用子域"><a href="#1-2-3-通用子域" class="headerlink" title="1.2.3 通用子域"></a>1.2.3 通用子域</h3><p>如果一个子域被整个业务系统所使用，那么它就是通用子域。比如电子商务系统中库存子域。</p>
+<h2 id="1-3-限界上下文"><a href="#1-3-限界上下文" class="headerlink" title="1.3 限界上下文"></a>1.3 限界上下文</h2><p>限界上下文指业务语言层面的上下文边界，它是显示的、是充满业务语义的。在一个好的限界上下文中，每一个术语应该只表示一个领域概念，无歧义且唯一。一个限界上下文并不一定包含在一个子域中，一个子域也可以包含多个上下文。对于一个领域中的限界上下文不是孤立存在的，是通过多个限界上下文的协作完成业务。</p>
+<p>对于限界上下文的识别是关注点分离的明确表象，它可以隔离其它不相关业务、减少干扰噪音，识别隐藏的领域概念。同一个物件在不同上下文中的领域概念是不同的，这些易于混淆的领域概念是理解限界上下文的关键。比如库存，在仓库中无人购买的库存称为积压件；已经被订购即将发货的库存称为即将发送件；被损坏的库存称为无用件。在库存的不同上下文中需要区别对待。</p>
+<h2 id="1-4-问题空间"><a href="#1-4-问题空间" class="headerlink" title="1.4 问题空间"></a>1.4 问题空间</h2><p>问题空间是领域的一部分，问题空间中考虑的是当前业务所面临的挑战，如库存系统的成本较高问题。对于问题空间的开发将产生新的核心子域，问题空间的子域随着项目的不同而不同，关注着各自不同的业务问题。</p>
+<p>在我们完成问题空间分析时，我们需要对其进行评估，需要与业务人员（客户）一起确认我们对问题空间的核心子域以及要达成的业务目标的理解，其中包含哪些核心概念，它的支撑子域和通用子域是什么，从而确认相关利益方在目标上达成一致，也即是我们通常在项目启动时所讲的构建业务愿景。</p>
+<h2 id="1-5-解决方案空间"><a href="#1-5-解决方案空间" class="headerlink" title="1.5 解决方案空间"></a>1.5 解决方案空间</h2><p>解决方案空间讨论的是如何用软件来解决这些业务挑战，它包括一个或多个限界上下文，是一组特定的软件模型。限界上下文在这里有更多的阐释，限界上下文即是一个特定的解决方案，划分限界上下文往往也意味着对于解决问题空间的分析映射和实现。</p>
+<p>解决方案空间通常会收到现有系统和技术的影响，需要考虑是否重用，资源时间的约束，如何集成，风险控制等。在解决方案空间中，限界上下文是重要的建模工具。</p>
+<h2 id="2-上下文是王道"><a href="#2-上下文是王道" class="headerlink" title="2. 上下文是王道"></a>2. 上下文是王道</h2><p>限界上下文组成解决方案。我们在实施DDD战略设计的时候，应该是从问题空间出发，确认解决方案空间，划分限界上下文，从而识别其中的核心领域模型；并通过问题空间的更新和解决方案的更新/正实时的调整模型及其关系。</p>
+<p>上下文的划分由问题空间和它要达成的业务目标所决定，与组织文化相关，与stakeholder相关。同一个术语在不同的企业组织、不同的业务范畴它代表的领域概念是不同的，这也是可行的，只要在组织内团队内达成一致。</p>
+<h2 id="2-1-限界上下文不只是领域模型"><a href="#2-1-限界上下文不只是领域模型" class="headerlink" title="2.1 限界上下文不只是领域模型"></a>2.1 限界上下文不只是领域模型</h2><p>1）领域模型是限界上下文中的主要公民，当前的上下文决定了它所代表的唯一的、具体的业务术语或概念。每个领域模型具有自己的属性和操作，领域模型之间互相交互完成限界上下文的业务。内聚的领域模型是一个好的限界上下文的重要组成。</p>
+<p>2）但限界上下文并不仅是领域模型，它同时也包含了那些为领域模型提供交互手段和辅助功能的内容，比如数据库Schema设计等。但如何确认领域模型/组件/服务在上下文的边界内是一个需要解决的问题。</p>
+<h2 id="2-2-限界上下文的大小"><a href="#2-2-限界上下文的大小" class="headerlink" title="2.2 限界上下文的大小"></a>2.2 限界上下文的大小</h2><p>限界上下文的粒度需要适中。限界上下文需要足够大，以能够表达它所对应的整套通用语言。限界上下文需要清楚包含的核心领域概念，清楚那些不属于通用语言的外部概念。上下文映射可以帮助我们做出相对正确的判断。限界上下文也需要足够小，从而使得它所封装的通用语言和领域对象具有清晰的定义，但也不要基于约束它的范围。限界上下文可以通过分析，由上而下，大粒度到小粒度逐渐分解，直至团队达成一致。</p>
+<h2 id="2-3-几点注意"><a href="#2-3-几点注意" class="headerlink" title="2.3 几点注意"></a>2.3 几点注意</h2><p>限界上下文首先考虑的一定是领域问题、通用术语。</p>
+<ul>
+<li>避免从技术层面考虑限界上下文，技术组件不能定义限界上下文。</li>
+<li>避免以开发任务的分配来拆分限界上下文，这些可能导致错误的上下文建模方式。<br>一个可以帮助划分限界上下文或者子域的方法是假设这部分从第三方购买，从而思考所带来的变化和合适的划分。</li>
+</ul>
+<h2 id="3-上下文映射"><a href="#3-上下文映射" class="headerlink" title="3. 上下文映射"></a>3. 上下文映射</h2><p>上下文映射关注于解决方案空间中限界上下文之间的集成关系，可以帮助界定和划分与其他系统/模块之间的依赖关系，识别交付风险（如集成瓶颈、组织管理问题等）及其需要应对的方案。</p>
+<p>Eric Evans 在DDD种定义了九种产品和组织的集成关系。</p>
+<h3 id="3-1-集成关系"><a href="#3-1-集成关系" class="headerlink" title="3.1 集成关系"></a>3.1 集成关系</h3><ul>
+<li>协作关系</li>
+<li>共享内核</li>
+<li>客户方和供应方开发</li>
+<li>遵奉者</li>
+<li>防腐层(ACL)</li>
+<li>开放主机服务(OHS)</li>
+<li>发布语言(PL)</li>
+<li>另谋他路</li>
+<li>大泥球</li>
+</ul>
+<p>绘制上下文映射图时需要首先定义上下文之间的集成关系和集成方式，是基于协作的，还是客户供应关系的。在SaaSovation的例子中，用户身份与访问上下文与协作上下文是客户和供应方的关系，身份是协作的上游，提供主机服务；而协作是身份的下游，消费身份提供的服务，并采用防腐层保证内部的稳定性。</p>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4.总结"></a>4.总结</h2><ul>
+<li>两个概念：子域与限界上下文。</li>
+</ul>
+<p>1）子域是指组织内所做事情的一个独立的部分；子域不会随着系统的替换而发生变化，无论解决方案是什么，我们的问题空间仍然存在。</p>
+<p>2）限界上下文是解决问题中的一个独立的具有一组清晰的通过术语的范畴，限界上下文可以跨子域，可以是已有系统，是模块。</p>
+<ul>
+<li>一种思考方式：假设替换法</li>
+</ul>
+<p>在讨论解决方案空间的概念时经常可以采用的一种思考方式是假设替换法，如果这个限界上下文被替换会出现什么变化？</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2014/04/18/implementing-ddd-reading-strategic-design/" data-id="cjlbz54uw001ess6sh1xump1j" class="article-share-link"><i class="fas fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2014/04/18/implementing-ddd-reading-strategic-design/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2014/04/18/implementing-ddd-reading-strategic-design/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2014/04/20/implementing-ddd-practice-timesheet/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    Implementing DDD Practice - Timesheet
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2014/04/14/why-4-dot-5/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">升级.NET Framework不得不说的事 (二)：Why 4.5.1</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/cxo-guide-microservices/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://lh4.googleusercontent.com/A7tEGUUzYq2LAC45i3e_hKuN7X3JKJqUPxQnk4K523ZSaFzvC2dudPXWL7w7yRJY07gKbl2xwc8ubjC4vCuZKH2dFWcJtoTnN4bAxjy4Gvm9GRHa896njBSnZLuexDXc_diTd-9h)" alt="[翻译] 给CxO的微服务指南" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/cxo-guide-microservices/" class="title">[翻译] 给CxO的微服务指南</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:11:42.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/abilities/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://upload-images.jianshu.io/upload_images/1825822-32344c7ba682ad9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)" alt="你需要了解的那些Abilities(一)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/abilities/" class="title">你需要了解的那些Abilities(一)</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:08:14.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/token/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/car.png)" alt="谁动了我的Token" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/05/25/token/" class="title">谁动了我的Token</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T07:03:47.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/insights/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/insights.jpeg)" alt="如何培养技术洞见力" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/05/25/insights/" class="title">如何培养技术洞见力</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T00:45:32.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/02/01/refactoring/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/refactoring.png)" alt="重构的七宗罪" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/02/01/refactoring/" class="title">重构的七宗罪</a></p>
+                            <p class="item-date"><time datetime="2016-02-01T06:59:00.000Z" itemprop="datePublished">2016-02-01</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/coding/">coding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/thought/">thought</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/works/">works</a><span class="category-list-count">20</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture/">architecture</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture-microservices/">architecture,microservices</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/architecture/" style="font-size: 10px;">architecture</a> <a href="/tags/architecture-microservices/" style="font-size: 10px;">architecture,microservices</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Xianjing Zhuo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'http://yoursite.com/2014/04/18/implementing-ddd-reading-strategic-design/';
+        
+        this.page.identifier = 'implementing-ddd-reading-strategic-design';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'xianjing' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

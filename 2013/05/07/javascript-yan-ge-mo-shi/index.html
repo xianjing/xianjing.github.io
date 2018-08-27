@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>JavaScript 严格模式 | Xianjing&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="##1. 严格模式 ‘Use Strict’ 特性是在2009年12月发布的ECMAScript 5中引入的，允许将一段程序或者方法加入严格语法检查的上下文中。其目地是通过使用严格模式，避免JavaScript中那些模糊杂乱，不安全的使用与错误，比如使用没有定义的变量，比如重复定义，比如修改只读属性，比如this访问全局变量等。这些编程中出现的错误以前会被Javascript Engine偷偷的吃">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 严格模式">
+<meta property="og:url" content="http://yoursite.com/2013/05/07/javascript-yan-ge-mo-shi/index.html">
+<meta property="og:site_name" content="Xianjing&#39;s blog">
+<meta property="og:description" content="##1. 严格模式 ‘Use Strict’ 特性是在2009年12月发布的ECMAScript 5中引入的，允许将一段程序或者方法加入严格语法检查的上下文中。其目地是通过使用严格模式，避免JavaScript中那些模糊杂乱，不安全的使用与错误，比如使用没有定义的变量，比如重复定义，比如修改只读属性，比如this访问全局变量等。这些编程中出现的错误以前会被Javascript Engine偷偷的吃">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-08-11T09:47:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript 严格模式">
+<meta name="twitter:description" content="##1. 严格模式 ‘Use Strict’ 特性是在2009年12月发布的ECMAScript 5中引入的，允许将一段程序或者方法加入严格语法检查的上下文中。其目地是通过使用严格模式，避免JavaScript中那些模糊杂乱，不安全的使用与错误，比如使用没有定义的变量，比如重复定义，比如修改只读属性，比如this访问全局变量等。这些编程中出现的错误以前会被Javascript Engine偷偷的吃">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Xianjing&#39;s blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpeg" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpeg" />
+            <h2 id="name">Xianjing</h2>
+            <h3 id="title">learner</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/xianjing">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                36
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                2
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/xianjing" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-javascript-yan-ge-mo-shi" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            JavaScript 严格模式
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2013/05/07/javascript-yan-ge-mo-shi/">
+            <time datetime="2013-05-07T07:17:00.000Z" itemprop="datePublished">2013-05-07</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/works/">works</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>##1. 严格模式</p>
+<p>‘Use Strict’ 特性是在2009年12月发布的ECMAScript 5中引入的，允许将一段程序或者方法加入严格语法检查的上下文中。其目地是通过使用严格模式，避免JavaScript中那些模糊杂乱，不安全的使用与错误，比如使用没有定义的变量，比如重复定义，比如修改只读属性，比如this访问全局变量等。这些编程中出现的错误以前会被Javascript Engine偷偷的吃掉，从而发生一些神奇的事情。而引入严格模式以后，这些错误则会通过异常，语法错误等方式被显示的暴露出来，从而帮助程序员更好的调试，从而加强Javascript使用规范与最佳实践，带来整洁的代码。同时也可以帮助Javascript Engine更好的进行优化。</p>
+<p>##2. 浏览器支持</p>
+<p>目前大多数主流的浏览器最新版都支持严格模式，包括IE10+，Opera12。<a href="http://caniuse.com/use-strict" target="_blank" rel="noopener">CanIUse</a>提供了不同浏览器版本对严格模式的支持信息，<a href="http://kangax.github.io/es5-compat-table/strict-mode/" target="_blank" rel="noopener">kangx’s strict mode support</a>则可以验证当前浏览器对严格模式具体特性的支持。<br><a id="more"></a></p>
+<p>##3. 如何使用<br>在javascript 文件或代码块中加入 ‘use strict’，适用范围可以是全局的，也可以是某一个方法体内部。</p>
+<ul>
+<li>文件全局范围</li>
+</ul>
+<p>在javascript文件的第一行加入 ‘use strict’，这个文件的所有javascript都会使用严格模式进行语法检查。</p>
+<figure class="highlight js"><figcaption><span>apply Strcit Mode</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">     <span class="comment">// in strict mode</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//in strict mode</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>方法范围</li>
+</ul>
+<p>在方法体的第一行加入’use strict’。</p>
+<figure class="highlight js"><figcaption><span>apply Strcit Mode</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"><span class="meta">     'use strict'</span>;</span><br><span class="line">      <span class="comment">//in strict mode</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// not in strict mode</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>use strict一定是在文件或者方法的第一行，并且有效的第一行。下面代码中将不会启用严格模式。<br><figure class="highlight js"><figcaption><span>apply Strcit Mode</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="keyword">var</span> test = <span class="string">'test'</span>;</span><br><span class="line"><span class="meta">     'use strict'</span>;</span><br><span class="line">     <span class="comment">//not in strict mode;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>推荐第二种方式而不推荐在全局使用。因为目前并不是所有的Javascript都支持严格模式，所以为了保证与引入严格模式之前的Javascript代码及相关类库的兼容，建议只在需要启用的地方使用，也即是第二种方式；二是多个Javascript文件合并的情况，如果采取全局方式，合并后回导致 use strict不在第一行，则严格模式不会被启用*</p>
+</blockquote>
+<p>##4. 严格模式检查的内容</p>
+<h4 id="1-变量在使用前必须声明。"><a href="#1-变量在使用前必须声明。" class="headerlink" title="1) 变量在使用前必须声明。"></a>1) 变量在使用前必须声明。</h4><p>在正常模式中，如果一个变量没有声明就赋值，默认是全局变量。严格模式禁止这种用法，变量必须显式声明才能使用，这样可以避免在非严格模式下发生的一些神奇的事情，诸如不同上下文出现的重复变量。<br><figure class="highlight js"><figcaption><span>use undefined var</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line">test = <span class="string">'abc'</span>; <span class="comment">//throw error</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="2-不可扩展属性的对象不能添加新的属性"><a href="#2-不可扩展属性的对象不能添加新的属性" class="headerlink" title="2) 不可扩展属性的对象不能添加新的属性"></a>2) 不可扩展属性的对象不能添加新的属性</h4><p>ES5引入了两个方法修改和验证对象的可扩展性。<br><figure class="highlight js"><figcaption><span>extend non-Extensible object</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.preventExtensions( obj )</span><br><span class="line"><span class="built_in">Object</span>.isExtensible( obj )</span><br></pre></td></tr></table></figure></p>
+<p>在非严格模式下默默的吃掉的错误在严格模式下会显示的报错。</p>
+<figure class="highlight js"><figcaption><span>extend non-Extensible object</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">name</span>: <span class="string">'hanse'</span>&#125;;</span><br><span class="line"><span class="built_in">Object</span>.preventExtensions(obj);</span><br><span class="line"></span><br><span class="line">obj.age = <span class="string">"3"</span>; <span class="comment">//throw error</span></span><br></pre></td></tr></table></figure>
+<h4 id="3-对象不能具有同样名称的属性"><a href="#3-对象不能具有同样名称的属性" class="headerlink" title="3) 对象不能具有同样名称的属性"></a>3) 对象不能具有同样名称的属性</h4><figure class="highlight js"><figcaption><span>no duplicate property</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">	<span class="string">'name'</span>: <span class="string">'abcd'</span>,</span><br><span class="line">	<span class="string">'name'</span>: <span class="string">'abcd'</span></span><br><span class="line">&#125;; <span class="comment">//throw error</span></span><br></pre></td></tr></table></figure>
+<h4 id="4-函数不允许重复名字的参数"><a href="#4-函数不允许重复名字的参数" class="headerlink" title="4) 函数不允许重复名字的参数"></a>4) 函数不允许重复名字的参数</h4><figure class="highlight js"><figcaption><span>no duplicate param</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span>(<span class="params">name, name</span>)</span>&#123; <span class="comment">//throw error</span></span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<h4 id="5-对于number对象赋值，不再使用八进制"><a href="#5-对于number对象赋值，不再使用八进制" class="headerlink" title="5) 对于number对象赋值，不再使用八进制"></a>5) 对于number对象赋值，不再使用八进制</h4><figure class="highlight js"><figcaption><span>apply Strcit Mode</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span></span><br><span class="line"><span class="keyword">var</span> total = <span class="number">010</span>; <span class="comment">//throw error: Octal literals are not allowed in strict mode.</span></span><br><span class="line"><span class="keyword">var</span> count = \<span class="number">010</span>; <span class="comment">//throw syntax error</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="6-delete-不能用于参数函数变量或者其他属性。"><a href="#6-delete-不能用于参数函数变量或者其他属性。" class="headerlink" title="6) delete 不能用于参数函数变量或者其他属性。"></a>6) delete 不能用于参数函数变量或者其他属性。</h4><p>严格模式下无法删除变量。只有configurable设置为true的对象属性，才能被删除。</p>
+<h4 id="7-引入eval作用域"><a href="#7-引入eval作用域" class="headerlink" title="7) 引入eval作用域"></a>7) 引入eval作用域</h4><p>eval代码块中引入的变量只在内部scope有效，外部使用会抛错。<br><figure class="highlight js"><figcaption><span>eval代码块</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span></span><br><span class="line"><span class="keyword">var</span> <span class="built_in">eval</span> = “<span class="built_in">eval</span>”; <span class="comment">//throw error</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">eval</span>(<span class="string">"var total = 1;"</span>)</span><br><span class="line">total = <span class="number">10</span>; <span class="comment">// throw error</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="8-with-禁止使用"><a href="#8-with-禁止使用" class="headerlink" title="8) with 禁止使用"></a>8) with 禁止使用</h4><h4 id="9-arguments的限制"><a href="#9-arguments的限制" class="headerlink" title="9) arguments的限制"></a>9) arguments的限制</h4><p>严格模式中，不能对arguments进行赋值，它作为方法参数的一个复本，不在与参数引用同一个对象；同时禁止使用arguments.callee。</p>
+<figure class="highlight js"><figcaption><span>arguments</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">testArgs</span>(<span class="params">oneArg</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">arguments</span>[<span class="number">0</span>] = <span class="number">20</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">testArgs([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]); <span class="comment">//oneArg保持不变，arguments = 20;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="10-禁止this指向全局对象"><a href="#10-禁止this指向全局对象" class="headerlink" title="10) 禁止this指向全局对象"></a>10) 禁止this指向全局对象</h4><p>在非严格模式下，如果this没有定义会指向全局对象；在严格模式引入后禁止this指向全局对象，二是返回undefined.<br> <figure class="highlight js"><figcaption><span>this</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">calculator</span>(<span class="params">input</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.total = input; <span class="comment">// throw error</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">calculator(<span class="number">1</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<h4 id="11-未来保留的关键字"><a href="#11-未来保留的关键字" class="headerlink" title="11) 未来保留的关键字"></a>11) 未来保留的关键字</h4><p>在严格模式下遇到这些关键字均会抛出异常。</p>
+<ul>
+<li>implements</li>
+<li>private</li>
+<li>protected</li>
+<li>public</li>
+<li>static</li>
+<li>interface</li>
+<li>let</li>
+<li>package</li>
+<li>yield</li>
+</ul>
+<p>#####参考</p>
+<ol>
+<li><a href="http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/" target="_blank" rel="noopener">http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2013/01/javascript_strict_mode.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2013/01/javascript_strict_mode.html</a></li>
+<li><a href="http://msdn.microsoft.com/zh-cn/library/br230269(v=vs.94).aspx" target="_blank" rel="noopener">http://msdn.microsoft.com/zh-cn/library/br230269(v=vs.94).aspx</a></li>
+</ol>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2013/05/07/javascript-yan-ge-mo-shi/" data-id="cjlbz54sk0001ss6sw6rk091j" class="article-share-link"><i class="fas fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2013/05/07/javascript-yan-ge-mo-shi/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2013/05/07/javascript-yan-ge-mo-shi/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2013/05/07/reflection-in-c-sharp/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    Reflection in C#
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2013/05/07/5points-to-be-a-effective-programmer/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">让自己成为牛逼的软件技术人员</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/cxo-guide-microservices/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://lh4.googleusercontent.com/A7tEGUUzYq2LAC45i3e_hKuN7X3JKJqUPxQnk4K523ZSaFzvC2dudPXWL7w7yRJY07gKbl2xwc8ubjC4vCuZKH2dFWcJtoTnN4bAxjy4Gvm9GRHa896njBSnZLuexDXc_diTd-9h)" alt="[翻译] 给CxO的微服务指南" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/cxo-guide-microservices/" class="title">[翻译] 给CxO的微服务指南</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:11:42.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/abilities/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://upload-images.jianshu.io/upload_images/1825822-32344c7ba682ad9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)" alt="你需要了解的那些Abilities(一)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/abilities/" class="title">你需要了解的那些Abilities(一)</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:08:14.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/token/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/car.png)" alt="谁动了我的Token" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/05/25/token/" class="title">谁动了我的Token</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T07:03:47.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/insights/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/insights.jpeg)" alt="如何培养技术洞见力" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/05/25/insights/" class="title">如何培养技术洞见力</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T00:45:32.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/02/01/refactoring/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/refactoring.png)" alt="重构的七宗罪" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/02/01/refactoring/" class="title">重构的七宗罪</a></p>
+                            <p class="item-date"><time datetime="2016-02-01T06:59:00.000Z" itemprop="datePublished">2016-02-01</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/coding/">coding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/thought/">thought</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/works/">works</a><span class="category-list-count">20</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture/">architecture</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture-microservices/">architecture,microservices</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/architecture/" style="font-size: 10px;">architecture</a> <a href="/tags/architecture-microservices/" style="font-size: 10px;">architecture,microservices</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Xianjing Zhuo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'http://yoursite.com/2013/05/07/javascript-yan-ge-mo-shi/';
+        
+        this.page.identifier = 'javascript-yan-ge-mo-shi';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'xianjing' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

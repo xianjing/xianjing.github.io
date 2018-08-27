@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>关注点分离的一次尝试 | Xianjing&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="怎么做与做什么  软件架构是什么，用一句话说就是关注点分离。如果一定要对软件架构加个限定词的话，那就是面向业务的软件架构，否则都是扯淡。我们有很多技术是用来解决关注点分离的问题，比如依赖注入，比如AOP。如果关注点不分离，那么代码就可能不是内聚的，可能不是单一职责的，重复的坏味道可能已经悄悄的出现了，尤其在复杂系统中会更糟糕。同样如果代码不是面向业务的，而是面向实现的，就会很容易的发现这里是co">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关注点分离的一次尝试">
+<meta property="og:url" content="http://yoursite.com/2013/12/29/a-try-about-separate-of-concern/index.html">
+<meta property="og:site_name" content="Xianjing&#39;s blog">
+<meta property="og:description" content="怎么做与做什么  软件架构是什么，用一句话说就是关注点分离。如果一定要对软件架构加个限定词的话，那就是面向业务的软件架构，否则都是扯淡。我们有很多技术是用来解决关注点分离的问题，比如依赖注入，比如AOP。如果关注点不分离，那么代码就可能不是内聚的，可能不是单一职责的，重复的坏味道可能已经悄悄的出现了，尤其在复杂系统中会更糟糕。同样如果代码不是面向业务的，而是面向实现的，就会很容易的发现这里是co">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-08-11T09:47:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关注点分离的一次尝试">
+<meta name="twitter:description" content="怎么做与做什么  软件架构是什么，用一句话说就是关注点分离。如果一定要对软件架构加个限定词的话，那就是面向业务的软件架构，否则都是扯淡。我们有很多技术是用来解决关注点分离的问题，比如依赖注入，比如AOP。如果关注点不分离，那么代码就可能不是内聚的，可能不是单一职责的，重复的坏味道可能已经悄悄的出现了，尤其在复杂系统中会更糟糕。同样如果代码不是面向业务的，而是面向实现的，就会很容易的发现这里是co">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Xianjing&#39;s blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpeg" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpeg" />
+            <h2 id="name">Xianjing</h2>
+            <h3 id="title">learner</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/xianjing">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                36
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                2
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/xianjing" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-a-try-about-separate-of-concern" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            关注点分离的一次尝试
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2013/12/29/a-try-about-separate-of-concern/">
+            <time datetime="2013-12-28T19:06:00.000Z" itemprop="datePublished">2013-12-29</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/works/">works</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <blockquote>
+<p>怎么做与做什么</p>
+</blockquote>
+<p>软件架构是什么，用一句话说就是关注点分离。如果一定要对软件架构加个限定词的话，那就是面向业务的软件架构，否则都是扯淡。我们有很多技术是用来解决关注点分离的问题，比如依赖注入，比如AOP。如果关注点不分离，那么代码就可能不是内聚的，可能不是单一职责的，重复的坏味道可能已经悄悄的出现了，尤其在复杂系统中会更糟糕。同样如果代码不是面向业务的，而是面向实现的，就会很容易的发现这里是coffeeRepo.Find(); coffee.getPrice()；那里也是，这个代码句句都懂，连起来为什么就是看不懂呢，我们的业务就这样迷失在了万千的无状态的面向实现的convertor,builder,generator，我们的domain在哪里？ 这可能就是由当时一个简单的Copy Paste引来的血案。</p>
+<p>话说重复是万恶之源。是的，重复是很强烈的业务概念缺失的坏味道，一旦发现重复代码是要警惕的。它常常需要我们重新审视代码，判断是否需要一个抽象或显示建模。</p>
+<p>今天就拿一个销售咖啡系统的前端Javascript代码为例来尝试应用一下。<br><a id="more"></a></p>
+<h3 id="业务场景："><a href="#业务场景：" class="headerlink" title="业务场景："></a>业务场景：</h3><ul>
+<li>这个系统目前可以销售两种咖啡，拿铁和美式咖啡。现增加新产品卡布奇诺，需要尽快推广。</li>
+</ul>
+<p>如果用Story来表示：</p>
+<pre><code>As a user, 
+I want to order a cappuccino coffee
+so that I could get what I want
+</code></pre><ul>
+<li>具体实现细节是：<br>用户打开购买咖啡页面，选择卡布奇诺类型，点击订单按钮。</li>
+</ul>
+<h3 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight plain"><figcaption><span>coffee order controller:javascript</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">coffeeRepo.getAll(function(coffees) &#123;</span><br><span class="line"></span><br><span class="line">	featureToggle.get(‘cappuccino’).then(function(toggleOn) &#123;</span><br><span class="line"></span><br><span class="line">		if(!toggleOn) &#123;</span><br><span class="line"></span><br><span class="line">			coffees = _.select(coffees,function(coffee) &#123;</span><br><span class="line">								return coffee.type !== 	global.CoffeeTypes.NEW_CAPPUCCINO;</span><br><span class="line"></span><br><span class="line">			&#125;);</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		$scope.coffees = coffees;</span><br><span class="line"></span><br><span class="line">......</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这段代码是从后台API中将所有的咖啡类型取出,并根据FeatureToggle的状态将不符合条件的卡布奇诺删掉.这段代码至少有两个问题,第一是面向实现的,coffeeCreateController需要知道加进来的新类型。试问，如果当这新类型开发完成时，也即Toggle打开的时候会有多少代码需要显示的清理。</p>
+<p>那么这段代码到底要做件什么事呢？这段代码的整体意图是要取得当前系统支持的咖啡类型,不关注到底有没有卡布奇诺，还是拿铁，还是美式，不管FeatureToggle开还是关，它的职责就是取得当前系统支持的咖啡类型。 第二个问题,重复.同样的代码出现在另外打折促销的类中.</p>
+<figure class="highlight plain"><figcaption><span>coffee on sale controller:javascript</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">coffeeOnSalesRepository.getAll(function(coffees) &#123;</span><br><span class="line"></span><br><span class="line">	featureToggle.get(‘cappuccino’).then(function(toggleOn) &#123;</span><br><span class="line"></span><br><span class="line">		if(!toggleOn) &#123;</span><br><span class="line"></span><br><span class="line">			coffees = _.select(coffees, function (coffee) &#123;</span><br><span class="line"></span><br><span class="line">				return coffee.type !== 	global.CoffeeTypes.NEW_CAPPUCCINO;</span><br><span class="line"></span><br><span class="line">			&#125;);</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		$scope.coffees = coffees;</span><br><span class="line"></span><br><span class="line">......</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>那么怎么做呢?</p>
+<p>我梳理了一下需求感觉至少有一个业务概念迷失在代码中,那就是系统支持CoffeeType. 然后就尝试增加了一个CoffeeTypeProvider.</p>
+<figure class="highlight plain"><figcaption><span>coffee type provider:javascript</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">coffeeModule.factory(‘coffeeTypeProvider’, [‘featureToggle’,function(featureToggle)&#123;</span><br><span class="line"></span><br><span class="line">	var coffeeTypes = [&apos;breve&apos;,&apos;Americano&apos;]; //暂时保留</span><br><span class="line"></span><br><span class="line">	return &#123;values : function values() &#123; </span><br><span class="line"></span><br><span class="line">		return featureToggle.get(&apos;cappuccino&apos;).then(function(toggleOn) &#123;              					 </span><br><span class="line"></span><br><span class="line">			if(toggleOn) &#123;   </span><br><span class="line"></span><br><span class="line">		        return coffeeTypes.push[&#123;NEW_CAPPUCCINO:&quot;cappuccino&quot;&#125;];  </span><br><span class="line"></span><br><span class="line">		    &#125;</span><br><span class="line"></span><br><span class="line">		    else &#123;                 </span><br><span class="line"></span><br><span class="line">		           return coffeeTypes;              </span><br><span class="line"></span><br><span class="line">		    &#125;          </span><br><span class="line"></span><br><span class="line">		 &#125;);      </span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">  .......</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这时CoffeeOrderController代码就变成了下面这个样子，新的类型Cappucino对它来说是个黑盒，它无需关注现在系统有哪些类型，无需关注Toggle开还是关。</p>
+<figure class="highlight plain"><figcaption><span>coffee order controller:javascript</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">coffeeRepository.getAll(function(coffee)&#123;</span><br><span class="line"></span><br><span class="line">	coffeeTypeProvider.values().then(function(supportCoffeeTypes) &#123;</span><br><span class="line"></span><br><span class="line">		$scope.coffees = supportCoffeeTypes.contains(coffee.CoffeeType);</span><br><span class="line"></span><br><span class="line">	&#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>CoffeeController也是一样。</p>
+<h3 id="第二个例子-Condiment-Service"><a href="#第二个例子-Condiment-Service" class="headerlink" title="第二个例子: Condiment Service"></a>第二个例子: Condiment Service</h3><p>先看下面的代码，有点长。后台也有同样逻辑的代码。</p>
+<figure class="highlight plain"><figcaption><span>condiment-service:javascript</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">coffeeModule.value(‘condimentProvider’, &#123;</span><br><span class="line"></span><br><span class="line">	sugarInitiated: &#123;code:1, name: “Sugar Initiated”&#125;,</span><br><span class="line">	milkOrdered: &#123;code:2, name: “Milk ordered”&#125;,</span><br><span class="line">	review: &#123;code:3, name: “Review”&#125;,</span><br><span class="line">	complete: &#123;code:4, name: “Complete&#125;,</span><br><span class="line">	</span><br><span class="line">	amercianSugarInitiated: &#123;code:1, name: “Amerciano Initiated”&#125;,</span><br><span class="line">	amercianoMilkOrdered: &#123;code:2, name: “milk ordered”&#125;,</span><br><span class="line">	amercianoReview: &#123;code:3, name: “Review”&#125;,</span><br><span class="line">	amercianoComplete: &#123;code:4, name: “Complete”&#125;,</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	cappuccinoInitiated: &#123;code:1, name: “Cappuccino Initiated”&#125;,</span><br><span class="line">	cappuccinoRquest: &#123;code:2, name: “Request”&#125;,</span><br><span class="line">	cappuccinoConfirm: &#123;code:3, name: “DoubleConfirm”&#125;,</span><br><span class="line">	cappuccinoReceived: &#123;code:4, name: “Received”&#125;,</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	_getWorkcondiments: function(CoffeeType) &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   		if(CoffeeType === global.CoffeeTypes.Bereve)&#123;  </span><br><span class="line"></span><br><span class="line">              return [ this.sugarInitiated, </span><br><span class="line"></span><br><span class="line">              			 this.milkOrdered, </span><br><span class="line"></span><br><span class="line">              			 this.review, </span><br><span class="line"></span><br><span class="line">              			 this.complete];         </span><br><span class="line"></span><br><span class="line">          &#125;         </span><br><span class="line"></span><br><span class="line">          if(CoffeeType === global.CoffeeTypes.Amercanio)&#123;             </span><br><span class="line"></span><br><span class="line">          		return [ this.amercianoSugarInitiated, </span><br><span class="line">          				  this.amercianoMilkOrdered, </span><br><span class="line">          				  this.amercianoReview,</span><br><span class="line">          				  this.amercianoComplete];         </span><br><span class="line"></span><br><span class="line">           &#125;         </span><br><span class="line"></span><br><span class="line">          	if(CoffeeType === global.coffeeTypes.Capuucino&#123;    </span><br><span class="line"></span><br><span class="line">          	         return [</span><br><span class="line"></span><br><span class="line">          	         			this.cappuccinoInitiated,</span><br><span class="line"></span><br><span class="line">          	         			this.cappuccinoRquest,</span><br><span class="line"></span><br><span class="line">          	         			this.cappuccinoConfirm,</span><br><span class="line"></span><br><span class="line">          	         			this.cappuccinoReceived];         </span><br><span class="line"></span><br><span class="line">          	         &#125;     </span><br><span class="line"></span><br><span class="line">          	  &#125;,</span><br><span class="line"></span><br><span class="line">          getcondimentNameByCode(code, CoffeeType),</span><br><span class="line"></span><br><span class="line">          getcondimentCodeByName(name, CoffeeType)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>condimentProvider主要有两个职责将后台的condiments code转换为name，还有一个是将name转换为code。其实这段代码也不是那么的难以理解，只是业务概念的缺失。不同CoffeeType包含不同的Condiments需要显示的建模；另一个问题就是对于provider的职责的concern，如果只简单的转化name和code，那么可以判断调用端也是面向实现的，而非面向业务的。因为如果面向业务那么操作一定是condiment对象而非简单的名字和code。这需要重新还原业务场景去理解才能进行重构，所以很多时候inline是一个很好的手法。</p>
+<p>这样condiment就出现了，而系统的需求也充分验证了这一点。CoffeeType的变换会影响工作流程的不同，即有不同的condiment。condiment也可以就自身的行为进行封装，比如是不是能够移动到完成状态，是否需要Confirm。当有了正确的业务模型，就会发现封装自然而然的就发生了。在这里会发先CoffeeType是AggregateRoot，可以获取系统支持的condiment列表。这时就可以对coffeeTypeProvider进行改造了。</p>
+<figure class="highlight plain"><figcaption><span>coffee type provider:javascript</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">coffeeModule.factory(‘coffeeTypeProvider’,function(featureToggle,breveCondimentsProvider, 				americanoCondimentsProvier, capuuccioCondimentsProvider)&#123;</span><br><span class="line"></span><br><span class="line">	var CoffeeTypes = &#123;</span><br><span class="line"></span><br><span class="line">		Breve: &#123;name: ‘Breve’, condiments: breveCondimentsProvider.values&#125;,</span><br><span class="line"></span><br><span class="line">		Amercano: &#123;name: ‘Americano’,</span><br><span class="line"></span><br><span class="line">					condiments: amercanoCondimentsProvider.values&#125;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	var buildCoffeeType(values) &#123;</span><br><span class="line"></span><br><span class="line">		var CoffeeType = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">		CoffeeType.values = function() &#123;</span><br><span class="line"></span><br><span class="line">			return _.plunk(CoffeeTypes, ‘name’);</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	return &#123;</span><br><span class="line"></span><br><span class="line">		get: function &#123;          </span><br><span class="line"></span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">			return featureToggle.get(&apos;capuucio&apos;).then(function(toggleOn) &#123;              </span><br><span class="line"></span><br><span class="line">			</span><br><span class="line"></span><br><span class="line">				if(toggleOn) &#123;                 </span><br><span class="line"></span><br><span class="line">			 		CoffeeTypes.NEW_CAPUUCINO = &#123;</span><br><span class="line"></span><br><span class="line">			 			NEW_CAPUU: &#123;                      </span><br><span class="line"></span><br><span class="line">			 				name: &apos;cappuccino&apos;,                      </span><br><span class="line"></span><br><span class="line">			 				condiments: cappuccinoCondimentsProvider.values    </span><br><span class="line"></span><br><span class="line">			 				             </span><br><span class="line"></span><br><span class="line">			  		&#125;&#125;;                  </span><br><span class="line"></span><br><span class="line">			  		return buildCoffeeType(CoffeeTypes);         </span><br><span class="line"></span><br><span class="line">			  &#125;              </span><br><span class="line"></span><br><span class="line">			 </span><br><span class="line"></span><br><span class="line">			 else &#123;                  </span><br><span class="line"></span><br><span class="line">			 	return buildCoffeeType(CoffeeTypes);              </span><br><span class="line"></span><br><span class="line">			 	&#125;          </span><br><span class="line"></span><br><span class="line">			 &#125;);     </span><br><span class="line"></span><br><span class="line">	 &#125;</span><br><span class="line"></span><br><span class="line">......</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><figcaption><span>condiment-service:javascript</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//breveCondimentProvider fake code</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">coffeeModule.factory(‘breveCondimentProvider’,function(</span><br><span class="line"></span><br><span class="line">	var condiments = [ &#123;code:1, name: “Sugar Initiated”&#125;, </span><br><span class="line"></span><br><span class="line">		&#123;code:2, name: “Milk ordered”&#125;, </span><br><span class="line"></span><br><span class="line">		&#123;code:3, name: “Review”&#125;, </span><br><span class="line"></span><br><span class="line">		&#123;code:4, name: “Complete”&#125;</span><br><span class="line"></span><br><span class="line">	]; </span><br><span class="line"></span><br><span class="line">	function couldComplete()&#123;&#125;; //fake code </span><br><span class="line"></span><br><span class="line">	function isValid(); </span><br><span class="line"></span><br><span class="line">	return &#123; </span><br><span class="line"></span><br><span class="line">		values: function() &#123; </span><br><span class="line"></span><br><span class="line">			_.each(condiments, function(condiment)&#123; </span><br><span class="line"></span><br><span class="line">				condiment.isCompleted = isComplted; </span><br><span class="line"></span><br><span class="line">				condiment.isValid = isValid; //fake </span><br><span class="line"></span><br><span class="line">			&#125;); </span><br><span class="line"></span><br><span class="line">		&#125;, </span><br><span class="line"></span><br><span class="line">		findBy: function(code) &#123; </span><br><span class="line"></span><br><span class="line">			return condimentObject; </span><br><span class="line"></span><br><span class="line">			//fake code &#125; </span><br><span class="line"></span><br><span class="line">		&#125;;</span><br><span class="line"></span><br><span class="line">	......</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>amercanoCondimentsProvider和capuuccinoCondimentsProvider会是类似，这样使得各自的业务上下文表达清楚，代码也会变得易懂，职责单一更内聚。</p>
+<p>改完了回过来看代码，如果客户说要重新改名，那么我们只要改coffeeTypeProvider这里就可以了；如果要删掉某一个condiment，也需要更改这里，当然不只这里。如果我们将页面模版的展示也基于我们支持的condiments，那么即使更改condiment的个数，调整condiment的顺序是不是也就不那么困难了呢？</p>
+<p>这是不是有些不一样了，这只是一个开始。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2013/12/29/a-try-about-separate-of-concern/" data-id="cjlbz54ud000uss6s37bxiad5" class="article-share-link"><i class="fas fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2013/12/29/a-try-about-separate-of-concern/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2013/12/29/a-try-about-separate-of-concern/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2014/01/15/2013events/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    2013Events
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2013/12/19/effective-keyboard-shortcuts-in-visual-studio/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Effective Keyboard Shortcuts for Window Operation in Visual Studio</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/cxo-guide-microservices/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://lh4.googleusercontent.com/A7tEGUUzYq2LAC45i3e_hKuN7X3JKJqUPxQnk4K523ZSaFzvC2dudPXWL7w7yRJY07gKbl2xwc8ubjC4vCuZKH2dFWcJtoTnN4bAxjy4Gvm9GRHa896njBSnZLuexDXc_diTd-9h)" alt="[翻译] 给CxO的微服务指南" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/cxo-guide-microservices/" class="title">[翻译] 给CxO的微服务指南</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:11:42.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/11/abilities/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://upload-images.jianshu.io/upload_images/1825822-32344c7ba682ad9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)" alt="你需要了解的那些Abilities(一)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2017/08/11/abilities/" class="title">你需要了解的那些Abilities(一)</a></p>
+                            <p class="item-date"><time datetime="2017-08-11T10:08:14.000Z" itemprop="datePublished">2017-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/token/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/car.png)" alt="谁动了我的Token" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/05/25/token/" class="title">谁动了我的Token</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T07:03:47.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/05/25/insights/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/insights.jpeg)" alt="如何培养技术洞见力" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/05/25/insights/" class="title">如何培养技术洞见力</a></p>
+                            <p class="item-date"><time datetime="2016-05-25T00:45:32.000Z" itemprop="datePublished">2016-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/02/01/refactoring/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/refactoring.png)" alt="重构的七宗罪" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/thought/">thought</a></p>
+                            <p class="item-title"><a href="/2016/02/01/refactoring/" class="title">重构的七宗罪</a></p>
+                            <p class="item-date"><time datetime="2016-02-01T06:59:00.000Z" itemprop="datePublished">2016-02-01</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/coding/">coding</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/thought/">thought</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/works/">works</a><span class="category-list-count">20</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture/">architecture</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture-microservices/">architecture,microservices</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/architecture/" style="font-size: 10px;">architecture</a> <a href="/tags/architecture-microservices/" style="font-size: 10px;">architecture,microservices</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Xianjing Zhuo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'http://yoursite.com/2013/12/29/a-try-about-separate-of-concern/';
+        
+        this.page.identifier = 'a-try-about-separate-of-concern';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'xianjing' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
